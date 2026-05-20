@@ -1,0 +1,16 @@
+project_id = "xjdqiudttarbknupdoro"
+
+[functions.ai-content]
+verify_jwt = false
+
+[functions.chat]
+verify_jwt = false
+
+[functions.esewa-initiate]
+verify_jwt = false
+
+[functions.esewa-verify]
+verify_jwt = false
+
+[functions.ai-insights]
+verify_jwt = false
