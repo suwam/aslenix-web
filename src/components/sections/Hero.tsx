@@ -53,6 +53,8 @@ type HeroSlide = {
   alt: string;
 };
 
+const HERO_CACHE_KEY = "aslenix:homepage-content:v1";
+
 const parseHeroSlides = (value: unknown): HeroSlide[] | null => {
   if (!Array.isArray(value)) return null;
   const slides = value
@@ -67,25 +69,56 @@ const parseHeroSlides = (value: unknown): HeroSlide[] | null => {
   return slides.length > 0 ? slides : null;
 };
 
+const readCachedHomepageData = () => {
+  if (typeof window === "undefined") return undefined;
+  try {
+    const cached = window.localStorage.getItem(HERO_CACHE_KEY);
+    return cached ? JSON.parse(cached) : undefined;
+  } catch {
+    return undefined;
+  }
+};
+
+const cacheHomepageData = (data: unknown) => {
+  try {
+    window.localStorage.setItem(HERO_CACHE_KEY, JSON.stringify(data));
+  } catch {
+    // Cache is only a speed boost; the live request still drives correctness.
+  }
+};
+
+const fetchHomepageData = async () => {
+  const url = import.meta.env.VITE_SUPABASE_URL;
+  const key = import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY;
+  if (!url || !key) return null;
+
+  const response = await fetch(`${url}/rest/v1/homepage_content?select=*&id=eq.1`, {
+    headers: {
+      apikey: key,
+      Authorization: `Bearer ${key}`,
+      Accept: "application/vnd.pgrst.object+json",
+    },
+  });
+
+  if (!response.ok) return null;
+  return response.json();
+};
+
 export const Hero = () => {
   const [phraseIndex, setPhraseIndex] = useState(0);
   const [typedText, setTypedText] = useState(phrases[0]);
   const [isDeleting, setIsDeleting] = useState(false);
   const [activeSlide, setActiveSlide] = useState(0);
   const [enhanced, setEnhanced] = useState(false);
-  const [homepageData, setHomepageData] = useState<any>();
+  const [homepageData, setHomepageData] = useState<any>(() => readCachedHomepageData());
 
   useEffect(() => {
     let mounted = true;
-    import("@/integrations/supabase/client").then(({ supabase }) => {
-      supabase
-        .from("homepage_content")
-        .select("*")
-        .eq("id", 1)
-        .maybeSingle()
-        .then(({ data }) => {
-          if (mounted) setHomepageData(data ?? null);
-        });
+
+    fetchHomepageData().then((data) => {
+      if (!mounted) return;
+      setHomepageData(data);
+      if (data) cacheHomepageData(data);
     }).catch(() => {
       if (mounted) setHomepageData(null);
     });
