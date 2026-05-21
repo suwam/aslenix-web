@@ -43,7 +43,7 @@ export const TrustedBy = () => {
       <div className="container relative z-10">
         <div className="text-center mb-6">
           <p className="font-mono text-sm sm:text-base tracking-[0.25em] uppercase">
-            <span className="text-white font-semibold">UI/UX Best</span>
+            <span className="text-white font-semibold">PREMIUM PARTNERS</span>
           </p>
         </div>
       </div>
