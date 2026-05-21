@@ -27,7 +27,7 @@ export const LocationMap = () => {
                 Find <span className="text-gradient">ASLENIX</span> in Kathmandu
               </h2>
               <p className="mt-3 text-base text-muted-foreground sm:text-lg">
-                M8QJ+25 Kathmandu
+                New Baneshwor Budhhanagar-10 Kathmandu, Nepal
               </p>
             </div>
             <Button asChild variant="outline" size="lg" className="w-full sm:w-auto">
