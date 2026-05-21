@@ -1,12 +1,10 @@
 import { ArrowLeft, ArrowRight, Brain, Code2, Database } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { useSupabaseRealtime } from "@/hooks/useSupabaseRealtime";
 import { useEffect, useState } from "react";
-import { supabase } from "@/integrations/supabase/client";
-import dashboardOne from "@/assets/project-1.jpg";
-import dashboardTwo from "@/assets/project-5.jpg";
-import dashboardThree from "@/assets/project-6.jpg";
-import dashboardFour from "@/assets/project-2.jpg";
+import dashboardOne from "@/assets/project-1.webp";
+import dashboardTwo from "@/assets/project-5.webp";
+import dashboardThree from "@/assets/project-6.webp";
+import dashboardFour from "@/assets/project-2.webp";
 
 const DEFAULTS = {
   title: "UI/UX Best",
@@ -75,22 +73,28 @@ export const Hero = () => {
   const [isDeleting, setIsDeleting] = useState(false);
   const [activeSlide, setActiveSlide] = useState(0);
   const [enhanced, setEnhanced] = useState(false);
-  const [loadCms, setLoadCms] = useState(false);
+  const [homepageData, setHomepageData] = useState<any>(null);
 
   useEffect(() => {
-    const timeout = window.setTimeout(() => setLoadCms(true), 1400);
-    return () => window.clearTimeout(timeout);
-  }, []);
+    let mounted = true;
+    const timeout = window.setTimeout(() => {
+      import("@/integrations/supabase/client").then(({ supabase }) => {
+        supabase
+          .from("homepage_content")
+          .select("*")
+          .eq("id", 1)
+          .maybeSingle()
+          .then(({ data }) => {
+            if (mounted) setHomepageData(data ?? null);
+          });
+      });
+    }, 1400);
 
-  const homepageData = useSupabaseRealtime<any>(
-    async () => {
-      if (!loadCms) return null;
-      const { data } = await supabase.from("homepage_content").select("*").eq("id", 1).maybeSingle();
-      return data ?? null;
-    },
-    loadCms ? ["homepage_content"] : [],
-    [loadCms],
-  );
+    return () => {
+      mounted = false;
+      window.clearTimeout(timeout);
+    };
+  }, []);
 
   const content = {
     title: homepageData?.hero_title ?? DEFAULTS.title,

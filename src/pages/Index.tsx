@@ -3,10 +3,10 @@ import { Navbar } from "@/components/Navbar";
 import { Hero } from "@/components/sections/Hero";
 import { Footer } from "@/components/Footer";
 import { WhatsAppButton } from "@/components/WhatsAppButton";
-import { SiteAnnouncement } from "@/components/SiteAnnouncement";
-import { TrustedBy } from "@/components/sections/TrustedBy";
 import { DeferredSection } from "@/components/DeferredSection";
 
+const SiteAnnouncement = lazy(() => import("@/components/SiteAnnouncement").then((module) => ({ default: module.SiteAnnouncement })));
+const TrustedBy = lazy(() => import("@/components/sections/TrustedBy").then((module) => ({ default: module.TrustedBy })));
 const About = lazy(() => import("@/components/sections/About").then((module) => ({ default: module.About })));
 const Services = lazy(() => import("@/components/sections/Services").then((module) => ({ default: module.Services })));
 const Projects = lazy(() => import("@/components/sections/Projects").then((module) => ({ default: module.Projects })));
@@ -22,6 +22,14 @@ const SectionFallback = () => <div className="min-h-32" aria-hidden="true" />;
 const Index = () => {
   const [showPrivacy, setShowPrivacy] = useState(false);
   const [showTerms, setShowTerms] = useState(false);
+  const [loadAnnouncements, setLoadAnnouncements] = useState(false);
+
+  useEffect(() => {
+    const scheduleIdle = window.requestIdleCallback ?? ((callback: IdleRequestCallback) => window.setTimeout(callback, 1600));
+    const cancelIdle = window.cancelIdleCallback ?? window.clearTimeout;
+    const id = scheduleIdle(() => setLoadAnnouncements(true));
+    return () => cancelIdle(id as never);
+  }, []);
 
   useEffect(() => {
     const isOpen = showPrivacy || showTerms;
@@ -33,36 +41,52 @@ const Index = () => {
 
   return (
     <div className="min-h-screen bg-background text-foreground overflow-x-hidden">
-      <SiteAnnouncement />
+      <Suspense fallback={null}>
+        {loadAnnouncements && <SiteAnnouncement />}
+      </Suspense>
       <Navbar />
       <main>
         <Hero />
-        <DeferredSection minHeight="min-h-28" rootMargin="500px 0px">
-          <TrustedBy />
+        <DeferredSection minHeight="min-h-28" rootMargin="200px 0px">
+          <Suspense fallback={<SectionFallback />}>
+            <TrustedBy />
+          </Suspense>
         </DeferredSection>
-        <Suspense fallback={<SectionFallback />}>
-          <DeferredSection>
+        <DeferredSection>
+          <Suspense fallback={<SectionFallback />}>
             <About />
-          </DeferredSection>
-          <DeferredSection>
+          </Suspense>
+        </DeferredSection>
+        <DeferredSection>
+          <Suspense fallback={<SectionFallback />}>
             <Services />
-          </DeferredSection>
-          <DeferredSection>
+          </Suspense>
+        </DeferredSection>
+        <DeferredSection>
+          <Suspense fallback={<SectionFallback />}>
             <Projects />
-          </DeferredSection>
-          <DeferredSection>
+          </Suspense>
+        </DeferredSection>
+        <DeferredSection>
+          <Suspense fallback={<SectionFallback />}>
             <WhyUs />
-          </DeferredSection>
-          <DeferredSection>
+          </Suspense>
+        </DeferredSection>
+        <DeferredSection>
+          <Suspense fallback={<SectionFallback />}>
             <Testimonials />
-          </DeferredSection>
-          <DeferredSection>
+          </Suspense>
+        </DeferredSection>
+        <DeferredSection>
+          <Suspense fallback={<SectionFallback />}>
             <Blog />
-          </DeferredSection>
-          <DeferredSection>
+          </Suspense>
+        </DeferredSection>
+        <DeferredSection>
+          <Suspense fallback={<SectionFallback />}>
             <Contact />
-          </DeferredSection>
-        </Suspense>
+          </Suspense>
+        </DeferredSection>
       </main>
       <Footer onOpenPrivacy={() => setShowPrivacy(true)} onOpenTerms={() => setShowTerms(true)} />
       <Suspense fallback={null}>

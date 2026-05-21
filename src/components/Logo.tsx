@@ -1,11 +1,12 @@
-import logo from "@/assets/aslenix-logo.png";
+import { memo } from "react";
+import logo from "@/assets/aslenix-logo.webp";
 
 interface LogoProps {
   className?: string;
   showText?: boolean;
 }
 
-export const Logo = ({ className = "h-10 w-10", showText = true }: LogoProps) => {
+export const Logo = memo(({ className = "h-10 w-10", showText = true }: LogoProps) => {
   return (
     <a href="#home" className="flex items-center gap-2 group">
       <img
@@ -24,4 +25,6 @@ export const Logo = ({ className = "h-10 w-10", showText = true }: LogoProps) =>
       )}
     </a>
   );
-};
+});
+
+Logo.displayName = "Logo";

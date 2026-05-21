@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import logo from "@/assets/aslenix-logo.png";
+import logo from "@/assets/aslenix-logo.webp";
 
 export const Loader = () => {
   const [logoLoaded, setLogoLoaded] = useState(false);
