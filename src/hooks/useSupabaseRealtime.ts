@@ -15,6 +15,10 @@ export function useSupabaseRealtime<T>(fetcher: () => Promise<T>, tables: string
 
     load();
 
+    if (tables.length === 0) return () => {
+      mounted = false;
+    };
+
     const channel = supabase.channel(`realtime-${tables.join("-")}`);
     tables.forEach((table) => {
       channel.on("postgres_changes", { event: "*", schema: "public", table }, () => {

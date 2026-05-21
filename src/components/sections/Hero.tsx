@@ -75,14 +75,21 @@ export const Hero = () => {
   const [isDeleting, setIsDeleting] = useState(false);
   const [activeSlide, setActiveSlide] = useState(0);
   const [enhanced, setEnhanced] = useState(false);
+  const [loadCms, setLoadCms] = useState(false);
+
+  useEffect(() => {
+    const timeout = window.setTimeout(() => setLoadCms(true), 1400);
+    return () => window.clearTimeout(timeout);
+  }, []);
 
   const homepageData = useSupabaseRealtime<any>(
     async () => {
+      if (!loadCms) return null;
       const { data } = await supabase.from("homepage_content").select("*").eq("id", 1).maybeSingle();
       return data ?? null;
     },
-    ["homepage_content"],
-    [],
+    loadCms ? ["homepage_content"] : [],
+    [loadCms],
   );
 
   const content = {

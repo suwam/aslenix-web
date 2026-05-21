@@ -5,6 +5,7 @@ import { Footer } from "@/components/Footer";
 import { WhatsAppButton } from "@/components/WhatsAppButton";
 import { SiteAnnouncement } from "@/components/SiteAnnouncement";
 import { TrustedBy } from "@/components/sections/TrustedBy";
+import { DeferredSection } from "@/components/DeferredSection";
 
 const About = lazy(() => import("@/components/sections/About").then((module) => ({ default: module.About })));
 const Services = lazy(() => import("@/components/sections/Services").then((module) => ({ default: module.Services })));
@@ -36,15 +37,31 @@ const Index = () => {
       <Navbar />
       <main>
         <Hero />
-        <TrustedBy />
+        <DeferredSection minHeight="min-h-28" rootMargin="500px 0px">
+          <TrustedBy />
+        </DeferredSection>
         <Suspense fallback={<SectionFallback />}>
-          <About />
-          <Services />
-          <Projects />
-          <WhyUs />
-          <Testimonials />
-          <Blog />
-          <Contact />
+          <DeferredSection>
+            <About />
+          </DeferredSection>
+          <DeferredSection>
+            <Services />
+          </DeferredSection>
+          <DeferredSection>
+            <Projects />
+          </DeferredSection>
+          <DeferredSection>
+            <WhyUs />
+          </DeferredSection>
+          <DeferredSection>
+            <Testimonials />
+          </DeferredSection>
+          <DeferredSection>
+            <Blog />
+          </DeferredSection>
+          <DeferredSection>
+            <Contact />
+          </DeferredSection>
         </Suspense>
       </main>
       <Footer onOpenPrivacy={() => setShowPrivacy(true)} onOpenTerms={() => setShowTerms(true)} />

@@ -21,17 +21,24 @@ export const SiteAnnouncement = () => {
   const [banner, setBanner] = useState<Ann | null>(null);
   const [popup, setPopup] = useState<Ann | null>(null);
   const [closedPopups, setClosedPopups] = useState<Set<string>>(() => new Set());
+  const [enabled, setEnabled] = useState(false);
+
+  useEffect(() => {
+    const timeout = window.setTimeout(() => setEnabled(true), 1200);
+    return () => window.clearTimeout(timeout);
+  }, []);
 
   const announcements = useSupabaseRealtime<Ann[]>(
     async () => {
+      if (!enabled) return [];
       const { data } = await supabase.from("announcements").select("id,message,type,link,link_text,poster_url,dismissible,active")
         .eq("active", true)
         .order("created_at", { ascending: false })
         .limit(10);
       return (data ?? []) as Ann[];
     },
-    ["announcements"],
-    [],
+    enabled ? ["announcements"] : [],
+    [enabled],
   ) ?? [];
 
   useEffect(() => {
