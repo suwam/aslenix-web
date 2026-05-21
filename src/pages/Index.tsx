@@ -14,6 +14,7 @@ const WhyUs = lazy(() => import("@/components/sections/WhyUs").then((module) => 
 const Testimonials = lazy(() => import("@/components/sections/Testimonials").then((module) => ({ default: module.Testimonials })));
 const Blog = lazy(() => import("@/components/sections/Blog").then((module) => ({ default: module.Blog })));
 const Contact = lazy(() => import("@/components/sections/Contact").then((module) => ({ default: module.Contact })));
+const LocationMap = lazy(() => import("@/components/sections/LocationMap").then((module) => ({ default: module.LocationMap })));
 const PrivacyModal = lazy(() => import("@/components/PrivacyModal").then((module) => ({ default: module.PrivacyModal })));
 const TermsModal = lazy(() => import("@/components/TermsModal").then((module) => ({ default: module.TermsModal })));
 
@@ -85,6 +86,11 @@ const Index = () => {
         <DeferredSection>
           <Suspense fallback={<SectionFallback />}>
             <Contact />
+          </Suspense>
+        </DeferredSection>
+        <DeferredSection>
+          <Suspense fallback={<SectionFallback />}>
+            <LocationMap />
           </Suspense>
         </DeferredSection>
       </main>

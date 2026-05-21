@@ -1,5 +1,5 @@
 import { Logo } from "./Logo";
-import { Mail, Phone, Globe, MessageCircle } from "lucide-react";
+import { Mail, Phone, Globe, MessageCircle, MapPin } from "lucide-react";
 
 const cols = [
   {
@@ -38,8 +38,8 @@ export const Footer = ({ onOpenPrivacy, onOpenTerms }: FooterProps) => {
           <div className="lg:col-span-2 space-y-4">
             <Logo />
             <p className="text-base text-muted-foreground leading-relaxed max-w-md">
-              ASLENIX is a next-gen digital studio from Nepal — engineering websites,
-              apps, AI products, and brands that move the world forward.
+              ASLENIX is a digital design and development studio in Nepal focusing on web development,
+              mobile applications, artificial intelligence products, and brand innovations.
             </p>
             <div className="space-y-2.5 text-base">
               <a href="mailto:info.aslenix.np@gmail.com" className="flex items-center gap-2 text-muted-foreground hover:text-accent transition-colors">
@@ -51,6 +51,9 @@ export const Footer = ({ onOpenPrivacy, onOpenTerms }: FooterProps) => {
               <a href="https://www.aslenix.tech" className="flex items-center gap-2 text-muted-foreground hover:text-accent transition-colors">
                 <Globe className="h-4 w-4" /> www.aslenix.tech
               </a>
+              <div className="flex items-start gap-2 text-muted-foreground">
+                <MapPin className="mt-1 h-4 w-4 shrink-0" /> New Baneshwor, Buddhanagar-10, Kathmandu
+              </div>
               <a href="https://wa.me/message/JIZWD7OFCQVWK1" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-muted-foreground hover:text-accent transition-colors">
                 <MessageCircle className="h-4 w-4" /> WhatsApp
               </a>
