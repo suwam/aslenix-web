@@ -1,5 +1,4 @@
 import { ArrowLeft, ArrowRight, Brain, Code2, Database } from "lucide-react";
-import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { useSupabaseRealtime } from "@/hooks/useSupabaseRealtime";
 import { useEffect, useState } from "react";
@@ -72,9 +71,10 @@ const parseHeroSlides = (value: unknown): HeroSlide[] | null => {
 
 export const Hero = () => {
   const [phraseIndex, setPhraseIndex] = useState(0);
-  const [typedText, setTypedText] = useState("");
+  const [typedText, setTypedText] = useState(phrases[0]);
   const [isDeleting, setIsDeleting] = useState(false);
   const [activeSlide, setActiveSlide] = useState(0);
+  const [enhanced, setEnhanced] = useState(false);
 
   const homepageData = useSupabaseRealtime<any>(
     async () => {
@@ -98,6 +98,12 @@ export const Hero = () => {
   const slideCount = slides.length;
 
   useEffect(() => {
+    const timeout = window.setTimeout(() => setEnhanced(true), 900);
+    return () => window.clearTimeout(timeout);
+  }, []);
+
+  useEffect(() => {
+    if (!enhanced) return;
     const currentPhrase = phrases[phraseIndex];
     const timeout = window.setTimeout(() => {
       if (!isDeleting) {
@@ -117,16 +123,18 @@ export const Hero = () => {
     }, typedText.length === currentPhrase.length && !isDeleting ? 1300 : isDeleting ? 45 : 70);
 
     return () => window.clearTimeout(timeout);
-  }, [typedText, isDeleting, phraseIndex]);
+  }, [typedText, isDeleting, phraseIndex, enhanced]);
 
   useEffect(() => {
+    if (!enhanced) return;
+    if (window.matchMedia("(max-width: 767px)").matches) return;
     if (slideCount <= 1) return;
     const interval = window.setInterval(() => {
       setActiveSlide((prev) => (prev + 1) % slideCount);
     }, 3000);
 
     return () => window.clearInterval(interval);
-  }, [slideCount]);
+  }, [slideCount, enhanced]);
 
   useEffect(() => {
     if (activeSlide >= slideCount) setActiveSlide(0);
@@ -152,12 +160,7 @@ export const Hero = () => {
       </div>
 
       <div className="relative z-10 mx-auto flex w-full max-w-7xl flex-col gap-14 px-6 sm:px-8 lg:px-12 xl:px-16 lg:grid lg:grid-cols-[1.05fr_0.95fr] lg:items-center">
-        <motion.div
-          initial={{ opacity: 0, y: 28 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.85 }}
-          className="max-w-2xl space-y-8"
-        >
+        <div className="max-w-2xl space-y-8 animate-enter-up">
           <div className="inline-flex items-center gap-3 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm text-muted-foreground backdrop-blur-xl shadow-[0_0_40px_-20px_rgba(255,79,216,0.3)]">
             <span className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-[#ffffff0f] text-base">✨</span>
             <span className="font-medium text-white/80">Premium SaaS, AI & growth systems</span>
@@ -213,14 +216,49 @@ export const Hero = () => {
               );
             })}
           </div>
-        </motion.div>
+        </div>
 
-        <motion.div
-          initial={{ opacity: 0, x: 40, scale: 0.96 }}
-          animate={{ opacity: 1, x: 0, scale: 1 }}
-          transition={{ duration: 0.9, delay: 0.15 }}
-          className="relative mx-auto flex w-full max-w-[680px] items-center justify-center lg:ml-8 xl:ml-14"
-        >
+        <div className="relative mx-auto flex w-full max-w-[680px] items-center justify-center lg:ml-8 xl:ml-14 animate-enter-side md:hidden">
+          <div className="relative w-full overflow-hidden rounded-[2rem] border border-white/10 bg-[#0d111d]/80 p-5 shadow-[0_24px_80px_-42px_rgba(0,0,0,0.9)]">
+            <div className="absolute inset-0 grid-pattern opacity-10" />
+            <div className="absolute left-1/2 top-1/2 h-56 w-56 -translate-x-1/2 -translate-y-1/2 rounded-full bg-brand-gradient opacity-15 blur-3xl" />
+            <div className="relative space-y-5">
+              <div className="flex items-center justify-between gap-4">
+                <div>
+                  <p className="text-xs uppercase tracking-[0.24em] text-white/45">Live Systems</p>
+                  <h2 className="mt-2 font-display text-2xl font-semibold text-white">Fast digital builds</h2>
+                </div>
+                <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-brand-gradient shadow-[0_0_28px_-8px_hsl(var(--accent)/0.9)]">
+                  <Code2 className="h-5 w-5 text-white" />
+                </div>
+              </div>
+              <div className="grid grid-cols-3 gap-3">
+                {["SaaS", "AI", "ERP"].map((item) => (
+                  <div key={item} className="rounded-2xl border border-white/10 bg-white/[0.04] px-3 py-4 text-center">
+                    <div className="text-lg font-semibold text-white">{item}</div>
+                    <div className="mt-1 h-1 rounded-full bg-brand-gradient opacity-70" />
+                  </div>
+                ))}
+              </div>
+              <div className="rounded-2xl border border-white/10 bg-black/20 p-4">
+                <div className="mb-3 flex items-center gap-2">
+                  <span className="h-2 w-2 rounded-full bg-green-400 shadow-[0_0_16px_rgba(74,222,128,0.9)]" />
+                  <span className="text-sm text-white/70">Optimized for mobile-first launches</span>
+                </div>
+                <div className="space-y-2">
+                  <div className="h-2 rounded-full bg-white/10">
+                    <div className="h-full w-4/5 rounded-full bg-brand-gradient" />
+                  </div>
+                  <div className="h-2 rounded-full bg-white/10">
+                    <div className="h-full w-2/3 rounded-full bg-brand-gradient opacity-70" />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="relative mx-auto hidden w-full max-w-[680px] items-center justify-center lg:ml-8 xl:ml-14 md:flex animate-enter-side">
           <div className="absolute inset-0 rounded-[3rem] bg-gradient-to-br from-white/5 via-transparent to-white/0 shadow-[0_0_180px_0_rgba(59,132,246,0.14)]" />
           <div className="absolute inset-0 rounded-[3rem] border border-white/10 bg-white/[0.035] backdrop-blur-[28px]" />
 
@@ -241,7 +279,9 @@ export const Hero = () => {
                       src={slide.src}
                       alt={slide.alt}
                       className="h-full w-full object-cover"
-                      loading="eager"
+                      loading={index === 0 ? "eager" : "lazy"}
+                      decoding="async"
+                      fetchPriority={index === 0 ? "high" : "low"}
                       draggable={false}
                     />
                     <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(6,9,22,0.12),rgba(6,9,22,0.36))]" />
@@ -287,7 +327,7 @@ export const Hero = () => {
               </div>
             </div>
           </div>
-        </motion.div>
+        </div>
       </div>
     </section>
   );

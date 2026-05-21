@@ -15,8 +15,7 @@ export const Logo = ({ className = "h-10 w-10", showText = true }: LogoProps) =>
         width={40}
         height={40}
         loading="eager"
-        decoding="sync"
-        fetchPriority="high"
+        decoding="async"
       />
       {showText && (
         <span className="font-display font-bold tracking-tight text-lg sm:text-xl text-gradient">

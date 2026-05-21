@@ -1,20 +1,22 @@
-import { useEffect, useState } from "react";
+import { Suspense, lazy, useEffect, useState } from "react";
 import { Navbar } from "@/components/Navbar";
 import { Hero } from "@/components/sections/Hero";
-import { About } from "@/components/sections/About";
-import { Services } from "@/components/sections/Services";
-import { Projects } from "@/components/sections/Projects";
-import { WhyUs } from "@/components/sections/WhyUs";
-import { Testimonials } from "@/components/sections/Testimonials";
-import { Blog } from "@/components/sections/Blog";
-import { Contact } from "@/components/sections/Contact";
 import { Footer } from "@/components/Footer";
 import { WhatsAppButton } from "@/components/WhatsAppButton";
-import { Loader } from "@/components/Loader";
 import { SiteAnnouncement } from "@/components/SiteAnnouncement";
 import { TrustedBy } from "@/components/sections/TrustedBy";
-import { PrivacyModal } from "@/components/PrivacyModal";
-import { TermsModal } from "@/components/TermsModal";
+
+const About = lazy(() => import("@/components/sections/About").then((module) => ({ default: module.About })));
+const Services = lazy(() => import("@/components/sections/Services").then((module) => ({ default: module.Services })));
+const Projects = lazy(() => import("@/components/sections/Projects").then((module) => ({ default: module.Projects })));
+const WhyUs = lazy(() => import("@/components/sections/WhyUs").then((module) => ({ default: module.WhyUs })));
+const Testimonials = lazy(() => import("@/components/sections/Testimonials").then((module) => ({ default: module.Testimonials })));
+const Blog = lazy(() => import("@/components/sections/Blog").then((module) => ({ default: module.Blog })));
+const Contact = lazy(() => import("@/components/sections/Contact").then((module) => ({ default: module.Contact })));
+const PrivacyModal = lazy(() => import("@/components/PrivacyModal").then((module) => ({ default: module.PrivacyModal })));
+const TermsModal = lazy(() => import("@/components/TermsModal").then((module) => ({ default: module.TermsModal })));
+
+const SectionFallback = () => <div className="min-h-32" aria-hidden="true" />;
 
 const Index = () => {
   const [showPrivacy, setShowPrivacy] = useState(false);
@@ -30,23 +32,26 @@ const Index = () => {
 
   return (
     <div className="min-h-screen bg-background text-foreground overflow-x-hidden">
-      <Loader />
       <SiteAnnouncement />
       <Navbar />
       <main>
         <Hero />
         <TrustedBy />
-        <About />
-        <Services />
-        <Projects />
-        <WhyUs />
-        <Testimonials />
-        <Blog />
-        <Contact />
+        <Suspense fallback={<SectionFallback />}>
+          <About />
+          <Services />
+          <Projects />
+          <WhyUs />
+          <Testimonials />
+          <Blog />
+          <Contact />
+        </Suspense>
       </main>
       <Footer onOpenPrivacy={() => setShowPrivacy(true)} onOpenTerms={() => setShowTerms(true)} />
-      <PrivacyModal open={showPrivacy} onClose={() => setShowPrivacy(false)} />
-      <TermsModal open={showTerms} onClose={() => setShowTerms(false)} />
+      <Suspense fallback={null}>
+        {showPrivacy && <PrivacyModal open={showPrivacy} onClose={() => setShowPrivacy(false)} />}
+        {showTerms && <TermsModal open={showTerms} onClose={() => setShowTerms(false)} />}
+      </Suspense>
       <WhatsAppButton />
     </div>
   );

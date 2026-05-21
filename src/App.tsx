@@ -1,11 +1,5 @@
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { Suspense, lazy } from "react";
-import { Toaster as Sonner } from "@/components/ui/sonner";
-import { Toaster } from "@/components/ui/toaster";
-import { TooltipProvider } from "@/components/ui/tooltip";
-import { AuthProvider } from "@/contexts/AuthContext";
-import { ProtectedRoute } from "@/components/admin/ProtectedRoute";
+import { Suspense, lazy, useEffect, useState } from "react";
 import Index from "./pages/Index.tsx";
 
 // Lazy-loaded routes (code-split to keep the homepage bundle small & fast)
@@ -54,13 +48,14 @@ const ClientInvoices = lazy(() => import("./pages/portal/ClientInvoices"));
 const ClientMeetings = lazy(() => import("./pages/portal/ClientMeetings"));
 const ClientMessages = lazy(() => import("./pages/portal/ClientMessages"));
 const ClientProposals = lazy(() => import("./pages/portal/ClientProposals"));
+const AuthBoundary = lazy(() => import("@/components/AuthBoundary").then((module) => ({ default: module.AuthBoundary })));
+const ProtectedAuthBoundary = lazy(() =>
+  import("@/components/AuthBoundary").then((module) => ({ default: module.ProtectedAuthBoundary })),
+);
+const ToastHosts = lazy(() => import("@/components/ToastHosts").then((module) => ({ default: module.ToastHosts })));
 
-const queryClient = new QueryClient({
-  defaultOptions: {
-    queries: { staleTime: 60_000, refetchOnWindowFocus: false, retry: 1 },
-  },
-});
-const Protected = ({ el }: { el: JSX.Element }) => <ProtectedRoute>{el}</ProtectedRoute>;
+const WithAuth = ({ el }: { el: JSX.Element }) => <AuthBoundary>{el}</AuthBoundary>;
+const Protected = ({ el }: { el: JSX.Element }) => <ProtectedAuthBoundary>{el}</ProtectedAuthBoundary>;
 
 const RouteFallback = () => (
   <div className="min-h-screen bg-background flex items-center justify-center">
@@ -68,16 +63,29 @@ const RouteFallback = () => (
   </div>
 );
 
+const DeferredToastHosts = () => {
+  const [ready, setReady] = useState(false);
+
+  useEffect(() => {
+    const scheduleIdle = window.requestIdleCallback ?? ((callback: IdleRequestCallback) => window.setTimeout(callback, 1200));
+    const cancelIdle = window.cancelIdleCallback ?? window.clearTimeout;
+    const id = scheduleIdle(() => setReady(true));
+    return () => cancelIdle(id as never);
+  }, []);
+
+  return ready ? (
+    <Suspense fallback={null}>
+      <ToastHosts />
+    </Suspense>
+  ) : null;
+};
+
 const App = () => (
-  <QueryClientProvider client={queryClient}>
-    <TooltipProvider>
-      <Toaster />
-      <Sonner />
-      <BrowserRouter>
-        <AuthProvider>
-          <Suspense fallback={<RouteFallback />}>
-            <Routes>
-              <Route path="/" element={<Index />} />
+  <>
+    <BrowserRouter>
+      <Suspense fallback={<RouteFallback />}>
+        <Routes>
+          <Route path="/" element={<Index />} />
 
               {/* Public payment */}
               <Route path="/pay/:token" element={<PayInvoice />} />
@@ -85,19 +93,19 @@ const App = () => (
               <Route path="/pay/:token/failed" element={<PayResult outcome="failed" />} />
 
               {/* Client portal */}
-              <Route path="/portal/login" element={<ClientLogin />} />
-              <Route path="/portal" element={<ClientHome />} />
-              <Route path="/portal/projects" element={<ClientProjects />} />
-              <Route path="/portal/invoices" element={<ClientInvoices />} />
-              <Route path="/portal/meetings" element={<ClientMeetings />} />
-              <Route path="/portal/messages" element={<ClientMessages />} />
-              <Route path="/portal/proposals" element={<ClientProposals />} />
+          <Route path="/portal/login" element={<WithAuth el={<ClientLogin />} />} />
+          <Route path="/portal" element={<WithAuth el={<ClientHome />} />} />
+          <Route path="/portal/projects" element={<WithAuth el={<ClientProjects />} />} />
+          <Route path="/portal/invoices" element={<WithAuth el={<ClientInvoices />} />} />
+          <Route path="/portal/meetings" element={<WithAuth el={<ClientMeetings />} />} />
+          <Route path="/portal/messages" element={<WithAuth el={<ClientMessages />} />} />
+          <Route path="/portal/proposals" element={<WithAuth el={<ClientProposals />} />} />
 
               {/* Admin */}
-              <Route path="/admin/setup" element={<AdminSetup />} />
-              <Route path="/admin/login" element={<AdminLogin />} />
-              <Route path="/admin/forgot-password" element={<AdminForgotPassword />} />
-              <Route path="/admin/reset-password" element={<AdminResetPassword />} />
+          <Route path="/admin/setup" element={<WithAuth el={<AdminSetup />} />} />
+          <Route path="/admin/login" element={<WithAuth el={<AdminLogin />} />} />
+          <Route path="/admin/forgot-password" element={<AdminForgotPassword />} />
+          <Route path="/admin/reset-password" element={<AdminResetPassword />} />
 
               <Route path="/admin" element={<Protected el={<AdminDashboard />} />} />
               <Route path="/admin/dashboard" element={<Protected el={<AdminDashboard />} />} />
@@ -133,12 +141,11 @@ const App = () => (
               <Route path="/admin/team" element={<Protected el={<AdminTeam />} />} />
               <Route path="/admin/brands" element={<Protected el={<AdminBrands />} />} />
 
-              <Route path="*" element={<NotFound />} />
-            </Routes>
-          </Suspense>
-        </AuthProvider>
-      </BrowserRouter>
-    </TooltipProvider>
-  </QueryClientProvider>
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </Suspense>
+    </BrowserRouter>
+    <DeferredToastHosts />
+  </>
 );
 export default App;
