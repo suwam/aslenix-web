@@ -73,39 +73,39 @@ export const Hero = () => {
   const [isDeleting, setIsDeleting] = useState(false);
   const [activeSlide, setActiveSlide] = useState(0);
   const [enhanced, setEnhanced] = useState(false);
-  const [homepageData, setHomepageData] = useState<any>(null);
+  const [homepageData, setHomepageData] = useState<any>();
 
   useEffect(() => {
     let mounted = true;
-    const timeout = window.setTimeout(() => {
-      import("@/integrations/supabase/client").then(({ supabase }) => {
-        supabase
-          .from("homepage_content")
-          .select("*")
-          .eq("id", 1)
-          .maybeSingle()
-          .then(({ data }) => {
-            if (mounted) setHomepageData(data ?? null);
-          });
-      });
-    }, 1400);
+    import("@/integrations/supabase/client").then(({ supabase }) => {
+      supabase
+        .from("homepage_content")
+        .select("*")
+        .eq("id", 1)
+        .maybeSingle()
+        .then(({ data }) => {
+          if (mounted) setHomepageData(data ?? null);
+        });
+    }).catch(() => {
+      if (mounted) setHomepageData(null);
+    });
 
     return () => {
       mounted = false;
-      window.clearTimeout(timeout);
     };
   }, []);
 
+  const homepageLoaded = homepageData !== undefined;
   const content = {
-    title: homepageData?.hero_title ?? DEFAULTS.title,
-    subtitle: homepageData?.hero_subtitle ?? DEFAULTS.subtitle,
-    ctaPrimaryText: homepageData?.hero_cta_primary_text ?? DEFAULTS.ctaPrimaryText,
-    ctaPrimaryLink: homepageData?.hero_cta_primary_link ?? DEFAULTS.ctaPrimaryLink,
-    ctaSecondaryText: homepageData?.hero_cta_secondary_text ?? DEFAULTS.ctaSecondaryText,
-    ctaSecondaryLink: homepageData?.hero_cta_secondary_link ?? DEFAULTS.ctaSecondaryLink,
+    title: homepageLoaded ? homepageData?.hero_title ?? DEFAULTS.title : "",
+    subtitle: homepageLoaded ? homepageData?.hero_subtitle ?? DEFAULTS.subtitle : "",
+    ctaPrimaryText: homepageLoaded ? homepageData?.hero_cta_primary_text ?? DEFAULTS.ctaPrimaryText : "",
+    ctaPrimaryLink: homepageLoaded ? homepageData?.hero_cta_primary_link ?? DEFAULTS.ctaPrimaryLink : "#contact",
+    ctaSecondaryText: homepageLoaded ? homepageData?.hero_cta_secondary_text ?? DEFAULTS.ctaSecondaryText : "",
+    ctaSecondaryLink: homepageLoaded ? homepageData?.hero_cta_secondary_link ?? DEFAULTS.ctaSecondaryLink : "#services",
   };
   const customSlides = parseHeroSlides(homepageData?.hero_slides);
-  const slides = customSlides ?? dashboardSlides;
+  const slides = homepageLoaded ? customSlides ?? dashboardSlides : [];
   const slideCount = slides.length;
 
   useEffect(() => {
@@ -148,7 +148,7 @@ export const Hero = () => {
   }, [slideCount, enhanced]);
 
   useEffect(() => {
-    if (activeSlide >= slideCount) setActiveSlide(0);
+    if (slideCount > 0 && activeSlide >= slideCount) setActiveSlide(0);
   }, [activeSlide, slideCount]);
 
   const goToSlide = (index: number) => {
@@ -179,31 +179,35 @@ export const Hero = () => {
 
           <div className="space-y-6">
             <h1 className="font-display text-4xl font-semibold leading-tight tracking-[-0.04em] text-white sm:text-5xl lg:text-6xl xl:text-7xl">
-              {renderTitle(content.title)}
+              {homepageLoaded ? renderTitle(content.title) : <span className="block h-[1.1em] w-3/4 rounded-2xl bg-white/10" />}
             </h1>
             <div className="space-y-4">
               <p className="max-w-xl text-base leading-8 text-muted-foreground sm:text-lg">
-                {content.subtitle}
+                {homepageLoaded ? content.subtitle : <span className="block h-20 rounded-2xl bg-white/10" />}
               </p>
-              <p className="max-w-xl text-base leading-8 text-white/80 sm:text-lg">
-                <span className="text-white/70">Delivering</span>{" "}
-                <span className="text-gradient">{typedText}</span>
-                <span className="inline-block h-6 w-1 animate-pulse bg-white rounded-sm align-middle ml-1" />
-              </p>
+              {homepageLoaded && (
+                <p className="max-w-xl text-base leading-8 text-white/80 sm:text-lg">
+                  <span className="text-white/70">Delivering</span>{" "}
+                  <span className="text-gradient">{typedText}</span>
+                  <span className="inline-block h-6 w-1 animate-pulse bg-white rounded-sm align-middle ml-1" />
+                </p>
+              )}
             </div>
           </div>
 
-          <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:gap-4">
-            <Button asChild variant="hero" size="lg" className="w-full sm:w-auto">
-              <a href={content.ctaPrimaryLink}>
-                {content.ctaPrimaryText}
-                <ArrowRight className="ml-2 h-4 w-4" />
-              </a>
-            </Button>
-            <Button asChild variant="glass" size="lg" className="w-full sm:w-auto">
-              <a href={content.ctaSecondaryLink}>{content.ctaSecondaryText}</a>
-            </Button>
-          </div>
+          {homepageLoaded && (
+            <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:gap-4">
+              <Button asChild variant="hero" size="lg" className="w-full sm:w-auto">
+                <a href={content.ctaPrimaryLink}>
+                  {content.ctaPrimaryText}
+                  <ArrowRight className="ml-2 h-4 w-4" />
+                </a>
+              </Button>
+              <Button asChild variant="glass" size="lg" className="w-full sm:w-auto">
+                <a href={content.ctaSecondaryLink}>{content.ctaSecondaryText}</a>
+              </Button>
+            </div>
+          )}
 
           <div className="grid gap-3 sm:grid-cols-3">
             {highlights.map((item) => {
@@ -280,25 +284,29 @@ export const Hero = () => {
 
             <div className="relative z-10 w-full max-w-[600px] overflow-hidden rounded-[2.25rem] border border-white/10 bg-[#060916] p-3 shadow-[0_26px_90px_-35px_rgba(0,0,0,0.85),inset_0_1px_0_rgba(255,255,255,0.08)] sm:p-4">
               <div className="overflow-hidden rounded-[1.75rem] border border-white/10 bg-black">
-              <div
-                className="flex transition-transform duration-700 ease-out"
-                style={{ transform: `translate3d(-${activeSlide * 100}%, 0, 0)` }}
-              >
-                {slides.map((slide, index) => (
-                  <div key={`${slide.src}-${index}`} className="relative aspect-[16/10.5] min-w-full basis-full shrink-0 overflow-hidden">
-                    <img
-                      src={slide.src}
-                      alt={slide.alt}
-                      className="h-full w-full object-cover"
-                      loading={index === 0 ? "eager" : "lazy"}
-                      decoding="async"
-                      fetchPriority={index === 0 ? "high" : "low"}
-                      draggable={false}
-                    />
-                    <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(6,9,22,0.12),rgba(6,9,22,0.36))]" />
+                {slideCount > 0 ? (
+                  <div
+                    className="flex transition-transform duration-700 ease-out"
+                    style={{ transform: `translate3d(-${activeSlide * 100}%, 0, 0)` }}
+                  >
+                    {slides.map((slide, index) => (
+                      <div key={`${slide.src}-${index}`} className="relative aspect-[16/10.5] min-w-full basis-full shrink-0 overflow-hidden">
+                        <img
+                          src={slide.src}
+                          alt={slide.alt}
+                          className="h-full w-full object-cover"
+                          loading={index === 0 ? "eager" : "lazy"}
+                          decoding="async"
+                          fetchPriority={index === 0 ? "high" : "low"}
+                          draggable={false}
+                        />
+                        <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(6,9,22,0.12),rgba(6,9,22,0.36))]" />
+                      </div>
+                    ))}
                   </div>
-                ))}
-              </div>
+                ) : (
+                  <div className="aspect-[16/10.5] animate-pulse bg-white/10" />
+                )}
               </div>
 
               {slideCount > 1 && (
