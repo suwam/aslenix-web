@@ -1,6 +1,19 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { ArrowUpRight, Calendar, Cpu, ExternalLink, User, X } from "lucide-react";
+import {
+  ArrowUpRight,
+  CheckCircle2,
+  Cpu,
+  ExternalLink,
+  Gauge,
+  Globe,
+  Layers,
+  LayoutDashboard,
+  MonitorSmartphone,
+  Sparkles,
+  type LucideIcon,
+  X,
+} from "lucide-react";
 import { useSupabaseRealtime } from "@/hooks/useSupabaseRealtime";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
@@ -104,61 +117,178 @@ const ProjectDetailModal = ({
     ? new Intl.DateTimeFormat("en", { month: "long", year: "numeric" }).format(new Date(project.completion_date))
     : null;
   const description = project?.full_description || project?.short_description || "More details for this project are coming soon.";
+  const technologies = project?.technologies?.filter(Boolean) ?? [];
+  const featureCards = [
+    {
+      icon: MonitorSmartphone,
+      title: "Responsive Experience",
+      text: "Designed to feel polished across desktop, tablet, and mobile screens.",
+    },
+    {
+      icon: LayoutDashboard,
+      title: "Admin Dashboard",
+      text: "Structured management tools for content, operations, and future growth.",
+    },
+    {
+      icon: Cpu,
+      title: "Modern Stack",
+      text: technologies.length ? `${technologies.slice(0, 3).join(", ")}${technologies.length > 3 ? " and more." : "."}` : "Built with a scalable, performance-focused technology stack.",
+    },
+    {
+      icon: Sparkles,
+      title: "Brand-Led UI",
+      text: "A visual system shaped around clarity, trust, and conversion.",
+    },
+  ];
+  const stats = [
+    { icon: MonitorSmartphone, label: "Responsive", value: "Yes" },
+    { icon: LayoutDashboard, label: "Admin Dashboard", value: "Included" },
+    { icon: Cpu, label: "Technologies Used", value: technologies.length ? `${technologies.length}` : "Custom" },
+    { icon: CheckCircle2, label: "Completion Status", value: formattedDate ? "Completed" : "Showcase" },
+  ];
+  const gallery = project?.cover_image ? [project.cover_image, project.cover_image, project.cover_image] : [];
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-5xl w-[95vw] max-h-[92vh] overflow-y-auto p-0 bg-card/95 backdrop-blur-2xl border-white/10 [&>button]:hidden">
+      <DialogContent className="max-w-[1180px] w-[95vw] max-h-[92vh] overflow-y-auto p-0 bg-card/95 backdrop-blur-2xl border-white/10 shadow-[0_30px_120px_-45px_hsl(var(--accent)/0.45)] [&>button]:hidden">
         <DialogTitle className="sr-only">{project?.title ?? "Project details"}</DialogTitle>
         <DialogDescription className="sr-only">{project?.short_description ?? ""}</DialogDescription>
 
         {project && (
-          <div>
-            <div className="relative min-h-[280px] overflow-hidden">
-              {project.cover_image ? (
-                <img src={project.cover_image} alt={project.title} className="absolute inset-0 h-full w-full object-cover" />
-              ) : (
-                <div className="absolute inset-0 bg-brand-gradient opacity-40" />
-              )}
-              <div className="absolute inset-0 bg-gradient-to-t from-card via-card/60 to-card/10" />
+          <div className="relative overflow-hidden">
+            <div className="absolute inset-x-0 top-0 h-72 bg-brand-gradient opacity-[0.08] blur-[90px]" />
+
+            <header className="relative z-10 flex items-center justify-between gap-4 border-b border-white/10 px-5 py-4 sm:px-8">
+              <div className="min-w-0">
+                <div className="text-xs font-medium uppercase tracking-[0.24em] text-accent">Project Showcase</div>
+                <div className="mt-1 truncate font-display text-lg font-semibold text-foreground">{project.title}</div>
+              </div>
               <button
                 type="button"
                 onClick={() => onOpenChange(false)}
-                className="absolute right-5 top-5 z-10 flex h-10 w-10 items-center justify-center rounded-full glass border border-white/10 transition-colors hover:border-accent/50"
+                className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-white/10 bg-white/[0.03] text-muted-foreground transition-all duration-300 hover:-translate-y-0.5 hover:border-accent/50 hover:bg-white/[0.06] hover:text-foreground"
                 aria-label="Close project details"
               >
                 <X className="h-4 w-4" />
               </button>
-              <div className="relative z-10 flex min-h-[280px] flex-col justify-end p-6 sm:p-10">
-                <div className="mb-4 inline-flex w-fit rounded-full glass px-3 py-1 text-xs font-medium text-accent">
-                  {project.category || "Project"}
+            </header>
+
+            <div className="relative z-10 space-y-8 p-5 sm:p-8 lg:p-10">
+              <section className="grid gap-8 lg:grid-cols-[0.95fr_1.05fr] lg:items-center">
+                <div className="space-y-6">
+                  <div className="inline-flex w-fit rounded-full border border-accent/25 bg-accent/10 px-3 py-1 text-xs font-medium text-accent">
+                    {project.category || "Featured Project"}
+                  </div>
+                  <div>
+                    <h3 className="font-display text-3xl font-bold leading-tight sm:text-5xl">{project.title}</h3>
+                    {project.short_description && (
+                      <p className="mt-4 max-w-xl text-sm leading-7 text-muted-foreground sm:text-base">
+                        {project.short_description}
+                      </p>
+                    )}
+                  </div>
+
+                  <div className="grid gap-3 sm:grid-cols-2">
+                    <ProjectMeta icon={Globe} label="Project Type" value={project.category || "Digital Product"} />
+                    <ProjectMeta icon={Gauge} label="Status" value={formattedDate ? `Completed ${formattedDate}` : "Portfolio Ready"} />
+                  </div>
+
+                  <div className="flex flex-wrap gap-3 pt-1">
+                    {project.project_url && (
+                      <>
+                        <Button asChild variant="hero">
+                          <a href={project.project_url} target="_blank" rel="noreferrer">
+                            Live Demo <ExternalLink className="h-4 w-4" />
+                          </a>
+                        </Button>
+                        <Button asChild variant="glass">
+                          <a href={project.project_url} target="_blank" rel="noreferrer">
+                            Visit Website <Globe className="h-4 w-4" />
+                          </a>
+                        </Button>
+                      </>
+                    )}
+                    <Button
+                      variant="glass"
+                      onClick={() => {
+                        onOpenChange(false);
+                        setTimeout(() => document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" }), 200);
+                      }}
+                    >
+                      Start Similar Project <ArrowUpRight className="h-4 w-4" />
+                    </Button>
+                  </div>
                 </div>
-                <h3 className="font-display text-3xl font-bold leading-tight sm:text-5xl">{project.title}</h3>
-                {project.short_description && (
-                  <p className="mt-3 max-w-2xl text-sm leading-relaxed text-foreground/80 sm:text-base">
-                    {project.short_description}
-                  </p>
-                )}
-              </div>
-            </div>
 
-            <div className="space-y-8 p-6 sm:p-10">
-              <div className="grid gap-3 sm:grid-cols-3">
-                {project.client_name && <ProjectFact icon={User} label="Client" value={project.client_name} />}
-                {formattedDate && <ProjectFact icon={Calendar} label="Completed" value={formattedDate} />}
-                {project.technologies?.length ? <ProjectFact icon={Cpu} label="Stack" value={`${project.technologies.length} technologies`} /> : null}
-              </div>
-
-              <section>
-                <h4 className="mb-3 font-display text-xl font-semibold">Project Overview</h4>
-                <p className="whitespace-pre-line text-sm leading-7 text-muted-foreground sm:text-base">{description}</p>
+                <div className="relative">
+                  <div className="absolute -inset-4 rounded-[2rem] bg-brand-gradient opacity-20 blur-2xl" />
+                  <div className="relative overflow-hidden rounded-3xl border border-white/10 bg-white/[0.03] p-3 shadow-[0_30px_100px_-50px_rgba(0,0,0,0.9)]">
+                    <div className="mb-3 flex items-center gap-2 px-1">
+                      <span className="h-2.5 w-2.5 rounded-full bg-secondary" />
+                      <span className="h-2.5 w-2.5 rounded-full bg-accent" />
+                      <span className="h-2.5 w-2.5 rounded-full bg-primary" />
+                    </div>
+                    <div className="aspect-[16/10] overflow-hidden rounded-2xl bg-muted">
+                      {project.cover_image ? (
+                        <img src={project.cover_image} alt={`${project.title} screenshot`} className="h-full w-full object-cover" />
+                      ) : (
+                        <div className="flex h-full w-full items-center justify-center bg-brand-gradient opacity-30">
+                          <Layers className="h-12 w-12 text-accent" />
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                </div>
               </section>
 
-              {project.technologies?.length ? (
+              <section className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+                {stats.map((stat) => (
+                  <ProjectStat key={stat.label} {...stat} />
+                ))}
+              </section>
+
+              <section>
+                <div className="mb-5 flex items-end justify-between gap-4 border-b border-white/10 pb-4">
+                  <div>
+                    <div className="text-xs font-medium uppercase tracking-[0.2em] text-accent">Overview</div>
+                    <h4 className="mt-2 font-display text-2xl font-semibold">Built for clarity, speed, and trust</h4>
+                  </div>
+                </div>
+                <p className="max-w-4xl whitespace-pre-line text-sm leading-7 text-muted-foreground sm:text-base">{description}</p>
+              </section>
+
+              <section>
+                <div className="mb-5">
+                  <div className="text-xs font-medium uppercase tracking-[0.2em] text-accent">Highlights</div>
+                  <h4 className="mt-2 font-display text-2xl font-semibold">Key capabilities</h4>
+                </div>
+                <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+                  {featureCards.map((feature) => (
+                    <FeatureCard key={feature.title} {...feature} />
+                  ))}
+                </div>
+              </section>
+
+              {technologies.length ? (
                 <section>
-                  <h4 className="mb-4 font-display text-xl font-semibold">Technologies</h4>
+                  <div className="mb-4 flex items-center gap-3">
+                    <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-brand-gradient">
+                      <Cpu className="h-4 w-4 text-white" />
+                    </div>
+                    <h4 className="font-display text-2xl font-semibold">Technology Stack</h4>
+                  </div>
                   <div className="flex flex-wrap gap-2">
-                    {project.technologies.map((tech) => (
-                      <span key={tech} className="rounded-full border border-white/10 glass px-4 py-2 text-sm font-medium text-foreground/90">
+                    {technologies.map((tech, index) => (
+                      <span
+                        key={tech}
+                        className={`rounded-full border px-4 py-2 text-sm font-medium shadow-[0_12px_30px_-22px_hsl(var(--accent)/0.8)] ${
+                          index % 3 === 0
+                            ? "border-accent/25 bg-accent/10 text-accent"
+                            : index % 3 === 1
+                              ? "border-primary/25 bg-primary/10 text-blue-300"
+                              : "border-secondary/25 bg-secondary/10 text-pink-300"
+                        }`}
+                      >
                         {tech}
                       </span>
                     ))}
@@ -166,24 +296,53 @@ const ProjectDetailModal = ({
                 </section>
               ) : null}
 
-              <div className="flex flex-wrap items-center gap-3 border-t border-white/10 pt-6">
-                {project.project_url && (
-                  <Button asChild variant="hero">
-                    <a href={project.project_url} target="_blank" rel="noreferrer">
-                      Visit Project <ExternalLink className="h-4 w-4" />
-                    </a>
-                  </Button>
+              <section>
+                <div className="mb-5">
+                  <div className="text-xs font-medium uppercase tracking-[0.2em] text-accent">Gallery</div>
+                  <h4 className="mt-2 font-display text-2xl font-semibold">Screenshots</h4>
+                </div>
+                {gallery.length ? (
+                  <div className="grid gap-4 md:grid-cols-3">
+                    {gallery.map((src, index) => (
+                      <div key={`${src}-${index}`} className="group overflow-hidden rounded-2xl border border-white/10 bg-white/[0.03] p-2">
+                        <div className="aspect-[4/3] overflow-hidden rounded-xl bg-muted">
+                          <img
+                            src={src}
+                            alt={`${project.title} gallery screenshot ${index + 1}`}
+                            className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
+                          />
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                ) : (
+                  <div className="rounded-2xl border border-white/10 bg-white/[0.03] p-8 text-center text-sm text-muted-foreground">
+                    Screenshots will be added soon.
+                  </div>
                 )}
-                <Button
-                  variant="glass"
-                  onClick={() => {
-                    onOpenChange(false);
-                    setTimeout(() => document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" }), 200);
-                  }}
-                >
-                  Start Similar Project <ArrowUpRight className="h-4 w-4" />
-                </Button>
-              </div>
+              </section>
+
+              <section className="overflow-hidden rounded-3xl border border-white/10 bg-white/[0.03] p-6 sm:p-8">
+                <div className="flex flex-col gap-5 sm:flex-row sm:items-center sm:justify-between">
+                  <div>
+                    <div className="text-xs font-medium uppercase tracking-[0.2em] text-accent">Next Project</div>
+                    <h4 className="mt-2 font-display text-2xl font-semibold">Want a result like this?</h4>
+                    <p className="mt-2 max-w-xl text-sm text-muted-foreground">
+                      Tell us what you are building and we will map the right design, stack, and launch path.
+                    </p>
+                  </div>
+                  <Button
+                    variant="hero"
+                    className="w-full sm:w-auto"
+                    onClick={() => {
+                      onOpenChange(false);
+                      setTimeout(() => document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" }), 200);
+                    }}
+                  >
+                    Start Similar Project <ArrowUpRight className="h-4 w-4" />
+                  </Button>
+                </div>
+              </section>
             </div>
           </div>
         )}
@@ -192,12 +351,32 @@ const ProjectDetailModal = ({
   );
 };
 
-const ProjectFact = ({ icon: Icon, label, value }: { icon: typeof User; label: string; value: string }) => (
-  <div className="glass rounded-2xl border border-white/10 p-4">
-    <div className="mb-3 flex h-9 w-9 items-center justify-center rounded-xl bg-brand-gradient">
+const ProjectMeta = ({ icon: Icon, label, value }: { icon: LucideIcon; label: string; value: string }) => (
+  <div className="rounded-2xl border border-white/10 bg-white/[0.03] p-4">
+    <div className="mb-1 flex items-center gap-2 text-xs font-medium uppercase tracking-wider text-muted-foreground">
+      <Icon className="h-3.5 w-3.5 text-accent" />
+      {label}
+    </div>
+    <div className="font-display text-sm font-semibold text-foreground">{value}</div>
+  </div>
+);
+
+const ProjectStat = ({ icon: Icon, label, value }: { icon: LucideIcon; label: string; value: string }) => (
+  <div className="group rounded-2xl border border-white/10 bg-white/[0.03] p-4 transition-all duration-300 hover:-translate-y-1 hover:border-accent/40 hover:bg-white/[0.05]">
+    <div className="mb-4 flex h-10 w-10 items-center justify-center rounded-xl bg-brand-gradient shadow-[0_0_24px_hsl(var(--accent)/0.22)]">
       <Icon className="h-4 w-4 text-white" />
     </div>
     <div className="text-xs font-medium uppercase tracking-wider text-muted-foreground">{label}</div>
-    <div className="mt-1 font-display text-base font-semibold">{value}</div>
+    <div className="mt-1 font-display text-lg font-semibold">{value}</div>
+  </div>
+);
+
+const FeatureCard = ({ icon: Icon, title, text }: { icon: LucideIcon; title: string; text: string }) => (
+  <div className="group rounded-2xl border border-white/10 bg-gradient-to-br from-white/[0.06] to-white/[0.02] p-5 transition-all duration-300 hover:-translate-y-1 hover:border-accent/40">
+    <div className="mb-4 flex h-11 w-11 items-center justify-center rounded-2xl bg-brand-gradient shadow-[0_0_28px_hsl(var(--accent)/0.24)]">
+      <Icon className="h-5 w-5 text-white" />
+    </div>
+    <h5 className="font-display text-base font-semibold">{title}</h5>
+    <p className="mt-2 text-sm leading-6 text-muted-foreground">{text}</p>
   </div>
 );
