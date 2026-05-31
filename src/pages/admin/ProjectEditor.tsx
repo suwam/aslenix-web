@@ -11,10 +11,11 @@ import { toast } from "sonner";
 import { toSlug } from "@/lib/utils-slug";
 import { MediaPicker } from "@/components/admin/MediaPicker";
 import { logActivity } from "@/lib/activity";
+import { ArrowDown, ArrowUp, ImageIcon, X } from "lucide-react";
 
 const empty = {
   title: "", slug: "", short_description: "", full_description: "",
-  cover_image: "", category: "", technologies: "" as string,
+  cover_image: "", gallery: [] as string[], category: "", technologies: "" as string,
   project_url: "", client_name: "", completion_date: "", featured: false,
   status: "planning" as "planning"|"in_progress"|"completed"|"on_hold",
   progress: 0, client_id: "" as string, budget: "", start_date: "", deadline: "",
@@ -26,6 +27,20 @@ const STATUSES = [
   { v: "completed", l: "Completed" },
   { v: "on_hold", l: "On Hold" },
 ];
+
+const parseGallery = (value: unknown): string[] => {
+  if (!Array.isArray(value)) return [];
+  return value
+    .map((item) => {
+      if (typeof item === "string") return item;
+      if (item && typeof item === "object") {
+        const record = item as Record<string, unknown>;
+        return [record.url, record.src, record.public_url, record.image].find((v) => typeof v === "string") as string | undefined;
+      }
+      return undefined;
+    })
+    .filter((url): url is string => Boolean(url?.trim()));
+};
 
 const ProjectEditor = () => {
   const { id } = useParams();
@@ -48,6 +63,7 @@ const ProjectEditor = () => {
         short_description: data.short_description ?? "",
         full_description: data.full_description ?? "",
         cover_image: data.cover_image ?? "",
+        gallery: parseGallery(data.gallery),
         category: data.category ?? "",
         technologies: (data.technologies ?? []).join(", "),
         project_url: data.project_url ?? "",
@@ -73,6 +89,7 @@ const ProjectEditor = () => {
       short_description: form.short_description || null,
       full_description: form.full_description || null,
       cover_image: form.cover_image || null,
+      gallery: form.gallery,
       category: form.category || null,
       technologies: form.technologies.split(",").map((t) => t.trim()).filter(Boolean),
       project_url: form.project_url || null,
@@ -113,6 +130,12 @@ const ProjectEditor = () => {
           </div>
           <div className="gradient-border glass rounded-2xl p-6">
             <MediaPicker label="Cover image" value={form.cover_image} onChange={(v) => setForm({ ...form, cover_image: v ?? "" })} />
+          </div>
+          <div className="gradient-border glass rounded-2xl p-6">
+            <ProjectGalleryManager
+              images={form.gallery}
+              onChange={(gallery) => setForm({ ...form, gallery })}
+            />
           </div>
         </div>
         <div className="space-y-4">
@@ -160,5 +183,72 @@ const ProjectEditor = () => {
 const Field = ({ label, children }: { label: string; children: React.ReactNode }) => (
   <div className="space-y-1.5"><label className="text-sm font-medium">{label}</label>{children}</div>
 );
+
+const ProjectGalleryManager = ({ images, onChange }: { images: string[]; onChange: (images: string[]) => void }) => {
+  const addImage = (url: string | null) => {
+    const nextUrl = url?.trim();
+    if (!nextUrl) return;
+    if (images.includes(nextUrl)) {
+      toast.info("That image is already in the gallery");
+      return;
+    }
+    onChange([...images, nextUrl]);
+  };
+
+  const removeImage = (index: number) => onChange(images.filter((_, i) => i !== index));
+  const moveImage = (index: number, direction: -1 | 1) => {
+    const target = index + direction;
+    if (target < 0 || target >= images.length) return;
+    const next = [...images];
+    [next[index], next[target]] = [next[target], next[index]];
+    onChange(next);
+  };
+
+  return (
+    <div className="space-y-4">
+      <div>
+        <label className="text-sm font-medium">Project gallery images</label>
+        <p className="mt-1 text-xs text-muted-foreground">
+          Add multiple website screenshots for the public project detail gallery.
+        </p>
+      </div>
+
+      {images.length > 0 ? (
+        <div className="grid gap-3 sm:grid-cols-2">
+          {images.map((image, index) => (
+            <div key={`${image}-${index}`} className="group relative overflow-hidden rounded-xl border border-white/10 bg-muted/20">
+              <div className="aspect-video overflow-hidden">
+                <img src={image} alt={`Gallery image ${index + 1}`} className="h-full w-full object-cover" />
+              </div>
+              <div className="absolute inset-x-0 bottom-0 flex items-center justify-between gap-2 bg-background/80 p-2 opacity-100 backdrop-blur sm:opacity-0 sm:transition-opacity sm:group-hover:opacity-100">
+                <div className="text-xs font-medium text-muted-foreground">#{index + 1}</div>
+                <div className="flex gap-1">
+                  <Button type="button" variant="ghost" size="icon" className="h-7 w-7" disabled={index === 0} onClick={() => moveImage(index, -1)}>
+                    <ArrowUp className="h-3.5 w-3.5" />
+                  </Button>
+                  <Button type="button" variant="ghost" size="icon" className="h-7 w-7" disabled={index === images.length - 1} onClick={() => moveImage(index, 1)}>
+                    <ArrowDown className="h-3.5 w-3.5" />
+                  </Button>
+                  <Button type="button" variant="destructive" size="icon" className="h-7 w-7" onClick={() => removeImage(index)}>
+                    <X className="h-3.5 w-3.5" />
+                  </Button>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      ) : (
+        <div className="rounded-xl border border-dashed border-white/10 p-6 text-center">
+          <ImageIcon className="mx-auto mb-2 h-7 w-7 text-muted-foreground" />
+          <div className="text-sm text-muted-foreground">No gallery images added yet</div>
+        </div>
+      )}
+
+      <div className="rounded-xl border border-white/10 bg-white/[0.02] p-4">
+        <MediaPicker label="Add gallery image" value={null} onChange={addImage} cropAspect={16 / 10} />
+      </div>
+    </div>
+  );
+};
 
 export default ProjectEditor;

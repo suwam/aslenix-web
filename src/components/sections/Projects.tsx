@@ -22,6 +22,7 @@ import { Dialog, DialogContent, DialogDescription, DialogTitle } from "@/compone
 type Project = {
   id: string; title: string; short_description: string | null;
   full_description: string | null; cover_image: string | null; category: string | null;
+  gallery: unknown;
   technologies: string[] | null; project_url: string | null; client_name: string | null;
   completion_date: string | null;
 };
@@ -29,12 +30,26 @@ type Project = {
 const tabs = ["All", "Web", "App", "Branding", "AI", "Software"] as const;
 type Tab = typeof tabs[number];
 
+const parseGallery = (value: unknown): string[] => {
+  if (!Array.isArray(value)) return [];
+  return value
+    .map((item) => {
+      if (typeof item === "string") return item;
+      if (item && typeof item === "object") {
+        const record = item as Record<string, unknown>;
+        return [record.url, record.src, record.public_url, record.image].find((v) => typeof v === "string") as string | undefined;
+      }
+      return undefined;
+    })
+    .filter((url): url is string => Boolean(url?.trim()));
+};
+
 export const Projects = () => {
   const [active, setActive] = useState<Tab>("All");
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   const projects = useSupabaseRealtime<Project[]>(
     async () => {
-      const { data } = await supabase.from("projects").select("id,title,short_description,full_description,cover_image,category,technologies,project_url,client_name,completion_date")
+      const { data } = await supabase.from("projects").select("id,title,short_description,full_description,cover_image,gallery,category,technologies,project_url,client_name,completion_date")
         .order("display_order").order("created_at", { ascending: false });
       return (data ?? []) as Project[];
     },
@@ -118,6 +133,7 @@ const ProjectDetailModal = ({
     : null;
   const description = project?.full_description || project?.short_description || "More details for this project are coming soon.";
   const technologies = project?.technologies?.filter(Boolean) ?? [];
+  const galleryImages = parseGallery(project?.gallery);
   const featureCards = [
     {
       icon: MonitorSmartphone,
@@ -146,7 +162,7 @@ const ProjectDetailModal = ({
     { icon: Cpu, label: "Technologies Used", value: technologies.length ? `${technologies.length}` : "Custom" },
     { icon: CheckCircle2, label: "Completion Status", value: formattedDate ? "Completed" : "Showcase" },
   ];
-  const gallery = project?.cover_image ? [project.cover_image, project.cover_image, project.cover_image] : [];
+  const gallery = galleryImages.length ? galleryImages : project?.cover_image ? [project.cover_image] : [];
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
