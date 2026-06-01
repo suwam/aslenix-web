@@ -1,8 +1,10 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 
 export function useSupabaseRealtime<T>(fetcher: () => Promise<T>, tables: string[], deps: unknown[] = []) {
   const [data, setData] = useState<T | null>(null);
+  const channelId = useRef(Math.random().toString(36).slice(2));
+  const tablesKey = useMemo(() => JSON.stringify(tables), [tables]);
 
   useEffect(() => {
     let mounted = true;
@@ -19,7 +21,7 @@ export function useSupabaseRealtime<T>(fetcher: () => Promise<T>, tables: string
       mounted = false;
     };
 
-    const channel = supabase.channel(`realtime-${tables.join("-")}`);
+    const channel = supabase.channel(`realtime-${tables.join("-")}-${channelId.current}`);
     tables.forEach((table) => {
       channel.on("postgres_changes", { event: "*", schema: "public", table }, () => {
         load();
@@ -31,7 +33,7 @@ export function useSupabaseRealtime<T>(fetcher: () => Promise<T>, tables: string
       mounted = false;
       supabase.removeChannel(channel);
     };
-  }, [JSON.stringify(tables), ...deps]);
+  }, [tablesKey, ...deps]);
 
   return data;
 }
