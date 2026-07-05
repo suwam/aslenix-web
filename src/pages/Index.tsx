@@ -65,11 +65,7 @@ const Index = () => {
             <Projects />
           </Suspense>
         </DeferredSection>
-        <DeferredSection id="about">
-          <Suspense fallback={<SectionFallback />}>
-            <About />
-          </Suspense>
-        </DeferredSection>
+
         <DeferredSection id="roadmap">
           <Suspense fallback={<SectionFallback />}>
             <Roadmap />
@@ -88,6 +84,11 @@ const Index = () => {
         <DeferredSection id="blog">
           <Suspense fallback={<SectionFallback />}>
             <Blog />
+          </Suspense>
+        </DeferredSection>
+        <DeferredSection id="about">
+          <Suspense fallback={<SectionFallback />}>
+            <About />
           </Suspense>
         </DeferredSection>
         <DeferredSection id="contact">
