@@ -129,8 +129,7 @@ export const About = () => {
               </h3>
             </div>
             <p className="max-w-2xl text-sm leading-6 text-slate-600">
-              Every team member is chosen for deep product experience, technical craft,
-              and a pragmatic approach to scaling modern businesses.
+              United by a shared passion for innovation, our experts bring together world-class experience in design, engineering, and strategy to build digital solutions that redefine industry standards and drive measurable growth.
             </p>
           </div>
 
