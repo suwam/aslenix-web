@@ -146,15 +146,21 @@ export const About = () => {
                 ];
                 const theme = colors[i % colors.length];
                 return (
-                  <div key={member.id} className={`group relative bg-white rounded-2xl p-7 text-left w-full border border-slate-100 shadow-[0_2px_10px_rgba(0,0,0,0.02)] hover:-translate-y-1 transition-all duration-300 ${theme.bgHover} overflow-hidden`}>
+                  <div key={member.id} className={`group relative bg-white rounded-2xl p-7 text-center flex flex-col items-center w-full border border-slate-100 shadow-[0_2px_10px_rgba(0,0,0,0.02)] hover:-translate-y-1 transition-all duration-300 ${theme.bgHover} overflow-hidden`}>
                     <div className={`absolute inset-0 bg-gradient-to-b ${theme.gradient} to-transparent pointer-events-none opacity-60`} />
                     
-                    <div className="relative z-10">
-                      <div className="flex justify-between items-start mb-5">
+                    <div className="relative z-10 w-full flex flex-col items-center">
+                      <div className="w-full flex justify-end mb-2">
+                        <div className={`text-[10px] font-bold tracking-widest uppercase ${theme.text} opacity-80 mt-1`}>
+                          LEADERSHIP
+                        </div>
+                      </div>
+                      
+                      <div className="mb-6 mt-2 relative">
                         {member.photo_url ? (
-                          <img src={member.photo_url} alt={member.name} className={`h-14 w-14 rounded-xl object-cover border ${theme.iconBox} shadow-sm transition-transform group-hover:scale-105 duration-500`} />
+                          <img src={member.photo_url} alt={member.name} className={`h-32 w-32 rounded-2xl object-cover border-2 border-white shadow-md mx-auto transition-transform group-hover:scale-105 duration-500 ring-2 ring-slate-50`} />
                         ) : (
-                          <div className={`flex h-14 w-14 items-center justify-center rounded-xl bg-white border ${theme.iconBox} text-xl font-bold ${theme.text} shadow-sm transition-transform group-hover:scale-105 duration-500`}>
+                          <div className={`flex h-32 w-32 items-center justify-center rounded-2xl bg-white border-2 border-white shadow-md mx-auto text-4xl font-bold ${theme.text} transition-transform group-hover:scale-105 duration-500 ring-2 ring-slate-50`}>
                             {member.name
                               .split(" ")
                               .map((part) => part[0])
@@ -162,14 +168,11 @@ export const About = () => {
                               .join("")}
                           </div>
                         )}
-                        <div className={`text-[10px] font-bold tracking-widest uppercase ${theme.text} opacity-80 mt-1`}>
-                          LEADERSHIP
-                        </div>
                       </div>
                       
                       <h3 className="text-xl font-bold font-sans text-slate-900 mb-1">{member.name}</h3>
                       <div className={`text-sm font-semibold ${theme.text} mb-3 uppercase tracking-wider text-[11px]`}>{member.role}</div>
-                      <p className="text-[13px] leading-relaxed text-slate-500 mb-1">{member.bio || "Experienced digital specialist focused on building premium product experiences."}</p>
+                      <p className="text-[13px] leading-relaxed text-slate-500 mb-1 max-w-[90%] mx-auto">{member.bio || "Experienced digital specialist focused on building premium product experiences."}</p>
                     </div>
                   </div>
                 );
