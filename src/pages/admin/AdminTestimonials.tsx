@@ -30,6 +30,7 @@ const sb = supabase as any;
 
 const AdminTestimonials = () => {
   const [rows, setRows] = useState<Testimonial[]>([]);
+  const [loading, setLoading] = useState(true);
   const [open, setOpen] = useState(false);
   const [editing, setEditing] = useState<Testimonial>(empty);
 
@@ -42,6 +43,7 @@ const AdminTestimonials = () => {
       return;
     }
     setRows((data ?? []) as Testimonial[]);
+    setLoading(false);
   };
   useEffect(() => { load(); }, []);
 
@@ -138,7 +140,9 @@ const AdminTestimonials = () => {
             </div>
           </div>
         ))}
-        {rows.length === 0 && (
+        {loading ? (
+          <div className="col-span-full py-12 text-center"><div className="inline-block h-6 w-6 animate-spin rounded-full border-2 border-solid border-current border-r-transparent opacity-50" /></div>
+        ) : rows.length === 0 && (
           <div className="col-span-full text-center text-muted-foreground py-12">
             No testimonials found. Click "Add Review" to create one.
             <div className="mt-2 text-xs opacity-70">Note: If you see this and haven't run the SQL migration yet, you must run it in your Supabase Dashboard!</div>

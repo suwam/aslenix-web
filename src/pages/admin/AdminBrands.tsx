@@ -26,6 +26,34 @@ type Brand = {
 
 const empty: Brand = {
   name: "", logo_url: null, website_url: "", description: "",
+import { useEffect, useMemo, useState } from "react";
+import { AdminShell } from "@/components/admin/AdminShell";
+import { supabase } from "@/integrations/supabase/client";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { Label } from "@/components/ui/label";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Switch } from "@/components/ui/switch";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { MediaPicker } from "@/components/admin/MediaPicker";
+import { Plus, Trash2, Pencil, Star } from "lucide-react";
+import { toast } from "sonner";
+
+type Brand = {
+  id?: string;
+  name: string;
+  logo_url: string | null;
+  website_url: string | null;
+  description: string | null;
+  category: "partner" | "client" | "technology" | "sponsor";
+  active: boolean;
+  featured: boolean;
+  display_order: number;
+};
+
+const empty: Brand = {
+  name: "", logo_url: null, website_url: "", description: "",
   category: "partner", active: true, featured: false, display_order: 0,
 };
 
@@ -33,6 +61,7 @@ const sb = supabase as any;
 
 const AdminBrands = () => {
   const [rows, setRows] = useState<Brand[]>([]);
+  const [loading, setLoading] = useState(true);
   const [open, setOpen] = useState(false);
   const [editing, setEditing] = useState<Brand>(empty);
   const [search, setSearch] = useState("");
@@ -41,8 +70,9 @@ const AdminBrands = () => {
   const load = async () => {
     const { data, error } = await sb
       .from("brands").select("*").order("display_order").order("created_at");
-    if (error) return toast.error(error.message);
+    if (error) { toast.error(error.message); setLoading(false); return; }
     setRows((data ?? []) as Brand[]);
+    setLoading(false);
   };
   useEffect(() => { load(); }, []);
 
@@ -158,7 +188,9 @@ const AdminBrands = () => {
             </div>
           </div>
         ))}
-        {filtered.length === 0 && (
+        {loading ? (
+          <div className="col-span-full py-12 text-center"><div className="inline-block h-6 w-6 animate-spin rounded-full border-2 border-solid border-current border-r-transparent opacity-50" /></div>
+        ) : filtered.length === 0 && (
           <div className="col-span-full text-center text-muted-foreground py-12">No brands yet — click "Add Brand" to create one.</div>
         )}
       </div>

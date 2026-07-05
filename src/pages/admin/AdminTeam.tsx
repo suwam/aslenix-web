@@ -25,6 +25,23 @@ const emptyMember: TeamMember = {
   name: "",
   role: "",
   bio: "",
+import { toast } from "sonner";
+import { logActivity } from "@/lib/activity";
+
+type TeamMember = {
+  id?: string;
+  name: string;
+  role: string;
+  bio?: string | null;
+  photo_url?: string | null;
+  position: number;
+  active: boolean;
+};
+
+const emptyMember: TeamMember = {
+  name: "",
+  role: "",
+  bio: "",
   photo_url: "",
   position: 0,
   active: true,
@@ -32,6 +49,7 @@ const emptyMember: TeamMember = {
 
 const AdminTeam = () => {
   const [members, setMembers] = useState<TeamMember[]>([]);
+  const [loading, setLoading] = useState(true);
   const [open, setOpen] = useState(false);
   const [editing, setEditing] = useState<TeamMember>(emptyMember);
   const [search, setSearch] = useState("");
@@ -43,9 +61,11 @@ const AdminTeam = () => {
       .order("position", { ascending: true });
     if (error) {
       toast.error(error.message);
+      setLoading(false);
       return;
     }
     setMembers(data ?? []);
+    setLoading(false);
   };
 
   useEffect(() => {
@@ -230,7 +250,9 @@ const AdminTeam = () => {
           </div>
         ))}
 
-        {filtered.length === 0 && (
+        {loading ? (
+          <div className="col-span-full py-12 text-center"><div className="inline-block h-6 w-6 animate-spin rounded-full border-2 border-solid border-current border-r-transparent opacity-50" /></div>
+        ) : filtered.length === 0 && (
           <div className="col-span-full rounded-3xl border border-foreground/10 bg-foreground/5 p-10 text-center text-sm text-muted-foreground">
             No team members found.
           </div>

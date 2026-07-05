@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Upload, Trash2, Copy } from "lucide-react";
 import { toast } from "sonner";
 import { logActivity } from "@/lib/activity";
+import { compressImage } from "@/lib/image";
 
 const AdminMedia = () => {
   const [items, setItems] = useState<any[]>([]);
@@ -21,8 +22,15 @@ const AdminMedia = () => {
     setUploading(true);
     try {
       const { data: { user } } = await supabase.auth.getUser();
-      for (const file of Array.from(files)) {
+      for (let file of Array.from(files)) {
         if (file.size > 10 * 1024 * 1024) { toast.error(`${file.name}: too large (>10MB)`); continue; }
+        
+        try {
+          file = await compressImage(file, 1600, 0.8);
+        } catch (err) {
+          console.error("Compression failed for", file.name, err);
+        }
+        
         const path = `${user?.id ?? "anon"}/${Date.now()}-${file.name.replace(/[^a-zA-Z0-9._-]/g, "_")}`;
         const { error } = await supabase.storage.from("media").upload(path, file);
         if (error) { toast.error(error.message); continue; }

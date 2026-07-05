@@ -47,6 +47,7 @@ const quickLinks = [
 const AdminDashboard = () => {
   const [stats, setStats] = useState({ projects: 0, services: 0, blogs: 0, leads: 0, unreadLeads: 0 });
   const [activity, setActivity] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     (async () => {
@@ -63,6 +64,7 @@ const AdminDashboard = () => {
         leads: l.count ?? 0, unreadLeads: lu.count ?? 0,
       });
       setActivity(a.data ?? []);
+      setLoading(false);
     })();
   }, []);
 
@@ -75,10 +77,10 @@ const AdminDashboard = () => {
       </>
     }>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
-        <StatCard label="Projects" value={stats.projects} icon={FolderKanban} accent="blue" />
-        <StatCard label="Services" value={stats.services} icon={Sparkles} accent="magenta" />
-        <StatCard label="Blogs" value={stats.blogs} icon={Newspaper} accent="pink" />
-        <StatCard label="Leads" value={stats.leads} icon={Inbox} hint={`${stats.unreadLeads} unread`} accent="magenta" />
+        <StatCard label="Projects" value={loading ? "..." : stats.projects} icon={FolderKanban} accent="blue" />
+        <StatCard label="Services" value={loading ? "..." : stats.services} icon={Sparkles} accent="magenta" />
+        <StatCard label="Blogs" value={loading ? "..." : stats.blogs} icon={Newspaper} accent="pink" />
+        <StatCard label="Leads" value={loading ? "..." : stats.leads} icon={Inbox} hint={loading ? "" : `${stats.unreadLeads} unread`} accent="magenta" />
       </div>
 
       <div className="mb-8 rounded-3xl border border-foreground/10 bg-background/80 p-6 shadow-[0_40px_100px_-40px_rgba(0,0,0,0.7)]">
@@ -114,7 +116,9 @@ const AdminDashboard = () => {
 
       <div className="gradient-border glass rounded-2xl p-6">
         <h2 className="font-display text-xl font-semibold mb-4">Recent activity</h2>
-        {activity.length === 0 ? (
+        {loading ? (
+          <div className="py-8 text-center"><div className="inline-block h-6 w-6 animate-spin rounded-full border-2 border-solid border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite] opacity-50" /></div>
+        ) : activity.length === 0 ? (
           <div className="text-sm text-muted-foreground py-8 text-center">No activity yet — start managing content above.</div>
         ) : (
           <ul className="divide-y divide-white/5">

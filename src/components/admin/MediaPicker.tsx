@@ -50,11 +50,47 @@ export const MediaPicker = ({ value, onChange, label = "Image", cropAspect = 16 
     setOffsetY(0);
   };
 
+  const compressOriginal = async (file: File) => {
+    const image = new Image();
+    const url = URL.createObjectURL(file);
+    image.src = url;
+    await new Promise<void>((resolve, reject) => {
+      image.onload = () => resolve();
+      image.onerror = () => reject(new Error("Could not load image"));
+    });
+    URL.revokeObjectURL(url);
+
+    let width = image.naturalWidth;
+    let height = image.naturalHeight;
+    const maxDim = 1600;
+    if (width > maxDim || height > maxDim) {
+      if (width > height) {
+        height = Math.round((height * maxDim) / width);
+        width = maxDim;
+      } else {
+        width = Math.round((width * maxDim) / height);
+        height = maxDim;
+      }
+    }
+
+    const canvas = document.createElement("canvas");
+    canvas.width = width;
+    canvas.height = height;
+    const ctx = canvas.getContext("2d");
+    if (!ctx) throw new Error("Could not prepare image");
+    ctx.drawImage(image, 0, 0, width, height);
+
+    const blob = await new Promise<Blob | null>((resolve) => canvas.toBlob(resolve, "image/webp", 0.8));
+    if (!blob) throw new Error("Could not compress image");
+    const name = file.name.replace(/\.[^.]+$/, "") || "image";
+    return new File([blob], `${name}-optimized.webp`, { type: "image/webp" });
+  };
+
   const prepareCrop = (file: File) => {
     if (file.size > 10 * 1024 * 1024) { toast.error("Max 10MB"); return; }
     if (!file.type.startsWith("image/")) { toast.error("Please choose an image file"); return; }
     if (cropAspect === null) {
-      void upload(file);
+      compressOriginal(file).then(f => upload(f)).catch(() => upload(file));
       return;
     }
     if (cropUrl) URL.revokeObjectURL(cropUrl);
@@ -96,10 +132,10 @@ export const MediaPicker = ({ value, onChange, label = "Image", cropAspect = 16 
     ctx.fillRect(0, 0, outputWidth, outputHeight);
     ctx.drawImage(image, drawX, drawY, drawWidth, drawHeight);
 
-    const blob = await new Promise<Blob | null>((resolve) => canvas.toBlob(resolve, "image/jpeg", 0.9));
+    const blob = await new Promise<Blob | null>((resolve) => canvas.toBlob(resolve, "image/webp", 0.8));
     if (!blob) throw new Error("Could not crop image");
     const name = file.name.replace(/\.[^.]+$/, "") || "image";
-    return new File([blob], `${name}-cropped.jpg`, { type: "image/jpeg" });
+    return new File([blob], `${name}-cropped.webp`, { type: "image/webp" });
   };
 
   const upload = async (file: File) => {
@@ -141,9 +177,17 @@ export const MediaPicker = ({ value, onChange, label = "Image", cropAspect = 16 
 
   const uploadOriginal = async () => {
     if (!cropFile) return;
-    const original = cropFile;
-    resetCrop();
-    await upload(original);
+    setUploading(true);
+    try {
+      const compressed = await compressOriginal(cropFile);
+      await upload(compressed);
+      resetCrop();
+    } catch (e: any) {
+      toast.error(e.message ?? "Optimization failed. Uploading raw image instead.");
+      const original = cropFile;
+      resetCrop();
+      await upload(original);
+    }
   };
 
   return (
