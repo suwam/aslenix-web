@@ -55,11 +55,6 @@ const Index = () => {
             <TrustedBy />
           </Suspense>
         </DeferredSection>
-        <DeferredSection id="about">
-          <Suspense fallback={<SectionFallback />}>
-            <About />
-          </Suspense>
-        </DeferredSection>
         <DeferredSection id="services">
           <Suspense fallback={<SectionFallback />}>
             <Services />
@@ -68,6 +63,11 @@ const Index = () => {
         <DeferredSection id="projects">
           <Suspense fallback={<SectionFallback />}>
             <Projects />
+          </Suspense>
+        </DeferredSection>
+        <DeferredSection id="about">
+          <Suspense fallback={<SectionFallback />}>
+            <About />
           </Suspense>
         </DeferredSection>
         <DeferredSection id="roadmap">
