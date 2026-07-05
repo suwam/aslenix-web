@@ -26,34 +26,6 @@ type Brand = {
 
 const empty: Brand = {
   name: "", logo_url: null, website_url: "", description: "",
-import { useEffect, useMemo, useState } from "react";
-import { AdminShell } from "@/components/admin/AdminShell";
-import { supabase } from "@/integrations/supabase/client";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { Label } from "@/components/ui/label";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Switch } from "@/components/ui/switch";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
-import { MediaPicker } from "@/components/admin/MediaPicker";
-import { Plus, Trash2, Pencil, Star } from "lucide-react";
-import { toast } from "sonner";
-
-type Brand = {
-  id?: string;
-  name: string;
-  logo_url: string | null;
-  website_url: string | null;
-  description: string | null;
-  category: "partner" | "client" | "technology" | "sponsor";
-  active: boolean;
-  featured: boolean;
-  display_order: number;
-};
-
-const empty: Brand = {
-  name: "", logo_url: null, website_url: "", description: "",
   category: "partner", active: true, featured: false, display_order: 0,
 };
 

@@ -25,23 +25,6 @@ const emptyMember: TeamMember = {
   name: "",
   role: "",
   bio: "",
-import { toast } from "sonner";
-import { logActivity } from "@/lib/activity";
-
-type TeamMember = {
-  id?: string;
-  name: string;
-  role: string;
-  bio?: string | null;
-  photo_url?: string | null;
-  position: number;
-  active: boolean;
-};
-
-const emptyMember: TeamMember = {
-  name: "",
-  role: "",
-  bio: "",
   photo_url: "",
   position: 0,
   active: true,
