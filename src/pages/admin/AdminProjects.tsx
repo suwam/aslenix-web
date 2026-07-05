@@ -35,15 +35,19 @@ const AdminProjects = () => {
   );
 
   return (
-    <AdminShell title="Projects" actions={
-      <Button asChild variant="hero" size="sm"><Link to="/admin/projects/new"><Plus className="w-3.5 h-3.5" /> New project</Link></Button>
-    }>
-      <div className="mb-4 relative max-w-sm">
-        <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
-        <Input value={q} onChange={(e) => setQ(e.target.value)} placeholder="Search projects…" className="pl-9 bg-muted/30 border-foreground/5" />
-      </div>
+    <AdminShell>
+      <div className="gradient-border glass rounded-2xl overflow-hidden flex flex-col">
+        <div className="p-6 border-b border-white/5 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+          <h1 className="font-display text-2xl font-bold">Projects</h1>
+          <div className="flex items-center gap-3 w-full sm:w-auto">
+            <div className="relative w-full sm:w-64">
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+              <Input value={q} onChange={(e) => setQ(e.target.value)} placeholder="Search projects…" className="pl-9 bg-muted/30 border-foreground/5 h-9" />
+            </div>
+            <Button asChild variant="hero" size="sm" className="shrink-0 h-9"><Link to="/admin/projects/new"><Plus className="w-3.5 h-3.5 mr-1" /> New project</Link></Button>
+          </div>
+        </div>
 
-      <div className="gradient-border glass rounded-2xl overflow-hidden">
         <table className="w-full text-sm">
           <thead className="bg-muted/30 text-xs uppercase tracking-wider text-muted-foreground">
             <tr>
