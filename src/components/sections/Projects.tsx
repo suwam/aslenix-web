@@ -92,7 +92,6 @@ export const Projects = () => {
                   ) : (
                     <div className="w-full h-full bg-brand-gradient opacity-30" />
                   )}
-                  <div className="absolute inset-0 bg-gradient-to-t from-background via-background/40 to-transparent" />
                   <div className="absolute top-4 right-4 w-10 h-10 rounded-full bg-brand-gradient flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-500">
                     <ArrowUpRight className="h-4 w-4 text-foreground" />
                   </div>
