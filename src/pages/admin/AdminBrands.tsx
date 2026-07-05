@@ -88,7 +88,7 @@ const AdminBrands = () => {
           <DialogHeader><DialogTitle>{editing.id ? "Edit" : "New"} Brand</DialogTitle></DialogHeader>
           <div className="space-y-3 max-h-[70vh] overflow-y-auto pr-1">
             <div><Label>Name *</Label><Input value={editing.name} onChange={(e) => setEditing({ ...editing, name: e.target.value })} /></div>
-            <MediaPicker label="Logo" value={editing.logo_url} cropAspect={null} onChange={(url) => setEditing({ ...editing, logo_url: url })} />
+            <MediaPicker label="Logo" value={editing.logo_url} onChange={(url) => setEditing({ ...editing, logo_url: url })} />
             {editing.logo_url && (
               <div className="rounded-lg border border-foreground/10 p-3 flex items-center justify-center bg-foreground/30">
                 <img src={editing.logo_url} alt="preview" className="h-14 object-contain" />
