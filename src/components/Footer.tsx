@@ -100,7 +100,13 @@ export const Footer = ({ onOpenPrivacy, onOpenTerms }: FooterProps) => {
                 Available for New Projects
               </div>
 
-              {socials.length > 0 && (
+              {settings === null ? (
+                <div className="flex items-center gap-2">
+                  {[1, 2, 3, 4].map((i) => (
+                    <div key={i} className="h-9 w-9 rounded-full bg-foreground/10 animate-pulse"></div>
+                  ))}
+                </div>
+              ) : socials.length > 0 ? (
                 <div className="flex items-center gap-2">
                   {socials.map((s) => (
                     <a
@@ -115,7 +121,7 @@ export const Footer = ({ onOpenPrivacy, onOpenTerms }: FooterProps) => {
                     </a>
                   ))}
                 </div>
-              )}
+              ) : null}
             </div>
           </div>
 

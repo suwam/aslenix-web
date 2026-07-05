@@ -160,7 +160,16 @@ export const Contact = () => {
               </Button>
             </motion.form>
 
-            {socials.length > 0 && (
+            {settings === null ? (
+              <div className="bg-white border border-slate-100 rounded-2xl p-6 shadow-[0_2px_10px_rgba(0,0,0,0.02)]">
+                <div className="h-2 w-16 bg-slate-200 rounded mb-5 animate-pulse"></div>
+                <div className="flex gap-3">
+                  {[1, 2, 3, 4, 5].map((i) => (
+                    <div key={i} className="w-11 h-11 rounded-xl bg-slate-100 animate-pulse border border-slate-200"></div>
+                  ))}
+                </div>
+              </div>
+            ) : socials.length > 0 ? (
               <div className="bg-white border border-slate-100 rounded-2xl p-6 shadow-[0_2px_10px_rgba(0,0,0,0.02)]">
                 <div className="text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-4">Follow Us</div>
                 <div className="flex gap-3">
@@ -178,7 +187,7 @@ export const Contact = () => {
                   ))}
                 </div>
               </div>
-            )}
+            ) : null}
           </div>
 
           {/* Right Column: Main Info */}
