@@ -49,7 +49,7 @@ const AdminAITools = () => {
                   key={t.id}
                   onClick={() => { setTask(t.id); setTitle(""); setOutput(""); }}
                   className={`text-left px-3 py-2 rounded-lg text-sm transition-all ${
-                    task === t.id ? "bg-brand-gradient text-white" : "bg-white/5 hover:bg-white/10 text-muted-foreground"
+                    task === t.id ? "bg-brand-gradient text-foreground" : "bg-foreground/5 hover:bg-foreground/10 text-muted-foreground"
                   }`}
                 >{t.label}</button>
               ))}

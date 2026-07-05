@@ -81,29 +81,32 @@ const AdminDashboard = () => {
         <StatCard label="Leads" value={stats.leads} icon={Inbox} hint={`${stats.unreadLeads} unread`} accent="magenta" />
       </div>
 
-      <div className="mb-8 rounded-3xl border border-white/10 bg-[#0d1021]/80 p-6 shadow-[0_40px_100px_-40px_rgba(0,0,0,0.7)]">
+      <div className="mb-8 rounded-3xl border border-foreground/10 bg-background/80 p-6 shadow-[0_40px_100px_-40px_rgba(0,0,0,0.7)]">
         <div className="flex items-center justify-between gap-4 mb-6 flex-col sm:flex-row">
           <div>
             <p className="text-sm uppercase tracking-[0.3em] text-muted-foreground/70">Quick access</p>
-            <h2 className="font-display text-2xl font-semibold text-white">All admin sections</h2>
+            <h2 className="font-display text-2xl font-semibold text-foreground">All admin sections</h2>
           </div>
           <p className="text-sm text-muted-foreground max-w-2xl">
             Open any admin page directly from the dashboard, with every route connected for fast management.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-5">
           {quickLinks.map((link) => (
             <Link
               key={link.to}
               to={link.to}
-              className="group rounded-3xl border border-white/10 bg-white/5 p-5 transition hover:border-accent/40 hover:bg-white/10"
+              className="group relative overflow-hidden rounded-[2rem] border border-foreground/10 bg-background/50 p-6 shadow-sm transition-all hover:-translate-y-1 hover:shadow-lg hover:border-accent/30 backdrop-blur-xl"
             >
-              <div className="inline-flex h-11 w-11 items-center justify-center rounded-2xl bg-brand-gradient text-white shadow-[0_10px_30px_-18px_rgba(255,79,216,0.45)] mb-4">
-                <link.icon className="h-5 w-5" />
+              <div className="absolute inset-0 -translate-y-full bg-gradient-to-b from-brand-gradient/10 to-transparent opacity-0 transition-all duration-500 group-hover:translate-y-0 group-hover:opacity-100" />
+              <div className="relative z-10">
+                <div className="inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-foreground/5 border border-foreground/10 text-foreground mb-5 transition-all duration-500 group-hover:scale-110 group-hover:-rotate-3 group-hover:bg-brand-gradient group-hover:border-transparent group-hover:text-foreground group-hover:shadow-[0_0_24px_-4px_hsl(var(--accent)/0.6)]">
+                  <link.icon className="h-5 w-5 transition-colors duration-500" />
+                </div>
+                <h3 className="font-display text-lg font-bold tracking-tight text-foreground mb-2">{link.label}</h3>
+                <p className="text-sm text-muted-foreground leading-relaxed">Open the {link.label} admin view.</p>
               </div>
-              <h3 className="font-semibold text-white mb-1">{link.label}</h3>
-              <p className="text-sm text-muted-foreground">Open the {link.label} admin view.</p>
             </Link>
           ))}
         </div>

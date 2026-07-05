@@ -39,6 +39,7 @@ const AdminClientUsers = lazy(() => import("./pages/admin/AdminClientUsers"));
 const AdminInsights = lazy(() => import("./pages/admin/AdminInsights"));
 const AdminAutomation = lazy(() => import("./pages/admin/AdminAutomation"));
 const AdminBrands = lazy(() => import("./pages/admin/AdminBrands"));
+const AdminTestimonials = lazy(() => import("./pages/admin/AdminTestimonials"));
 const PayInvoice = lazy(() => import("./pages/PayInvoice"));
 const PayResult = lazy(() => import("./pages/PayResult"));
 const ClientLogin = lazy(() => import("./pages/portal/ClientLogin"));
@@ -132,6 +133,7 @@ const App = () => (
               <Route path="/admin/tasks" element={<Protected el={<AdminTasks />} />} />
               <Route path="/admin/announcements" element={<Protected el={<AdminAnnouncements />} />} />
               <Route path="/admin/exports" element={<Protected el={<AdminExports />} />} />
+
               <Route path="/admin/performance" element={<Protected el={<AdminPerformance />} />} />
               <Route path="/admin/finance" element={<Protected el={<AdminFinance />} />} />
               <Route path="/admin/calendar" element={<Protected el={<AdminCalendar />} />} />
@@ -140,6 +142,7 @@ const App = () => (
               <Route path="/admin/automation" element={<Protected el={<AdminAutomation />} />} />
               <Route path="/admin/team" element={<Protected el={<AdminTeam />} />} />
               <Route path="/admin/brands" element={<Protected el={<AdminBrands />} />} />
+              <Route path="/admin/reviews" element={<Protected el={<AdminTestimonials />} />} />
 
           <Route path="*" element={<NotFound />} />
         </Routes>

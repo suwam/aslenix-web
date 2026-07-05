@@ -12,26 +12,37 @@ const reasons = [
 
 export const WhyUs = () => {
   return (
-    <section id="why" className="py-24 sm:py-32 relative">
-      <div className="container">
+    <section id="why" className="py-24 sm:py-32 relative overflow-hidden bg-background">
+      {/* Background Glows */}
+      <div className="pointer-events-none absolute inset-0 opacity-40">
+        <div className="absolute inset-0 grid-pattern opacity-10" />
+        <div className="absolute -left-1/4 top-1/4 h-[400px] w-[400px] rounded-full bg-[radial-gradient(circle,_rgba(186,230,253,0.3),transparent_70%)] blur-[100px]" />
+        <div className="absolute -right-1/4 bottom-1/4 h-[400px] w-[400px] rounded-full bg-[radial-gradient(circle,_rgba(233,213,255,0.3),transparent_70%)] blur-[100px]" />
+      </div>
+
+      <div className="container relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="text-center max-w-2xl mx-auto mb-16"
+          className="text-center max-w-2xl mx-auto mb-20"
         >
-          <div className="inline-block px-4 py-2 glass rounded-full text-sm font-semibold text-accent mb-6 tracking-[0.28em]">
-            WHY ASLENIX
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-foreground/10 bg-foreground/5 text-sm font-medium text-foreground mb-6 shadow-sm backdrop-blur-xl">
+            <span className="flex h-2 w-2 rounded-full bg-accent animate-pulse" />
+            <span className="tracking-[0.2em] uppercase">Why Aslenix</span>
           </div>
-          <h2 className="font-display text-5xl sm:text-6xl xl:text-7xl font-bold leading-tight mb-6">
-            Built different. <span className="text-gradient">By design.</span>
+          <h2 className="font-display text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight mb-6 tracking-tight">
+            Built different. <span className="text-gradient relative inline-block">
+              By design.
+              <span className="absolute -inset-2 bg-brand-gradient blur-2xl opacity-20 -z-10" />
+            </span>
           </h2>
-          <p className="text-muted-foreground text-lg">
+          <p className="text-muted-foreground text-lg sm:text-xl leading-relaxed">
             Six reasons teams choose us — and stay with us.
           </p>
         </motion.div>
 
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
           {reasons.map((r, i) => (
             <motion.div
               key={r.title}
@@ -39,15 +50,20 @@ export const WhyUs = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: (i % 3) * 0.1 }}
-              className="group relative gradient-border glass rounded-2xl p-7 glow-hover"
+              className="group relative overflow-hidden rounded-[2rem] border border-foreground/10 bg-background/60 p-8 shadow-sm transition-all hover:-translate-y-1 hover:shadow-xl hover:border-accent/30 backdrop-blur-xl"
             >
-              <div className="flex items-center gap-3 mb-3">
-                <div className="w-10 h-10 rounded-lg bg-brand-gradient flex items-center justify-center shadow-[0_0_20px_hsl(var(--accent)/0.35)]">
-                  <r.icon className="h-4.5 w-4.5 text-white" />
+              <div className="absolute inset-0 -translate-x-full bg-gradient-to-r from-brand-gradient/0 via-brand-gradient/10 to-brand-gradient/0 opacity-0 transition-all duration-700 group-hover:translate-x-full group-hover:opacity-100" />
+              <div className="absolute inset-0 bg-brand-gradient opacity-0 transition-opacity duration-500 group-hover:opacity-[0.03]" />
+              
+              <div className="relative z-10 flex flex-col gap-5">
+                <div className="inline-flex h-14 w-14 items-center justify-center rounded-2xl bg-foreground/5 border border-foreground/10 text-foreground shadow-sm transition-all duration-500 group-hover:scale-110 group-hover:rotate-3 group-hover:bg-brand-gradient group-hover:border-transparent group-hover:text-foreground group-hover:shadow-[0_0_30px_-5px_hsl(var(--accent)/0.6)]">
+                  <r.icon className="h-6 w-6 transition-colors duration-500" />
                 </div>
-                <h3 className="font-display text-lg font-semibold">{r.title}</h3>
+                <div className="space-y-3">
+                  <h3 className="font-display text-xl font-bold tracking-tight text-foreground">{r.title}</h3>
+                  <p className="text-muted-foreground leading-relaxed">{r.desc}</p>
+                </div>
               </div>
-              <p className="text-sm text-muted-foreground leading-relaxed">{r.desc}</p>
             </motion.div>
           ))}
         </div>

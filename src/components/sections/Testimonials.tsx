@@ -1,30 +1,27 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Quote, ChevronLeft, ChevronRight, Star } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
+import { cn } from "@/lib/utils";
 
-const testimonials = [
-  {
-    quote:
-      "ASLENIX rebuilt our entire platform in 8 weeks. The design is breathtaking and our conversions doubled within a month.",
-    name: "Aarav Sharma",
-    role: "CEO, Lumora SaaS",
-  },
-  {
-    quote:
-      "Working with ASLENIX feels like having a senior in-house team. They care about the details and ship on time, every time.",
-    name: "Priya Khadka",
-    role: "Founder, Bloom Co.",
-  },
-  {
-    quote:
-      "The AI assistant they built handles 70% of our support queries. ROI was clear within the first quarter.",
-    name: "Daniel Wright",
-    role: "Head of Ops, Northwind",
-  },
-];
+const sb = supabase as any;
 
 export const Testimonials = () => {
+  const [data, setData] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
   const [i, setI] = useState(0);
+
+  useEffect(() => {
+    sb.from("testimonials").select("*").eq("active", true).order("display_order")
+      .then(({ data, error }: any) => {
+        if (!error && data) setData(data);
+        setLoading(false);
+      });
+  }, []);
+
+  if (loading || data.length === 0) return null;
+
+  const testimonials = data;
   const next = () => setI((p) => (p + 1) % testimonials.length);
   const prev = () => setI((p) => (p - 1 + testimonials.length) % testimonials.length);
   const t = testimonials[i];
@@ -59,7 +56,7 @@ export const Testimonials = () => {
             >
               <div className="flex justify-center gap-1 mb-6">
                 {Array(5).fill(0).map((_, n) => (
-                  <Star key={n} className="h-4 w-4 fill-accent text-accent" />
+                  <Star key={n} className={cn("h-4 w-4 transition-colors", n < (t.rating || 5) ? "fill-amber-400 text-amber-400" : "fill-muted text-muted")} />
                 ))}
               </div>
               <p className="font-display text-xl sm:text-2xl leading-relaxed mb-8 text-foreground/90">
@@ -76,7 +73,7 @@ export const Testimonials = () => {
             <button
               aria-label="Previous"
               onClick={prev}
-              className="w-10 h-10 rounded-full glass border border-white/10 flex items-center justify-center hover:bg-white/5 transition-colors"
+              className="w-10 h-10 rounded-full glass border border-foreground/10 flex items-center justify-center hover:bg-foreground/5 transition-colors"
             >
               <ChevronLeft className="h-4 w-4" />
             </button>
@@ -95,7 +92,7 @@ export const Testimonials = () => {
             <button
               aria-label="Next"
               onClick={next}
-              className="w-10 h-10 rounded-full glass border border-white/10 flex items-center justify-center hover:bg-white/5 transition-colors"
+              className="w-10 h-10 rounded-full glass border border-foreground/10 flex items-center justify-center hover:bg-foreground/5 transition-colors"
             >
               <ChevronRight className="h-4 w-4" />
             </button>

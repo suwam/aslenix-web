@@ -105,7 +105,7 @@ const AdminTasks = () => {
               </div>
               <div className="space-y-2 min-h-[200px]">
                 {items.map((t) => (
-                  <div key={t.id} className="bg-white/5 rounded-lg p-3 hover:bg-white/10 transition group">
+                  <div key={t.id} className="bg-foreground/5 rounded-lg p-3 hover:bg-foreground/10 transition group">
                     <div className="flex items-start justify-between gap-2">
                       <button onClick={() => { setEditing(t); setOpen(true); }} className="text-left flex-1">
                         <div className="text-sm font-medium">{t.title}</div>

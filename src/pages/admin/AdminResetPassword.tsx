@@ -58,8 +58,8 @@ const AdminResetPassword = () => {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-background relative overflow-hidden px-4">
-      <div className="absolute top-1/4 -left-32 w-96 h-96 rounded-full bg-primary/20 blur-[120px]" />
-      <div className="absolute bottom-1/4 -right-32 w-96 h-96 rounded-full bg-accent/20 blur-[120px]" />
+
+
 
       <motion.div
         initial={{ opacity: 0, y: 24 }}
@@ -67,10 +67,10 @@ const AdminResetPassword = () => {
         transition={{ duration: 0.6 }}
         className="relative w-full max-w-md"
       >
-        <div className="glass rounded-3xl p-8 md:p-10 border border-white/10">
+        <div className="glass rounded-3xl p-8 md:p-10 border border-foreground/10">
           <div className="flex flex-col items-center mb-8">
             <Logo />
-            <div className="mt-6 flex items-center gap-2 px-3 py-1 rounded-full glass border border-white/10">
+            <div className="mt-6 flex items-center gap-2 px-3 py-1 rounded-full glass border border-foreground/10">
               <ShieldCheck className="w-4 h-4 text-accent" />
               <span className="text-xs font-medium tracking-wider uppercase text-muted-foreground">
                 Set New Password
@@ -97,7 +97,7 @@ const AdminResetPassword = () => {
                     autoComplete="new-password"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
-                    className="pl-10 h-11 bg-background/40 border-white/10 focus-visible:ring-accent"
+                    className="pl-10 h-11 bg-background/40 border-foreground/10 focus-visible:ring-accent"
                     required
                   />
                 </div>
@@ -112,7 +112,7 @@ const AdminResetPassword = () => {
                     autoComplete="new-password"
                     value={confirm}
                     onChange={(e) => setConfirm(e.target.value)}
-                    className="pl-10 h-11 bg-background/40 border-white/10 focus-visible:ring-accent"
+                    className="pl-10 h-11 bg-background/40 border-foreground/10 focus-visible:ring-accent"
                     required
                   />
                 </div>

@@ -32,7 +32,7 @@ const AdminExports = () => {
             className="gradient-border glass rounded-2xl p-6 text-left hover:scale-[1.02] transition group">
             <div className="flex items-center justify-between mb-3">
               <div className="w-10 h-10 rounded-xl bg-brand-gradient flex items-center justify-center">
-                <e.icon className="w-5 h-5 text-white" />
+                <e.icon className="w-5 h-5 text-foreground" />
               </div>
               <FileDown className="w-4 h-4 text-muted-foreground group-hover:text-accent transition" />
             </div>

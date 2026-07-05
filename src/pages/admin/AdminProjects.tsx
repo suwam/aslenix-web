@@ -40,7 +40,7 @@ const AdminProjects = () => {
     }>
       <div className="mb-4 relative max-w-sm">
         <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
-        <Input value={q} onChange={(e) => setQ(e.target.value)} placeholder="Search projects…" className="pl-9 bg-muted/30 border-white/5" />
+        <Input value={q} onChange={(e) => setQ(e.target.value)} placeholder="Search projects…" className="pl-9 bg-muted/30 border-foreground/5" />
       </div>
 
       <div className="gradient-border glass rounded-2xl overflow-hidden">
@@ -60,7 +60,7 @@ const AdminProjects = () => {
             ) : filtered.length === 0 ? (
               <tr><td colSpan={5} className="text-center py-12 text-muted-foreground">No projects yet</td></tr>
             ) : filtered.map((p) => (
-              <tr key={p.id} className="hover:bg-white/5">
+              <tr key={p.id} className="hover:bg-foreground/5">
                 <td className="px-4 py-3">
                   <div className="flex items-center gap-3">
                     {p.cover_image

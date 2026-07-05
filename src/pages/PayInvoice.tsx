@@ -49,10 +49,10 @@ const PayInvoice = () => {
         <h1 className="text-2xl font-display font-semibold mb-2">Invoice from ASLENIX</h1>
         <p className="text-muted-foreground text-sm mb-6">Billed to {invoice.clients?.company_name ?? "—"}</p>
 
-        <div className="bg-white/5 rounded-2xl p-6 mb-6 space-y-2">
+        <div className="bg-foreground/5 rounded-2xl p-6 mb-6 space-y-2">
           <div className="flex justify-between text-sm"><span className="text-muted-foreground">Total</span><span>{invoice.currency} {Number(invoice.total).toFixed(2)}</span></div>
           <div className="flex justify-between text-sm"><span className="text-muted-foreground">Paid</span><span>{invoice.currency} {Number(invoice.paid_amount).toFixed(2)}</span></div>
-          <div className="flex justify-between text-lg font-semibold pt-2 border-t border-white/10"><span>Due</span><span className="text-gradient">{invoice.currency} {remaining.toFixed(2)}</span></div>
+          <div className="flex justify-between text-lg font-semibold pt-2 border-t border-foreground/10"><span>Due</span><span className="text-gradient">{invoice.currency} {remaining.toFixed(2)}</span></div>
         </div>
 
         {isPaid ? (

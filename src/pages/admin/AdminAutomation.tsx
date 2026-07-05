@@ -32,11 +32,11 @@ const AdminAutomation = () => {
       </div>
 
       <div className="gradient-border glass rounded-2xl overflow-hidden">
-        <div className="p-3 border-b border-white/5 text-xs uppercase tracking-wider text-muted-foreground">Recent automation events</div>
+        <div className="p-3 border-b border-foreground/5 text-xs uppercase tracking-wider text-muted-foreground">Recent automation events</div>
         <table className="w-full text-sm">
           <tbody>
             {logs.map((l) => (
-              <tr key={l.id} className="border-t border-white/5">
+              <tr key={l.id} className="border-t border-foreground/5">
                 <td className="p-3 font-mono text-xs">{l.workflow}</td>
                 <td className="p-3 text-xs text-muted-foreground">{JSON.stringify(l.payload).slice(0, 100)}</td>
                 <td className="p-3 text-xs text-right text-muted-foreground">{formatDistanceToNow(new Date(l.created_at), { addSuffix: true })}</td>

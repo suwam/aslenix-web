@@ -4,12 +4,14 @@ import { Hero } from "@/components/sections/Hero";
 import { Footer } from "@/components/Footer";
 import { WhatsAppButton } from "@/components/WhatsAppButton";
 import { DeferredSection } from "@/components/DeferredSection";
+import { FloatingReviewButton } from "@/components/FloatingReviewButton";
 
 const SiteAnnouncement = lazy(() => import("@/components/SiteAnnouncement").then((module) => ({ default: module.SiteAnnouncement })));
 const TrustedBy = lazy(() => import("@/components/sections/TrustedBy").then((module) => ({ default: module.TrustedBy })));
 const About = lazy(() => import("@/components/sections/About").then((module) => ({ default: module.About })));
 const Services = lazy(() => import("@/components/sections/Services").then((module) => ({ default: module.Services })));
 const Projects = lazy(() => import("@/components/sections/Projects").then((module) => ({ default: module.Projects })));
+const Roadmap = lazy(() => import("@/components/sections/Roadmap").then((module) => ({ default: module.Roadmap })));
 const WhyUs = lazy(() => import("@/components/sections/WhyUs").then((module) => ({ default: module.WhyUs })));
 const Testimonials = lazy(() => import("@/components/sections/Testimonials").then((module) => ({ default: module.Testimonials })));
 const Blog = lazy(() => import("@/components/sections/Blog").then((module) => ({ default: module.Blog })));
@@ -53,19 +55,24 @@ const Index = () => {
             <TrustedBy />
           </Suspense>
         </DeferredSection>
-        <DeferredSection>
+        <DeferredSection id="about">
           <Suspense fallback={<SectionFallback />}>
             <About />
           </Suspense>
         </DeferredSection>
-        <DeferredSection>
+        <DeferredSection id="services">
           <Suspense fallback={<SectionFallback />}>
             <Services />
           </Suspense>
         </DeferredSection>
-        <DeferredSection>
+        <DeferredSection id="projects">
           <Suspense fallback={<SectionFallback />}>
             <Projects />
+          </Suspense>
+        </DeferredSection>
+        <DeferredSection id="roadmap">
+          <Suspense fallback={<SectionFallback />}>
+            <Roadmap />
           </Suspense>
         </DeferredSection>
         <DeferredSection>
@@ -78,12 +85,12 @@ const Index = () => {
             <Testimonials />
           </Suspense>
         </DeferredSection>
-        <DeferredSection>
+        <DeferredSection id="blog">
           <Suspense fallback={<SectionFallback />}>
             <Blog />
           </Suspense>
         </DeferredSection>
-        <DeferredSection>
+        <DeferredSection id="contact">
           <Suspense fallback={<SectionFallback />}>
             <Contact />
           </Suspense>
@@ -100,6 +107,7 @@ const Index = () => {
         {showTerms && <TermsModal open={showTerms} onClose={() => setShowTerms(false)} />}
       </Suspense>
       <WhatsAppButton />
+      <FloatingReviewButton />
     </div>
   );
 };

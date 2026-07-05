@@ -142,15 +142,15 @@ const AdminHomepage = () => {
           </div>
 
           {normalizeSlides(row.hero_slides).length === 0 ? (
-            <div className="rounded-xl border border-dashed border-white/10 p-6 text-center text-sm text-muted-foreground">
+            <div className="rounded-xl border border-dashed border-foreground/10 p-6 text-center text-sm text-muted-foreground">
               No custom dashboard images yet. The homepage will use the default images until you add and save custom ones.
             </div>
           ) : (
             <div className="grid gap-4 lg:grid-cols-2">
               {normalizeSlides(row.hero_slides).map((slide, index) => (
-                <div key={`${slide.src}-${index}`} className="rounded-2xl border border-white/10 bg-white/[0.03] p-4 space-y-4">
+                <div key={`${slide.src}-${index}`} className="rounded-2xl border border-foreground/10 bg-foreground/[0.03] p-4 space-y-4">
                   <div className="flex items-center justify-between gap-3">
-                    <div className="text-sm font-medium text-white">Image {index + 1}</div>
+                    <div className="text-sm font-medium text-foreground">Image {index + 1}</div>
                     <div className="flex items-center gap-1">
                       <Button type="button" variant="ghost" size="icon" disabled={index === 0} onClick={() => moveSlide(index, -1)} aria-label="Move image up"><ArrowUp className="h-4 w-4" /></Button>
                       <Button type="button" variant="ghost" size="icon" disabled={index === normalizeSlides(row.hero_slides).length - 1} onClick={() => moveSlide(index, 1)} aria-label="Move image down"><ArrowDown className="h-4 w-4" /></Button>
@@ -178,7 +178,7 @@ const AdminHomepage = () => {
             <h3 className="font-display text-lg font-semibold mb-3">Featured services</h3>
             <div className="space-y-1 max-h-80 overflow-auto">
               {services.map((s) => (
-                <label key={s.id} className="flex items-center gap-3 p-2 rounded-lg hover:bg-white/5 cursor-pointer text-sm">
+                <label key={s.id} className="flex items-center gap-3 p-2 rounded-lg hover:bg-foreground/5 cursor-pointer text-sm">
                   <input type="checkbox" checked={row.featured_service_ids?.includes(s.id)} onChange={() => toggle("featured_service_ids", s.id)} />
                   <span>{s.title}</span>
                 </label>
@@ -191,7 +191,7 @@ const AdminHomepage = () => {
             <h3 className="font-display text-lg font-semibold mb-3">Featured projects</h3>
             <div className="space-y-1 max-h-80 overflow-auto">
               {projects.map((p) => (
-                <label key={p.id} className="flex items-center gap-3 p-2 rounded-lg hover:bg-white/5 cursor-pointer text-sm">
+                <label key={p.id} className="flex items-center gap-3 p-2 rounded-lg hover:bg-foreground/5 cursor-pointer text-sm">
                   <input type="checkbox" checked={row.featured_project_ids?.includes(p.id)} onChange={() => toggle("featured_project_ids", p.id)} />
                   <span>{p.title}</span>
                 </label>

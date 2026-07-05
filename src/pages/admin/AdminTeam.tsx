@@ -164,14 +164,14 @@ const AdminTeam = () => {
                   type="checkbox"
                   checked={editing.active}
                   onChange={(e) => setEditing({ ...editing, active: e.target.checked })}
-                  className="h-4 w-4 rounded border-white/10 bg-muted text-brand-gradient focus:ring-transparent"
+                  className="h-4 w-4 rounded border-foreground/10 bg-muted text-brand-gradient focus:ring-transparent"
                 />
                 <label htmlFor="active-member" className="text-sm text-foreground">
                   Visible in About section
                 </label>
               </div>
             </div>
-            <div className="sticky bottom-0 -mx-6 -mb-6 border-t border-white/10 bg-background/95 px-6 py-4 backdrop-blur">
+            <div className="sticky bottom-0 -mx-6 -mb-6 border-t border-foreground/10 bg-background/95 px-6 py-4 backdrop-blur">
               <Button variant="hero" onClick={saveMember} className="w-full sm:w-auto">
                 {editing.id ? "Update" : "Create"}
               </Button>
@@ -194,7 +194,7 @@ const AdminTeam = () => {
         {filtered.map((member) => (
           <div key={member.id ?? member.name} className="gradient-border glass rounded-3xl p-5 group">
             <div className="flex items-start gap-4 mb-4">
-              <div className="flex h-16 w-16 items-center justify-center rounded-3xl bg-white/5 text-lg font-semibold text-white/90">
+              <div className="flex h-16 w-16 items-center justify-center rounded-3xl bg-foreground/5 text-lg font-semibold text-foreground/90">
                 {member.photo_url ? (
                   <img src={member.photo_url} alt={member.name} className="h-16 w-16 rounded-3xl object-cover" />
                 ) : (
@@ -203,8 +203,8 @@ const AdminTeam = () => {
               </div>
               <div className="flex-1">
                 <div className="flex items-center justify-between gap-4">
-                  <h3 className="text-lg font-semibold text-white">{member.name}</h3>
-                  <span className="rounded-full bg-white/5 px-3 py-1 text-xs uppercase tracking-[0.2em] text-muted-foreground">
+                  <h3 className="text-lg font-semibold text-foreground">{member.name}</h3>
+                  <span className="rounded-full bg-foreground/5 px-3 py-1 text-xs uppercase tracking-[0.2em] text-muted-foreground">
                     #{member.position}
                   </span>
                 </div>
@@ -231,7 +231,7 @@ const AdminTeam = () => {
         ))}
 
         {filtered.length === 0 && (
-          <div className="col-span-full rounded-3xl border border-white/10 bg-white/5 p-10 text-center text-sm text-muted-foreground">
+          <div className="col-span-full rounded-3xl border border-foreground/10 bg-foreground/5 p-10 text-center text-sm text-muted-foreground">
             No team members found.
           </div>
         )}

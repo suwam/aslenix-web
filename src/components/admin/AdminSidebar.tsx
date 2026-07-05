@@ -4,7 +4,7 @@ import {
   BarChart3, Image as ImageIcon, Search, Bot, FileText,
   Settings as SettingsIcon, Activity, LogOut, Home, Layout,
   Users, Receipt, CheckSquare, Megaphone, Download, Gauge,
-  DollarSign, Calendar as CalIcon, MessageSquare, Sparkle, Workflow, UserCheck, Award,
+  DollarSign, Calendar as CalIcon, MessageSquare, Sparkle, Workflow, UserCheck, Award, Star
 } from "lucide-react";
 import {
   Sidebar, SidebarContent, SidebarGroup, SidebarGroupContent,
@@ -20,6 +20,7 @@ const main = [
   { to: "/admin/dashboard", label: "Dashboard", icon: LayoutDashboard },
   { to: "/admin/homepage", label: "Homepage", icon: Layout },
   { to: "/admin/brands", label: "Brands / Partners", icon: Award },
+  { to: "/admin/reviews", label: "Reviews", icon: Star },
   { to: "/admin/clients", label: "Clients", icon: Users },
   { to: "/admin/team", label: "Team", icon: UserCheck },
   { to: "/admin/projects", label: "Projects", icon: FolderKanban },
@@ -69,10 +70,10 @@ export const AdminSidebar = () => {
     pathname === to || (to !== "/admin/dashboard" && pathname.startsWith(to));
 
   const linkClass = (to: string) =>
-    `flex items-center gap-3 w-full rounded-lg transition-all ${
+    `group flex items-center gap-3 w-full rounded-xl transition-all duration-300 ${
       isActive(to)
-        ? "bg-brand-gradient text-white font-medium shadow-[0_4px_20px_-6px_hsl(var(--accent)/0.6)]"
-        : "text-muted-foreground hover:text-foreground hover:bg-white/5"
+        ? "bg-brand-gradient text-foreground font-medium shadow-[0_8px_24px_-8px_hsl(var(--accent)/0.6)]"
+        : "text-muted-foreground hover:text-foreground hover:bg-foreground/5"
     }`;
 
   const handleLogout = async () => {
@@ -82,10 +83,10 @@ export const AdminSidebar = () => {
   };
 
   return (
-    <Sidebar collapsible="icon" className="border-r border-white/5">
-      <SidebarContent className="bg-[hsl(240_18%_5%)]">
-        <div className="px-4 py-5 border-b border-white/5">
-          {!collapsed ? <Logo /> : <div className="w-8 h-8 rounded-lg bg-brand-gradient" />}
+    <Sidebar collapsible="none" className="border-r border-foreground/5">
+      <SidebarContent className="bg-background overflow-y-auto overflow-x-hidden modal-scroll pb-6">
+        <div className="px-4 py-5 border-b border-foreground/5">
+          {!collapsed ? <Logo className="h-10 w-10" /> : <div className="w-8 h-8 rounded-lg bg-brand-gradient" />}
         </div>
 
         <SidebarGroup>

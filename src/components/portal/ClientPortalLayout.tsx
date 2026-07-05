@@ -47,18 +47,18 @@ export const ClientPortalLayout = ({ children, title }: { children: ReactNode; t
 
   return (
     <div className="min-h-screen bg-background flex">
-      <aside className="w-64 border-r border-white/5 bg-[hsl(240_18%_5%)] p-4 flex flex-col">
+      <aside className="w-64 border-r border-foreground/5 bg-[hsl(240_18%_5%)] p-4 flex flex-col">
         <div className="mb-6"><Logo /></div>
         <div className="text-xs uppercase tracking-widest text-muted-foreground/60 px-2 mb-2">Client Portal</div>
         <nav className="flex-1 space-y-1">
           {nav.map((n) => (
             <NavLink key={n.to} to={n.to} end={n.end} className={({ isActive }) =>
-              `flex items-center gap-3 px-3 py-2 rounded-lg text-sm transition ${isActive ? "bg-brand-gradient text-white font-medium" : "text-muted-foreground hover:text-foreground hover:bg-white/5"}`}>
+              `flex items-center gap-3 px-3 py-2 rounded-lg text-sm transition ${isActive ? "bg-brand-gradient text-foreground font-medium" : "text-muted-foreground hover:text-foreground hover:bg-foreground/5"}`}>
               <n.icon className="w-4 h-4" />{n.label}
             </NavLink>
           ))}
         </nav>
-        <div className="border-t border-white/5 pt-4 mt-4">
+        <div className="border-t border-foreground/5 pt-4 mt-4">
           <div className="px-2 mb-3">
             <div className="text-sm font-medium truncate">{profile.full_name ?? user.email}</div>
             <div className="text-xs text-muted-foreground truncate">{profile.clients?.company_name ?? "—"}</div>

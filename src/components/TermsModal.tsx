@@ -73,7 +73,7 @@ export const TermsModal = ({ open, onClose }: TermsModalProps) => {
           aria-label="Terms and Conditions"
         >
           <motion.div
-            className="absolute inset-0 bg-black/75 backdrop-blur-xl"
+            className="absolute inset-0 bg-foreground/75 backdrop-blur-xl"
             onClick={handleOverlayClick}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -81,7 +81,7 @@ export const TermsModal = ({ open, onClose }: TermsModalProps) => {
           />
 
           <motion.div
-            className="relative z-10 w-full max-w-[900px] h-[85vh] overflow-hidden rounded-[2rem] border border-white/10 bg-[#090b18]/95 shadow-[0_40px_120px_-40px_rgba(0,0,0,0.9)] backdrop-blur-[30px]"
+            className="relative z-10 w-full max-w-[900px] h-[85vh] overflow-hidden rounded-[2rem] border border-foreground/10 bg-[#090b18]/95 shadow-[0_40px_120px_-40px_rgba(0,0,0,0.9)] backdrop-blur-[30px]"
             initial={{ opacity: 0, scale: 0.96, y: 20 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.96, y: 20 }}
@@ -92,12 +92,12 @@ export const TermsModal = ({ open, onClose }: TermsModalProps) => {
             <div className="absolute right-8 bottom-12 h-24 w-24 rounded-full bg-[#3b82f6]/20 blur-3xl" />
 
             <div className="relative h-full overflow-hidden px-4 py-5 sm:px-6 sm:py-6">
-              <div className="flex items-start justify-between gap-4 pb-4 border-b border-white/10">
+              <div className="flex items-start justify-between gap-4 pb-4 border-b border-foreground/10">
                 <div>
-                  <div className="inline-flex rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs uppercase tracking-[0.3em] text-muted-foreground">
+                  <div className="inline-flex rounded-full border border-foreground/10 bg-foreground/5 px-3 py-1 text-xs uppercase tracking-[0.3em] text-muted-foreground">
                     Terms & Conditions
                   </div>
-                  <h2 className="mt-5 text-3xl font-semibold tracking-[-0.04em] text-white sm:text-4xl">
+                  <h2 className="mt-5 text-3xl font-semibold tracking-[-0.04em] text-foreground sm:text-4xl">
                     Premium terms for a trusted digital partnership
                   </h2>
                   <p className="mt-3 text-sm leading-6 text-muted-foreground sm:text-base">
@@ -107,14 +107,14 @@ export const TermsModal = ({ open, onClose }: TermsModalProps) => {
                 <button
                   type="button"
                   onClick={onClose}
-                  className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/10 bg-white/5 text-white hover:bg-white/10 transition-colors"
+                  className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-foreground/10 bg-foreground/5 text-foreground hover:bg-foreground/10 transition-colors"
                   aria-label="Close Terms and Conditions"
                 >
                   <X className="h-5 w-5" />
                 </button>
               </div>
 
-              <div className="modal-scroll relative mt-6 h-[calc(85vh-170px)] overflow-y-auto pr-3 text-sm leading-7 text-white/80">
+              <div className="modal-scroll relative mt-6 h-[calc(85vh-170px)] overflow-y-auto pr-3 text-sm leading-7 text-foreground/80">
                 {terms.map((section) => (
                   <section key={section.title} className="space-y-4 scroll-mt-8">
                     <h3 className="text-xl font-semibold text-gradient">{section.title}</h3>

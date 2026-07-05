@@ -150,18 +150,18 @@ export const MediaPicker = ({ value, onChange, label = "Image", cropAspect = 16 
     <div className="space-y-2">
       <label className="text-sm font-medium">{label}</label>
       {value ? (
-        <div className="relative w-full aspect-video rounded-xl overflow-hidden glass border border-white/5">
+        <div className="relative w-full aspect-video rounded-xl overflow-hidden glass border border-foreground/5">
           <img src={value} alt="" className="w-full h-full object-cover" />
           <button
             type="button"
             onClick={() => onChange(null)}
             className="absolute top-2 right-2 w-8 h-8 rounded-full bg-destructive flex items-center justify-center"
           >
-            <X className="w-4 h-4 text-white" />
+            <X className="w-4 h-4 text-foreground" />
           </button>
         </div>
       ) : (
-        <div className="border-2 border-dashed border-white/10 rounded-xl p-8 text-center">
+        <div className="border-2 border-dashed border-foreground/10 rounded-xl p-8 text-center">
           <ImageIcon className="w-8 h-8 mx-auto text-muted-foreground mb-2" />
           <div className="text-sm text-muted-foreground">No image selected</div>
         </div>
@@ -190,7 +190,7 @@ export const MediaPicker = ({ value, onChange, label = "Image", cropAspect = 16 
                 <button
                   key={m.id} type="button"
                   onClick={() => { onChange(m.public_url); setOpen(false); }}
-                  className="aspect-square rounded-lg overflow-hidden border border-white/5 hover:border-accent transition-colors"
+                  className="aspect-square rounded-lg overflow-hidden border border-foreground/5 hover:border-accent transition-colors"
                 >
                   <img src={m.public_url} alt={m.file_name} className="w-full h-full object-cover" />
                 </button>
@@ -206,7 +206,7 @@ export const MediaPicker = ({ value, onChange, label = "Image", cropAspect = 16 
           {cropUrl && (
             <div className="space-y-5">
               <div
-                className="relative mx-auto w-full max-w-2xl overflow-hidden rounded-xl border border-white/10 bg-black"
+                className="relative mx-auto w-full max-w-2xl overflow-hidden rounded-xl border border-foreground/10 bg-foreground"
                 style={{ aspectRatio: cropAspect }}
               >
                 <img
@@ -218,7 +218,7 @@ export const MediaPicker = ({ value, onChange, label = "Image", cropAspect = 16 
                     transformOrigin: "center",
                   }}
                 />
-                <div className="pointer-events-none absolute inset-0 border-2 border-white/50" />
+                <div className="pointer-events-none absolute inset-0 border-2 border-foreground/50" />
               </div>
 
               <div className="grid gap-4 md:grid-cols-3">
@@ -242,7 +242,7 @@ export const MediaPicker = ({ value, onChange, label = "Image", cropAspect = 16 
                 </div>
               </div>
 
-              <div className="flex flex-wrap justify-end gap-2 border-t border-white/10 pt-4">
+              <div className="flex flex-wrap justify-end gap-2 border-t border-foreground/10 pt-4">
                 <Button type="button" variant="ghost" onClick={resetCrop}>Cancel</Button>
                 <Button type="button" variant="glass" disabled={uploading} onClick={uploadOriginal}>
                   <Upload className="h-4 w-4" /> Upload original

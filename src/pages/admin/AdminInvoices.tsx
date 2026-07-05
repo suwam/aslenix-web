@@ -206,7 +206,7 @@ const AdminInvoices = () => {
             ))}
           </div>
           <div><Label>Notes</Label><Textarea rows={2} value={inv.notes ?? ""} onChange={(e) => setInv({ ...inv, notes: e.target.value })} /></div>
-          <div className="flex items-center justify-between border-t border-white/5 pt-3">
+          <div className="flex items-center justify-between border-t border-foreground/5 pt-3">
             <div className="text-sm">
               <div>Subtotal: <strong>{inv.currency} {subtotal.toFixed(2)}</strong></div>
               <div>Tax: <strong>{inv.currency} {taxAmount.toFixed(2)}</strong></div>
@@ -219,7 +219,7 @@ const AdminInvoices = () => {
 
       <div className="gradient-border glass rounded-2xl overflow-hidden">
         <table className="w-full text-sm">
-          <thead className="bg-white/5 text-xs uppercase text-muted-foreground">
+          <thead className="bg-foreground/5 text-xs uppercase text-muted-foreground">
             <tr>
               <th className="text-left p-3">Number</th>
               <th className="text-left p-3">Client</th>
@@ -232,7 +232,7 @@ const AdminInvoices = () => {
           </thead>
           <tbody>
             {rows.map((r) => (
-              <tr key={r.id} className="border-t border-white/5 hover:bg-white/5">
+              <tr key={r.id} className="border-t border-foreground/5 hover:bg-foreground/5">
                 <td className="p-3 font-mono text-xs">{r.invoice_number}</td>
                 <td className="p-3">{r.clients?.company_name ?? "—"}</td>
                 <td className="p-3 text-xs text-muted-foreground">{r.issue_date}</td>

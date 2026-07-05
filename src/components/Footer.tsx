@@ -61,7 +61,7 @@ export const Footer = ({ onOpenPrivacy, onOpenTerms }: FooterProps) => {
     .filter((social) => social.href);
 
   return (
-    <footer className="relative pt-20 pb-8 border-t border-white/5">
+    <footer className="relative pt-20 pb-8 border-t border-foreground/5">
       <div className="absolute inset-x-0 top-0 h-px bg-brand-gradient opacity-50" />
       <div className="absolute inset-x-0 -top-40 h-[300px] bg-brand-gradient opacity-[0.06] blur-[120px] -z-10" />
 
@@ -73,7 +73,7 @@ export const Footer = ({ onOpenPrivacy, onOpenTerms }: FooterProps) => {
               ASLENIX is a digital design and development studio in Nepal focusing on web development,
               mobile applications, artificial intelligence products, and brand innovations.
             </p>
-            <div className="space-y-2.5 text-base border-y border-white/5 py-4 sm:border-b-0 sm:pb-0">
+            <div className="space-y-2.5 text-base border-y border-foreground/5 py-4 sm:border-b-0 sm:pb-0">
               <a href="mailto:info.aslenix.np@gmail.com" className="group flex items-center gap-2 text-muted-foreground hover:text-accent transition-colors">
                 <Mail className="h-4 w-4" /> info.aslenix.np@gmail.com
               </a>
@@ -109,7 +109,7 @@ export const Footer = ({ onOpenPrivacy, onOpenTerms }: FooterProps) => {
                       target="_blank"
                       rel="noopener noreferrer"
                       aria-label={s.label}
-                      className="group flex h-9 w-9 items-center justify-center rounded-full border border-white/10 bg-white/[0.03] text-muted-foreground transition-all duration-300 hover:-translate-y-0.5 hover:border-accent/50 hover:bg-brand-gradient hover:text-white hover:shadow-[0_10px_28px_-16px_hsl(var(--accent)/0.9)]"
+                      className="group flex h-9 w-9 items-center justify-center rounded-full border border-foreground/10 bg-foreground/[0.03] text-muted-foreground transition-all duration-300 hover:-translate-y-0.5 hover:border-accent/50 hover:bg-brand-gradient hover:text-foreground hover:shadow-[0_10px_28px_-16px_hsl(var(--accent)/0.9)]"
                     >
                       <s.icon className="h-4 w-4 transition-transform duration-300 group-hover:scale-110" />
                     </a>
@@ -135,7 +135,7 @@ export const Footer = ({ onOpenPrivacy, onOpenTerms }: FooterProps) => {
           ))}
         </div>
 
-        <div className="relative pt-8 border-t border-white/5 flex flex-col items-center gap-4 text-sm text-muted-foreground sm:min-h-12 sm:justify-center">
+        <div className="relative pt-8 border-t border-foreground/5 flex flex-col items-center gap-4 text-sm text-muted-foreground sm:min-h-12 sm:justify-center">
           <div className="text-gradient text-center font-semibold">
             © {new Date().getFullYear()} ASLENIX. Crafted with vision in Nepal.
           </div>

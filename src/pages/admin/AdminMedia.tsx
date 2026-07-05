@@ -61,7 +61,7 @@ const AdminMedia = () => {
       ) : (
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3">
           {items.map((m) => (
-            <div key={m.id} className="group relative aspect-square rounded-xl overflow-hidden border border-white/5">
+            <div key={m.id} className="group relative aspect-square rounded-xl overflow-hidden border border-foreground/5">
               <img src={m.public_url} alt={m.file_name} className="w-full h-full object-cover" />
               <div className="absolute inset-0 bg-background/80 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col items-center justify-center gap-1 p-2">
                 <div className="text-[10px] text-center truncate w-full">{m.file_name}</div>

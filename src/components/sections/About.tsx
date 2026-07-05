@@ -55,92 +55,128 @@ export const About = () => {
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            <div className="inline-block px-3 py-1 glass rounded-full text-xs font-medium text-accent mb-6">
+            <div className="inline-block px-4 py-1.5 border border-slate-200 bg-white rounded-full text-xs font-bold tracking-wider text-slate-900 shadow-sm mb-6 uppercase">
               ABOUT ASLENIX
             </div>
-            <h2 className="font-display text-4xl sm:text-5xl font-bold leading-tight mb-6">
-              A modern technology studio building the <span className="text-gradient">future of digital</span>
+            <h2 className="font-display text-4xl sm:text-5xl font-bold leading-tight mb-6 text-slate-900">
+              A modern technology studio building the <span className="text-slate-500 italic font-medium">future of digital</span>
             </h2>
-            <p className="text-muted-foreground text-lg leading-relaxed mb-4">
+            <p className="text-slate-600 text-lg leading-relaxed mb-5">
               ASLENIX is a Nepal-born digital company crafting websites, mobile apps,
               custom software, brand identities, and AI-powered solutions for
               ambitious teams worldwide.
             </p>
-            <p className="text-muted-foreground leading-relaxed">
+            <p className="text-slate-500 leading-relaxed mb-5">
               We blend strategy, design, and engineering into one seamless studio —
               shipping products that look stunning, perform beautifully, and grow with
               your business.
             </p>
+            <p className="text-slate-500 leading-relaxed mb-5">
+              Our technological arsenal is built on modern, scalable foundations. We leverage the power of industry-leading frameworks to build lightning-fast interfaces, while engineering robust cloud infrastructures designed to handle enterprise-level traffic without breaking a sweat.
+            </p>
+            <p className="text-slate-500 leading-relaxed">
+              Beyond traditional software, our proprietary AI and automation solutions empower businesses to optimize their workflows, uncover data-driven insights, and stay miles ahead of the competition in an increasingly automated world.
+            </p>
           </motion.div>
 
           <div className="space-y-4">
-            {pillars.map((p, i) => (
-              <motion.div
-                key={p.title}
-                initial={{ opacity: 0, x: 30 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: i * 0.1 }}
-                className="glass gradient-border rounded-2xl p-6 glow-hover"
-              >
-                <div className="flex items-start gap-4">
-                  <div className="shrink-0 w-12 h-12 rounded-xl bg-brand-gradient flex items-center justify-center shadow-[0_0_30px_hsl(var(--accent)/0.4)]">
-                    <p.icon className="h-5 w-5 text-white" />
+            {pillars.map((p, i) => {
+              const colors = [
+                { name: "green", bgHover: "hover:shadow-emerald-500/10", gradient: "from-emerald-500/10", iconBox: "border-emerald-500/20", text: "text-emerald-500" },
+                { name: "rose", bgHover: "hover:shadow-rose-500/10", gradient: "from-rose-500/10", iconBox: "border-rose-500/20", text: "text-rose-500" },
+                { name: "blue", bgHover: "hover:shadow-blue-500/10", gradient: "from-blue-500/10", iconBox: "border-blue-500/20", text: "text-blue-500" },
+              ];
+              const theme = colors[i % colors.length];
+              return (
+                <motion.div
+                  key={p.title}
+                  initial={{ opacity: 0, x: 30 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: i * 0.1 }}
+                  className={`group relative bg-white rounded-2xl p-7 text-left w-full border border-slate-100 shadow-[0_2px_10px_rgba(0,0,0,0.02)] hover:-translate-y-1 transition-all duration-300 ${theme.bgHover} overflow-hidden`}
+                >
+                  <div className={`absolute inset-0 bg-gradient-to-b ${theme.gradient} to-transparent pointer-events-none opacity-60`} />
+                  
+                  <div className="relative z-10">
+                    <div className="flex justify-between items-start mb-5">
+                      <div className={`w-12 h-12 rounded-xl bg-white border ${theme.iconBox} flex items-center justify-center transition-transform group-hover:scale-105 duration-300 shadow-sm`}>
+                        <p.icon className={`h-5 w-5 ${theme.text}`} />
+                      </div>
+                      <div className={`text-[10px] font-bold tracking-widest uppercase ${theme.text} opacity-80 mt-1`}>
+                        CORE
+                      </div>
+                    </div>
+                    <h3 className="text-xl font-bold font-sans text-slate-900 mb-1">{p.title}</h3>
+                    <div className={`text-sm font-semibold ${theme.text} mb-3`}>Our Identity</div>
+                    <p className="text-[13px] text-slate-500 leading-relaxed mb-1">{p.text}</p>
                   </div>
-                  <div>
-                    <h3 className="font-display text-xl font-semibold mb-2">{p.title}</h3>
-                    <p className="text-sm text-muted-foreground leading-relaxed">{p.text}</p>
-                  </div>
-                </div>
-              </motion.div>
-            ))}
+                </motion.div>
+              );
+            })}
           </div>
         </div>
 
-        <div className="mt-16">
+        <div className="mt-20">
           <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
             <div>
-              <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm font-medium text-muted-foreground">
-                <Users className="w-4 h-4 text-accent" />
+              <div className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-4 py-2 text-sm font-bold tracking-wide text-slate-900 shadow-sm uppercase">
+                <Users className="w-4 h-4 text-slate-900" />
                 Team & Leadership
               </div>
-              <h3 className="font-display text-3xl sm:text-4xl font-bold mt-4">
+              <h3 className="font-display text-3xl sm:text-4xl font-bold mt-6 text-slate-900">
                 Built by focused digital leaders, designers, and engineers.
               </h3>
             </div>
-            <p className="max-w-2xl text-sm leading-6 text-muted-foreground">
+            <p className="max-w-2xl text-sm leading-6 text-slate-600">
               Every team member is chosen for deep product experience, technical craft,
               and a pragmatic approach to scaling modern businesses.
             </p>
           </div>
 
           {team.length > 0 ? (
-            <div className="mt-10 grid gap-6 sm:grid-cols-2 xl:grid-cols-3">
-              {team.map((member) => (
-                <div key={member.id} className="glass gradient-border rounded-3xl p-6 transition hover:-translate-y-1">
-                  <div className="flex items-center gap-4 mb-5">
-                    {member.photo_url ? (
-                      <img src={member.photo_url} alt={member.name} className="h-16 w-16 rounded-3xl object-cover" />
-                    ) : (
-                      <div className="flex h-16 w-16 items-center justify-center rounded-3xl bg-white/5 text-xl font-semibold text-white/90">
-                        {member.name
-                          .split(" ")
-                          .map((part) => part[0])
-                          .slice(0, 2)
-                          .join("")}
+            <div className="mt-12 grid gap-6 sm:grid-cols-2 xl:grid-cols-3">
+              {team.map((member, i) => {
+                const colors = [
+                  { name: "cyan", bgHover: "hover:shadow-cyan-500/10", gradient: "from-cyan-500/10", iconBox: "border-cyan-500/20", text: "text-cyan-500" },
+                  { name: "amber", bgHover: "hover:shadow-amber-500/10", gradient: "from-amber-500/10", iconBox: "border-amber-500/20", text: "text-amber-500" },
+                  { name: "purple", bgHover: "hover:shadow-purple-500/10", gradient: "from-purple-500/10", iconBox: "border-purple-500/20", text: "text-purple-500" },
+                  { name: "indigo", bgHover: "hover:shadow-indigo-500/10", gradient: "from-indigo-500/10", iconBox: "border-indigo-500/20", text: "text-indigo-500" },
+                  { name: "orange", bgHover: "hover:shadow-orange-500/10", gradient: "from-orange-500/10", iconBox: "border-orange-500/20", text: "text-orange-500" },
+                ];
+                const theme = colors[i % colors.length];
+                return (
+                  <div key={member.id} className={`group relative bg-white rounded-2xl p-7 text-left w-full border border-slate-100 shadow-[0_2px_10px_rgba(0,0,0,0.02)] hover:-translate-y-1 transition-all duration-300 ${theme.bgHover} overflow-hidden`}>
+                    <div className={`absolute inset-0 bg-gradient-to-b ${theme.gradient} to-transparent pointer-events-none opacity-60`} />
+                    
+                    <div className="relative z-10">
+                      <div className="flex justify-between items-start mb-5">
+                        {member.photo_url ? (
+                          <img src={member.photo_url} alt={member.name} className={`h-14 w-14 rounded-xl object-cover border ${theme.iconBox} shadow-sm transition-transform group-hover:scale-105 duration-500`} />
+                        ) : (
+                          <div className={`flex h-14 w-14 items-center justify-center rounded-xl bg-white border ${theme.iconBox} text-xl font-bold ${theme.text} shadow-sm transition-transform group-hover:scale-105 duration-500`}>
+                            {member.name
+                              .split(" ")
+                              .map((part) => part[0])
+                              .slice(0, 2)
+                              .join("")}
+                          </div>
+                        )}
+                        <div className={`text-[10px] font-bold tracking-widest uppercase ${theme.text} opacity-80 mt-1`}>
+                          LEADERSHIP
+                        </div>
                       </div>
-                    )}
-                    <div>
-                      <p className="text-sm uppercase tracking-[0.24em] text-muted-foreground/80">{member.role}</p>
-                      <h4 className="text-xl font-semibold text-white">{member.name}</h4>
+                      
+                      <h3 className="text-xl font-bold font-sans text-slate-900 mb-1">{member.name}</h3>
+                      <div className={`text-sm font-semibold ${theme.text} mb-3 uppercase tracking-wider text-[11px]`}>{member.role}</div>
+                      <p className="text-[13px] leading-relaxed text-slate-500 mb-1">{member.bio || "Experienced digital specialist focused on building premium product experiences."}</p>
                     </div>
                   </div>
-                  <p className="text-sm leading-6 text-muted-foreground">{member.bio || "Experienced digital specialist focused on building premium product experiences."}</p>
-                </div>
-              ))}
+                );
+              })}
             </div>
           ) : (
-            <div className="mt-10 rounded-3xl border border-white/10 bg-white/5 p-8 text-center text-sm text-muted-foreground">
+            <div className="mt-12 rounded-3xl border border-slate-200 bg-white shadow-sm p-12 text-center text-sm font-medium text-slate-500">
               Team details will appear here once added through the admin panel.
             </div>
           )}

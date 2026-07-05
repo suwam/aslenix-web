@@ -61,7 +61,7 @@ export const SiteAnnouncement = () => {
   return (
     <>
       {banner && (
-        <div className="sticky top-0 z-[60] bg-brand-gradient text-white text-sm">
+        <div className="sticky top-0 z-[60] bg-brand-gradient text-foreground text-sm">
           <div className="container flex items-center justify-center gap-3 py-2 text-center">
             <Megaphone className="w-4 h-4 shrink-0" />
             <span>{banner.message}</span>

@@ -93,7 +93,7 @@ const AdminChangePassword = () => {
         className="max-w-xl mx-auto"
       >
         <div className="mb-8">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full glass border border-white/10 mb-4">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full glass border border-foreground/10 mb-4">
             <ShieldCheck className="w-4 h-4 text-accent" />
             <span className="text-xs font-medium tracking-wider uppercase text-muted-foreground">
               Account Security
@@ -107,7 +107,7 @@ const AdminChangePassword = () => {
           </p>
         </div>
 
-        <form onSubmit={handleSubmit} className="glass rounded-2xl p-6 md:p-8 border border-white/10 space-y-5">
+        <form onSubmit={handleSubmit} className="glass rounded-2xl p-6 md:p-8 border border-foreground/10 space-y-5">
           {[
             { id: "current", label: "Current password", value: currentPassword, setter: setCurrentPassword, autoComplete: "current-password" },
             { id: "new", label: "New password", value: newPassword, setter: setNewPassword, autoComplete: "new-password" },
@@ -123,7 +123,7 @@ const AdminChangePassword = () => {
                   autoComplete={f.autoComplete}
                   value={f.value}
                   onChange={(e) => f.setter(e.target.value)}
-                  className="pl-10 pr-10 h-11 bg-background/40 border-white/10 focus-visible:ring-accent"
+                  className="pl-10 pr-10 h-11 bg-background/40 border-foreground/10 focus-visible:ring-accent"
                   required
                 />
               </div>

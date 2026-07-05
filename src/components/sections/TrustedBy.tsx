@@ -43,7 +43,7 @@ export const TrustedBy = () => {
       <div className="container relative z-10">
         <div className="text-center mb-6">
           <p className="font-mono text-sm sm:text-base tracking-[0.25em] uppercase">
-            <span className="text-white font-semibold">PREMIUM PARTNERS</span>
+            <span className="text-foreground font-semibold">PREMIUM PARTNERS</span>
           </p>
         </div>
       </div>
@@ -53,7 +53,7 @@ export const TrustedBy = () => {
         <div className="pointer-events-none absolute inset-y-0 left-0 w-20 sm:w-32 z-20 bg-gradient-to-r from-background to-transparent" />
         <div className="pointer-events-none absolute inset-y-0 right-0 w-20 sm:w-32 z-20 bg-gradient-to-l from-background to-transparent" />
 
-        <div className="pointer-events-none absolute left-1/2 top-1/2 h-20 w-[115%] -translate-x-1/2 -translate-y-1/2 rounded-full border border-white/10 bg-[linear-gradient(90deg,rgba(255,45,146,0.18),rgba(209,59,255,0.12),rgba(59,130,246,0.16),rgba(255,45,146,0.18))] shadow-[0_20px_90px_-42px_rgba(255,45,146,0.8)] blur-[0.5px]" />
+        <div className="pointer-events-none absolute left-1/2 top-1/2 h-20 w-[115%] -translate-x-1/2 -translate-y-1/2 rounded-full border border-foreground/10 bg-[linear-gradient(90deg,rgba(255,45,146,0.18),rgba(209,59,255,0.12),rgba(59,130,246,0.16),rgba(255,45,146,0.18))] shadow-[0_20px_90px_-42px_rgba(255,45,146,0.8)] blur-[0.5px]" />
 
         <div className="flex w-max animate-marquee items-center gap-8 px-8 [animation-duration:30s] group-hover:[animation-play-state:paused]">
           {row.map((b, i) => {
@@ -66,7 +66,8 @@ export const TrustedBy = () => {
                            transition-all duration-500
                            group-hover/logo:scale-105
                            group-hover/logo:drop-shadow-[0_0_18px_hsl(var(--accent)/0.85)]"
-                loading="lazy"
+                fetchpriority="high"
+                decoding="async"
               />
             ) : (
               <span
@@ -80,7 +81,7 @@ export const TrustedBy = () => {
             return (
               <div
                 key={`${b.id}-${i}`}
-                className="group/logo relative flex h-16 min-w-40 shrink-0 items-center justify-center overflow-hidden rounded-full border border-white/12 bg-[#151120]/75 px-8 shadow-[0_18px_55px_-35px_rgba(255,45,146,0.8)] backdrop-blur-xl transition hover:border-accent/45 hover:bg-white/[0.08] sm:min-w-48 sm:px-10"
+                className="group/logo relative flex h-16 min-w-40 shrink-0 items-center justify-center overflow-hidden rounded-full border border-foreground/12 bg-[#151120]/75 px-8 shadow-[0_18px_55px_-35px_rgba(255,45,146,0.8)] backdrop-blur-xl transition hover:border-accent/45 hover:bg-foreground/[0.08] sm:min-w-48 sm:px-10"
                 title={b.name}
               >
                 <div className="absolute inset-0 bg-brand-gradient opacity-10 transition group-hover/logo:opacity-20" />

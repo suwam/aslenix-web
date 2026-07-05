@@ -195,7 +195,7 @@ const AdminProposals = () => {
           <div className="space-y-2 text-sm">
             <div className="flex justify-between"><span className="text-muted-foreground">Subtotal</span><span>${subtotal.toFixed(2)}</span></div>
             <div className="flex justify-between"><span className="text-muted-foreground">Tax ({taxPct}%)</span><span>${tax.toFixed(2)}</span></div>
-            <div className="flex justify-between border-t border-white/10 pt-2 font-bold text-base"><span>Total</span><span className="text-gradient">${total.toFixed(2)}</span></div>
+            <div className="flex justify-between border-t border-foreground/10 pt-2 font-bold text-base"><span>Total</span><span className="text-gradient">${total.toFixed(2)}</span></div>
           </div>
           <Button onClick={exportPdf} variant="hero" className="w-full mt-6"><FileDown className="w-4 h-4" /> Export PDF</Button>
         </div>

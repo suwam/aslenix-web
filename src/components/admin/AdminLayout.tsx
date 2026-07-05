@@ -24,10 +24,10 @@ export const AdminLayout = ({ children }: { children: ReactNode }) => {
 
   return (
     <div className="min-h-screen bg-background text-foreground relative overflow-hidden">
-      <div className="absolute top-0 -left-40 w-[500px] h-[500px] rounded-full bg-primary/10 blur-[140px] pointer-events-none" />
-      <div className="absolute bottom-0 -right-40 w-[500px] h-[500px] rounded-full bg-accent/10 blur-[140px] pointer-events-none" />
 
-      <header className="relative z-10 border-b border-white/5 glass">
+
+
+      <header className="relative z-10 border-b border-foreground/5 glass">
         <div className="container flex items-center justify-between h-16">
           <div className="flex items-center gap-8">
             <Logo />
@@ -40,8 +40,8 @@ export const AdminLayout = ({ children }: { children: ReactNode }) => {
                     to={n.to}
                     className={`flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium transition-all ${
                       active
-                        ? "bg-brand-gradient text-white shadow-[0_8px_24px_-8px_hsl(var(--accent)/0.6)]"
-                        : "text-muted-foreground hover:text-foreground hover:bg-white/5"
+                        ? "bg-brand-gradient text-foreground shadow-[0_8px_24px_-8px_hsl(var(--accent)/0.6)]"
+                        : "text-muted-foreground hover:text-foreground hover:bg-foreground/5"
                     }`}
                   >
                     <n.icon className="w-4 h-4" />
@@ -57,7 +57,7 @@ export const AdminLayout = ({ children }: { children: ReactNode }) => {
         </div>
 
         {/* Mobile nav */}
-        <div className="md:hidden border-t border-white/5">
+        <div className="md:hidden border-t border-foreground/5">
           <div className="container flex gap-1 py-2 overflow-x-auto">
             {nav.map((n) => {
               const active = pathname === n.to;
@@ -67,7 +67,7 @@ export const AdminLayout = ({ children }: { children: ReactNode }) => {
                   to={n.to}
                   className={`flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-medium whitespace-nowrap transition-all ${
                     active
-                      ? "bg-brand-gradient text-white"
+                      ? "bg-brand-gradient text-foreground"
                       : "text-muted-foreground hover:text-foreground"
                   }`}
                 >

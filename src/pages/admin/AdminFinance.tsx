@@ -144,7 +144,7 @@ const AdminFinance = () => {
           <thead className="text-xs uppercase text-muted-foreground"><tr><th className="text-left p-2">Reference</th><th className="text-left p-2">Method</th><th className="text-left p-2">Status</th><th className="text-right p-2">Amount</th><th className="text-right p-2">Date</th></tr></thead>
           <tbody>
             {tx.slice(0, 12).map((t) => (
-              <tr key={t.id} className="border-t border-white/5">
+              <tr key={t.id} className="border-t border-foreground/5">
                 <td className="p-2 font-mono text-xs">{t.reference_id}</td>
                 <td className="p-2 capitalize">{t.method}</td>
                 <td className="p-2"><span className={`text-[10px] px-2 py-0.5 rounded-full uppercase ${t.status === "success" ? "bg-green-500/20 text-green-400" : t.status === "failed" ? "bg-destructive/20 text-destructive" : "bg-yellow-500/20 text-yellow-400"}`}>{t.status}</span></td>

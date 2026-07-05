@@ -42,7 +42,7 @@ const AdminBlogs = () => {
             {items.length === 0 ? (
               <tr><td colSpan={4} className="text-center py-12 text-muted-foreground">No posts yet</td></tr>
             ) : items.map((b) => (
-              <tr key={b.id} className="hover:bg-white/5">
+              <tr key={b.id} className="hover:bg-foreground/5">
                 <td className="px-4 py-3">
                   <div className="font-medium">{b.title}</div>
                   <div className="text-xs text-muted-foreground">/{b.slug}</div>

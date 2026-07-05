@@ -11,12 +11,12 @@ const buttonVariants = cva(
       variant: {
         default: "bg-primary text-primary-foreground hover:bg-primary/90",
         destructive: "bg-destructive text-destructive-foreground hover:bg-destructive/90",
-        outline: "border border-white/10 bg-background/80 text-foreground hover:bg-white/5 hover:border-accent/40 hover:text-white shadow-[0_0_18px_-5px_rgba(59,130,246,0.2)]",
-        secondary: "bg-[#2b0b2f] text-white hover:bg-[#3d1d53] shadow-[0_15px_35px_-20px_rgba(255,79,216,0.35)]",
-        ghost: "hover:bg-white/5 hover:text-foreground",
+        outline: "border border-foreground/10 bg-background/80 text-foreground hover:bg-foreground/5 hover:border-accent/40 hover:text-foreground shadow-[0_0_18px_-5px_rgba(186,230,253,0.3)]",
+        secondary: "bg-background border border-foreground/10 text-foreground hover:bg-foreground/5 shadow-[0_15px_35px_-20px_rgba(233,213,255,0.4)]",
+        ghost: "hover:bg-foreground/5 hover:text-foreground",
         link: "text-primary underline-offset-4 hover:underline",
-        hero: "relative bg-gradient-to-r from-[#ff2d92] via-[#d13bff] to-[#3b82f6] text-white shadow-[0_14px_50px_-16px_rgba(255,79,216,0.45)] hover:shadow-[0_20px_70px_-22px_rgba(255,79,216,0.55)] hover:-translate-y-0.5 hover:scale-[1.02] before:absolute before:inset-0 before:rounded-full before:bg-gradient-to-r before:from-[#ff2d92] before:via-[#d13bff] before:to-[#3b82f6] before:opacity-0 hover:before:opacity-80 before:blur-2xl before:-z-10 before:transition-opacity",
-        glass: "glass border border-white/10 text-foreground hover:border-accent/40 hover:bg-white/5 hover:shadow-[0_0_30px_-5px_hsl(var(--accent)/0.4)]",
+        hero: "relative bg-brand-gradient text-foreground shadow-[0_14px_50px_-16px_rgba(186,230,253,0.6)] hover:shadow-[0_20px_70px_-22px_rgba(233,213,255,0.7)] hover:-translate-y-0.5 hover:scale-[1.02] before:absolute before:inset-0 before:rounded-full before:bg-brand-gradient before:opacity-0 hover:before:opacity-80 before:blur-2xl before:-z-10 before:transition-opacity",
+        glass: "glass border border-foreground/10 text-foreground hover:border-accent/40 hover:bg-foreground/5 hover:shadow-[0_0_30px_-5px_hsl(var(--accent)/0.4)]",
       },
       size: {
         default: "h-10 px-5 py-2",
@@ -39,9 +39,45 @@ export interface ButtonProps
 }
 
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ className, variant, size, asChild = false, ...props }, ref) => {
-    const Comp = asChild ? Slot : "button";
-    return <Comp className={cn(buttonVariants({ variant, size, className }))} ref={ref} {...props} />;
+  ({ className, variant, size, asChild = false, onClick, disabled, children, ...props }, ref) => {
+    const [isLoading, setIsLoading] = React.useState(false);
+
+    const handleClick = async (e: React.MouseEvent<HTMLButtonElement>) => {
+      if (!onClick) return;
+      const result = onClick(e);
+      if (result instanceof Promise) {
+        setIsLoading(true);
+        try {
+          await result;
+        } finally {
+          // Check if component is still mounted (simple way: just set state, React 18 handles unmounted state updates fine)
+          setIsLoading(false);
+        }
+      }
+    };
+
+    if (asChild) {
+      return (
+        <Slot className={cn(buttonVariants({ variant, size, className }))} ref={ref as any} onClick={onClick} {...props}>
+          {children}
+        </Slot>
+      );
+    }
+
+    return (
+      <button
+        className={cn(buttonVariants({ variant, size, className }))}
+        ref={ref}
+        onClick={handleClick}
+        disabled={disabled || isLoading}
+        {...props}
+      >
+        {isLoading && (
+          <span className="mr-2 h-4 w-4 shrink-0 rounded-full border-2 border-current border-t-transparent animate-spin" />
+        )}
+        {children}
+      </button>
+    );
   },
 );
 Button.displayName = "Button";

@@ -73,7 +73,7 @@ export const Projects = () => {
             {tabs.map((t) => (
               <button key={t} onClick={() => setActive(t)}
                 className={`px-4 py-2 text-sm font-medium rounded-full border transition-all duration-300 ${
-                  active === t ? "bg-brand-gradient text-white border-transparent shadow-[0_0_30px_hsl(var(--accent)/0.4)]" : "glass text-muted-foreground hover:text-foreground border-white/5"
+                  active === t ? "bg-brand-gradient text-foreground border-transparent shadow-[0_0_30px_hsl(var(--accent)/0.4)]" : "glass text-muted-foreground hover:text-foreground border-foreground/5"
                 }`}>{t}</button>
             ))}
           </div>
@@ -94,7 +94,7 @@ export const Projects = () => {
                   )}
                   <div className="absolute inset-0 bg-gradient-to-t from-background via-background/40 to-transparent" />
                   <div className="absolute top-4 right-4 w-10 h-10 rounded-full bg-brand-gradient flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-500">
-                    <ArrowUpRight className="h-4 w-4 text-white" />
+                    <ArrowUpRight className="h-4 w-4 text-foreground" />
                   </div>
                 </div>
                 <div className="p-6">
@@ -166,7 +166,7 @@ const ProjectDetailModal = ({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-[1180px] w-[95vw] max-h-[92vh] overflow-y-auto p-0 bg-card/95 backdrop-blur-2xl border-white/10 shadow-[0_30px_120px_-45px_hsl(var(--accent)/0.45)] [&>button]:hidden">
+      <DialogContent className="max-w-[1180px] w-[95vw] max-h-[92vh] overflow-y-auto p-0 bg-card/95 backdrop-blur-2xl border-foreground/10 shadow-[0_30px_120px_-45px_hsl(var(--accent)/0.45)] [&>button]:hidden">
         <DialogTitle className="sr-only">{project?.title ?? "Project details"}</DialogTitle>
         <DialogDescription className="sr-only">{project?.short_description ?? ""}</DialogDescription>
 
@@ -174,7 +174,7 @@ const ProjectDetailModal = ({
           <div className="relative overflow-hidden">
             <div className="absolute inset-x-0 top-0 h-72 bg-brand-gradient opacity-[0.08] blur-[90px]" />
 
-            <header className="relative z-10 flex items-center justify-between gap-4 border-b border-white/10 px-5 py-4 sm:px-8">
+            <header className="relative z-10 flex items-center justify-between gap-4 border-b border-foreground/10 px-5 py-4 sm:px-8">
               <div className="min-w-0">
                 <div className="text-xs font-medium uppercase tracking-[0.24em] text-accent">Project Showcase</div>
                 <div className="mt-1 truncate font-display text-lg font-semibold text-foreground">{project.title}</div>
@@ -182,7 +182,7 @@ const ProjectDetailModal = ({
               <button
                 type="button"
                 onClick={() => onOpenChange(false)}
-                className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-white/10 bg-white/[0.03] text-muted-foreground transition-all duration-300 hover:-translate-y-0.5 hover:border-accent/50 hover:bg-white/[0.06] hover:text-foreground"
+                className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-foreground/10 bg-foreground/[0.03] text-muted-foreground transition-all duration-300 hover:-translate-y-0.5 hover:border-accent/50 hover:bg-foreground/[0.06] hover:text-foreground"
                 aria-label="Close project details"
               >
                 <X className="h-4 w-4" />
@@ -238,7 +238,7 @@ const ProjectDetailModal = ({
 
                 <div className="relative">
                   <div className="absolute -inset-4 rounded-[2rem] bg-brand-gradient opacity-20 blur-2xl" />
-                  <div className="relative overflow-hidden rounded-3xl border border-white/10 bg-white/[0.03] p-3 shadow-[0_30px_100px_-50px_rgba(0,0,0,0.9)]">
+                  <div className="relative overflow-hidden rounded-3xl border border-foreground/10 bg-foreground/[0.03] p-3 shadow-[0_30px_100px_-50px_rgba(0,0,0,0.9)]">
                     <div className="mb-3 flex items-center gap-2 px-1">
                       <span className="h-2.5 w-2.5 rounded-full bg-secondary" />
                       <span className="h-2.5 w-2.5 rounded-full bg-accent" />
@@ -264,7 +264,7 @@ const ProjectDetailModal = ({
               </section>
 
               <section>
-                <div className="mb-5 flex items-end justify-between gap-4 border-b border-white/10 pb-4">
+                <div className="mb-5 flex items-end justify-between gap-4 border-b border-foreground/10 pb-4">
                   <div>
                     <div className="text-xs font-medium uppercase tracking-[0.2em] text-accent">Overview</div>
                     <h4 className="mt-2 font-display text-2xl font-semibold">Built for clarity, speed, and trust</h4>
@@ -289,7 +289,7 @@ const ProjectDetailModal = ({
                 <section>
                   <div className="mb-4 flex items-center gap-3">
                     <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-brand-gradient">
-                      <Cpu className="h-4 w-4 text-white" />
+                      <Cpu className="h-4 w-4 text-foreground" />
                     </div>
                     <h4 className="font-display text-2xl font-semibold">Technology Stack</h4>
                   </div>
@@ -320,7 +320,7 @@ const ProjectDetailModal = ({
                 {gallery.length ? (
                   <div className="grid gap-4 md:grid-cols-3">
                     {gallery.map((src, index) => (
-                      <div key={`${src}-${index}`} className="group overflow-hidden rounded-2xl border border-white/10 bg-white/[0.03] p-2">
+                      <div key={`${src}-${index}`} className="group overflow-hidden rounded-2xl border border-foreground/10 bg-foreground/[0.03] p-2">
                         <div className="aspect-[4/3] overflow-hidden rounded-xl bg-muted">
                           <img
                             src={src}
@@ -332,13 +332,13 @@ const ProjectDetailModal = ({
                     ))}
                   </div>
                 ) : (
-                  <div className="rounded-2xl border border-white/10 bg-white/[0.03] p-8 text-center text-sm text-muted-foreground">
+                  <div className="rounded-2xl border border-foreground/10 bg-foreground/[0.03] p-8 text-center text-sm text-muted-foreground">
                     Screenshots will be added soon.
                   </div>
                 )}
               </section>
 
-              <section className="overflow-hidden rounded-3xl border border-white/10 bg-white/[0.03] p-6 sm:p-8">
+              <section className="overflow-hidden rounded-3xl border border-foreground/10 bg-foreground/[0.03] p-6 sm:p-8">
                 <div className="flex flex-col gap-5 sm:flex-row sm:items-center sm:justify-between">
                   <div>
                     <div className="text-xs font-medium uppercase tracking-[0.2em] text-accent">Next Project</div>
@@ -368,7 +368,7 @@ const ProjectDetailModal = ({
 };
 
 const ProjectMeta = ({ icon: Icon, label, value }: { icon: LucideIcon; label: string; value: string }) => (
-  <div className="rounded-2xl border border-white/10 bg-white/[0.03] p-4">
+  <div className="rounded-2xl border border-foreground/10 bg-foreground/[0.03] p-4">
     <div className="mb-1 flex items-center gap-2 text-xs font-medium uppercase tracking-wider text-muted-foreground">
       <Icon className="h-3.5 w-3.5 text-accent" />
       {label}
@@ -378,9 +378,9 @@ const ProjectMeta = ({ icon: Icon, label, value }: { icon: LucideIcon; label: st
 );
 
 const ProjectStat = ({ icon: Icon, label, value }: { icon: LucideIcon; label: string; value: string }) => (
-  <div className="group rounded-2xl border border-white/10 bg-white/[0.03] p-4 transition-all duration-300 hover:-translate-y-1 hover:border-accent/40 hover:bg-white/[0.05]">
+  <div className="group rounded-2xl border border-foreground/10 bg-foreground/[0.03] p-4 transition-all duration-300 hover:-translate-y-1 hover:border-accent/40 hover:bg-foreground/[0.05]">
     <div className="mb-4 flex h-10 w-10 items-center justify-center rounded-xl bg-brand-gradient shadow-[0_0_24px_hsl(var(--accent)/0.22)]">
-      <Icon className="h-4 w-4 text-white" />
+      <Icon className="h-4 w-4 text-foreground" />
     </div>
     <div className="text-xs font-medium uppercase tracking-wider text-muted-foreground">{label}</div>
     <div className="mt-1 font-display text-lg font-semibold">{value}</div>
@@ -388,9 +388,9 @@ const ProjectStat = ({ icon: Icon, label, value }: { icon: LucideIcon; label: st
 );
 
 const FeatureCard = ({ icon: Icon, title, text }: { icon: LucideIcon; title: string; text: string }) => (
-  <div className="group rounded-2xl border border-white/10 bg-gradient-to-br from-white/[0.06] to-white/[0.02] p-5 transition-all duration-300 hover:-translate-y-1 hover:border-accent/40">
+  <div className="group rounded-2xl border border-foreground/10 bg-gradient-to-br from-white/[0.06] to-white/[0.02] p-5 transition-all duration-300 hover:-translate-y-1 hover:border-accent/40">
     <div className="mb-4 flex h-11 w-11 items-center justify-center rounded-2xl bg-brand-gradient shadow-[0_0_28px_hsl(var(--accent)/0.24)]">
-      <Icon className="h-5 w-5 text-white" />
+      <Icon className="h-5 w-5 text-foreground" />
     </div>
     <h5 className="font-display text-base font-semibold">{title}</h5>
     <p className="mt-2 text-sm leading-6 text-muted-foreground">{text}</p>

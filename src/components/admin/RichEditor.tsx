@@ -35,25 +35,25 @@ export const RichEditor = ({ value, onChange }: Props) => {
     <Button
       type="button" variant="ghost" size="sm" aria-label={label}
       onClick={on}
-      className={`h-8 w-8 p-0 ${active ? "bg-brand-gradient text-white" : ""}`}
+      className={`h-8 w-8 p-0 ${active ? "bg-brand-gradient text-foreground" : ""}`}
     >
       {children}
     </Button>
   );
 
   return (
-    <div className="border border-white/10 rounded-xl overflow-hidden bg-muted/20">
-      <div className="flex flex-wrap items-center gap-1 p-2 border-b border-white/5 bg-muted/40">
+    <div className="border border-foreground/10 rounded-xl overflow-hidden bg-muted/20">
+      <div className="flex flex-wrap items-center gap-1 p-2 border-b border-foreground/5 bg-muted/40">
         <Btn label="Bold" on={() => editor.chain().focus().toggleBold().run()} active={editor.isActive("bold")}><Bold className="w-3.5 h-3.5" /></Btn>
         <Btn label="Italic" on={() => editor.chain().focus().toggleItalic().run()} active={editor.isActive("italic")}><Italic className="w-3.5 h-3.5" /></Btn>
-        <div className="w-px h-5 bg-white/10 mx-1" />
+        <div className="w-px h-5 bg-foreground/10 mx-1" />
         <Btn label="H2" on={() => editor.chain().focus().toggleHeading({ level: 2 }).run()} active={editor.isActive("heading", { level: 2 })}><Heading2 className="w-3.5 h-3.5" /></Btn>
         <Btn label="H3" on={() => editor.chain().focus().toggleHeading({ level: 3 }).run()} active={editor.isActive("heading", { level: 3 })}><Heading3 className="w-3.5 h-3.5" /></Btn>
-        <div className="w-px h-5 bg-white/10 mx-1" />
+        <div className="w-px h-5 bg-foreground/10 mx-1" />
         <Btn label="Bullet list" on={() => editor.chain().focus().toggleBulletList().run()} active={editor.isActive("bulletList")}><List className="w-3.5 h-3.5" /></Btn>
         <Btn label="Numbered list" on={() => editor.chain().focus().toggleOrderedList().run()} active={editor.isActive("orderedList")}><ListOrdered className="w-3.5 h-3.5" /></Btn>
         <Btn label="Quote" on={() => editor.chain().focus().toggleBlockquote().run()} active={editor.isActive("blockquote")}><Quote className="w-3.5 h-3.5" /></Btn>
-        <div className="w-px h-5 bg-white/10 mx-1" />
+        <div className="w-px h-5 bg-foreground/10 mx-1" />
         <Btn label="Link" on={() => {
           const url = window.prompt("URL?");
           if (url) editor.chain().focus().extendMarkRange("link").setLink({ href: url }).run();

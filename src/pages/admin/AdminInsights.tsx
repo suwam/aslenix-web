@@ -42,7 +42,7 @@ const AdminInsights = () => {
               <h3 className="font-display text-lg mb-3">Suggested Social Posts</h3>
               <div className="space-y-3">
                 {data.insights.social_posts.map((p: string, i: number) => (
-                  <div key={i} className="bg-white/5 rounded-xl p-3 text-sm">{p}</div>
+                  <div key={i} className="bg-foreground/5 rounded-xl p-3 text-sm">{p}</div>
                 ))}
               </div>
             </div>

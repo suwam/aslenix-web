@@ -90,13 +90,13 @@ const AdminAnnouncements = () => {
         {rows.map((r) => (
           <div key={r.id} className="gradient-border glass rounded-2xl p-5 flex items-start gap-4">
             {r.poster_url ? (
-              <img src={r.poster_url} alt="" className="h-14 w-11 rounded-lg object-cover shrink-0 border border-white/10" />
+              <img src={r.poster_url} alt="" className="h-14 w-11 rounded-lg object-cover shrink-0 border border-foreground/10" />
             ) : (
               <Megaphone className="w-5 h-5 text-accent shrink-0 mt-1" />
             )}
             <div className="flex-1">
               <div className="flex items-center gap-2 mb-1">
-                <span className="text-[10px] uppercase px-2 py-0.5 rounded-full bg-white/5">{r.type}</span>
+                <span className="text-[10px] uppercase px-2 py-0.5 rounded-full bg-foreground/5">{r.type}</span>
                 {r.active ? <span className="text-[10px] uppercase px-2 py-0.5 rounded-full bg-green-500/20 text-green-400">Live</span>
                           : <span className="text-[10px] uppercase px-2 py-0.5 rounded-full bg-muted">Off</span>}
               </div>

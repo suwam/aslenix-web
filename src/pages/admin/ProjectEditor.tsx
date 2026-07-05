@@ -148,7 +148,7 @@ const ProjectEditor = () => {
             </Field>
             <Field label={`Progress: ${form.progress}%`}>
               <input type="range" min={0} max={100} value={form.progress} onChange={(e) => setForm({ ...form, progress: Number(e.target.value) })} className="w-full accent-primary" />
-              <div className="h-2 rounded-full bg-white/5 overflow-hidden">
+              <div className="h-2 rounded-full bg-foreground/5 overflow-hidden">
                 <div className="h-full bg-brand-gradient transition-all" style={{ width: `${form.progress}%` }} />
               </div>
             </Field>
@@ -216,7 +216,7 @@ const ProjectGalleryManager = ({ images, onChange }: { images: string[]; onChang
       {images.length > 0 ? (
         <div className="grid gap-3 sm:grid-cols-2">
           {images.map((image, index) => (
-            <div key={`${image}-${index}`} className="group relative overflow-hidden rounded-xl border border-white/10 bg-muted/20">
+            <div key={`${image}-${index}`} className="group relative overflow-hidden rounded-xl border border-foreground/10 bg-muted/20">
               <div className="aspect-video overflow-hidden">
                 <img src={image} alt={`Gallery image ${index + 1}`} className="h-full w-full object-cover" />
               </div>
@@ -238,13 +238,13 @@ const ProjectGalleryManager = ({ images, onChange }: { images: string[]; onChang
           ))}
         </div>
       ) : (
-        <div className="rounded-xl border border-dashed border-white/10 p-6 text-center">
+        <div className="rounded-xl border border-dashed border-foreground/10 p-6 text-center">
           <ImageIcon className="mx-auto mb-2 h-7 w-7 text-muted-foreground" />
           <div className="text-sm text-muted-foreground">No gallery images added yet</div>
         </div>
       )}
 
-      <div className="rounded-xl border border-white/10 bg-white/[0.02] p-4">
+      <div className="rounded-xl border border-foreground/10 bg-foreground/[0.02] p-4">
         <MediaPicker label="Add gallery image" value={null} onChange={addImage} cropAspect={16 / 10} />
       </div>
     </div>

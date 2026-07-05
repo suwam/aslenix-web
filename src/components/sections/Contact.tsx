@@ -59,6 +59,7 @@ export const Contact = () => {
 
   const submit = async (e: React.FormEvent) => {
     e.preventDefault();
+
     const parsed = schema.safeParse(form);
     if (!parsed.success) {
       toast.error(parsed.error.issues[0].message);
@@ -78,7 +79,6 @@ export const Contact = () => {
 
   return (
     <section id="contact" className="py-24 sm:py-32 relative">
-      <div className="absolute inset-x-0 top-0 h-[500px] bg-brand-gradient opacity-[0.05] blur-[150px] -z-10" />
       <div className="container">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -86,109 +86,84 @@ export const Contact = () => {
           viewport={{ once: true }}
           className="text-center max-w-2xl mx-auto mb-16"
         >
-          <div className="inline-block px-3 py-1 glass rounded-full text-xs font-medium text-accent mb-6">
+          <div className="inline-block px-4 py-1.5 border border-slate-200 bg-white rounded-full text-xs font-bold tracking-wider text-slate-900 shadow-sm mb-6 uppercase">
             GET IN TOUCH
           </div>
-          <h2 className="font-display text-4xl sm:text-5xl font-bold leading-tight mb-6">
-            Let's build <span className="text-gradient">something legendary</span>
+          <h2 className="font-display text-4xl sm:text-5xl font-bold leading-tight mb-6 text-slate-900">
+            Let's build <span className="text-slate-500 italic font-medium">something legendary</span>
           </h2>
-          <p className="text-muted-foreground text-lg">
+          <p className="text-slate-600 text-lg">
             Tell us about your project. We respond within 24 hours.
           </p>
         </motion.div>
 
         <div className="grid lg:grid-cols-5 gap-8 max-w-6xl mx-auto">
-          {/* Form */}
-          <motion.form
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            onSubmit={submit}
-            className="lg:col-span-3 gradient-border glass rounded-3xl p-8 space-y-5"
-          >
-            <div className="grid sm:grid-cols-2 gap-4">
-              <div>
-                <label className="text-sm font-medium mb-2 block">Name</label>
-                <Input
-                  required
-                  maxLength={100}
-                  value={form.name}
-                  onChange={(e) => setForm({ ...form, name: e.target.value })}
-                  className="h-12 bg-muted/40 border-white/5 focus-visible:ring-accent"
-                  placeholder="Your full name"
-                />
-              </div>
-              <div>
-                <label className="text-sm font-medium mb-2 block">Email</label>
-                <Input
-                  required
-                  type="email"
-                  maxLength={255}
-                  value={form.email}
-                  onChange={(e) => setForm({ ...form, email: e.target.value })}
-                  className="h-12 bg-muted/40 border-white/5 focus-visible:ring-accent"
-                  placeholder="you@company.com"
-                />
-              </div>
-            </div>
-            <div>
-              <label className="text-sm font-medium mb-2 block">Phone</label>
-              <Input
-                required
-                maxLength={30}
-                value={form.phone}
-                onChange={(e) => setForm({ ...form, phone: e.target.value })}
-                className="h-12 bg-muted/40 border-white/5 focus-visible:ring-accent"
-                placeholder="+977 ..."
-              />
-            </div>
-            <div>
-              <label className="text-sm font-medium mb-2 block">Message</label>
-              <Textarea
-                required
-                maxLength={1000}
-                rows={5}
-                value={form.message}
-                onChange={(e) => setForm({ ...form, message: e.target.value })}
-                className="bg-muted/40 border-white/5 focus-visible:ring-accent resize-none"
-                placeholder="Tell us about your project, timeline, and goals..."
-              />
-            </div>
-            <Button type="submit" variant="hero" size="lg" disabled={loading} className="w-full sm:w-auto">
-              {loading ? "Sending..." : (<>Send Message <Send className="ml-1 h-4 w-4" /></>)}
-            </Button>
-          </motion.form>
-
-          {/* Info */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.1 }}
-            className="lg:col-span-2 space-y-4"
-          >
-            {contactInfo.map((c) => (
-              <a
-                key={c.label}
-                href={c.href}
-                className="block gradient-border glass rounded-2xl p-5 glow-hover group"
-              >
-                <div className="flex items-center gap-4">
-                  <div className="w-11 h-11 rounded-xl bg-brand-gradient flex items-center justify-center shadow-[0_0_20px_hsl(var(--accent)/0.35)]">
-                    <c.icon className="h-4.5 w-4.5 text-white" />
-                  </div>
-                  <div>
-                    <div className="text-xs text-muted-foreground uppercase tracking-wider">{c.label}</div>
-                    <div className="font-medium group-hover:text-accent transition-colors">{c.value}</div>
-                  </div>
+          {/* Left Column: Form & Socials */}
+          <div className="lg:col-span-3 flex flex-col gap-6">
+            <motion.form
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              onSubmit={submit}
+              className="bg-white border border-slate-100 shadow-[0_4px_20px_rgba(0,0,0,0.03)] rounded-3xl p-8 sm:p-10 space-y-6"
+            >
+              <div className="grid sm:grid-cols-2 gap-5">
+                <div>
+                  <label className="text-sm font-bold text-slate-900 mb-2 block">Name</label>
+                  <Input
+                    required
+                    maxLength={100}
+                    value={form.name}
+                    onChange={(e) => setForm({ ...form, name: e.target.value })}
+                    className="h-12 bg-slate-50 border-slate-200 focus-visible:ring-slate-900 focus-visible:border-slate-900 transition-colors"
+                    placeholder="Your full name"
+                  />
                 </div>
-              </a>
-            ))}
+                <div>
+                  <label className="text-sm font-bold text-slate-900 mb-2 block">Email</label>
+                  <Input
+                    required
+                    type="email"
+                    maxLength={255}
+                    value={form.email}
+                    onChange={(e) => setForm({ ...form, email: e.target.value })}
+                    className="h-12 bg-slate-50 border-slate-200 focus-visible:ring-slate-900 focus-visible:border-slate-900 transition-colors"
+                    placeholder="you@company.com"
+                  />
+                </div>
+              </div>
+              <div>
+                <label className="text-sm font-bold text-slate-900 mb-2 block">Phone</label>
+                <Input
+                  required
+                  maxLength={30}
+                  value={form.phone}
+                  onChange={(e) => setForm({ ...form, phone: e.target.value })}
+                  className="h-12 bg-slate-50 border-slate-200 focus-visible:ring-slate-900 focus-visible:border-slate-900 transition-colors"
+                  placeholder="+977 ..."
+                />
+              </div>
+              <div>
+                <label className="text-sm font-bold text-slate-900 mb-2 block">Message</label>
+                <Textarea
+                  required
+                  maxLength={1000}
+                  rows={5}
+                  value={form.message}
+                  onChange={(e) => setForm({ ...form, message: e.target.value })}
+                  className="bg-slate-50 border-slate-200 focus-visible:ring-slate-900 focus-visible:border-slate-900 resize-none transition-colors"
+                  placeholder="Tell us about your project, timeline, and goals..."
+                />
+              </div>
+              <Button type="submit" size="lg" disabled={loading} className="w-full sm:w-auto bg-slate-900 text-white hover:bg-slate-800 rounded-full h-12 px-8 font-medium transition-colors">
+                {loading ? "Sending..." : (<>Send Message <Send className="ml-2 h-4 w-4" /></>)}
+              </Button>
+            </motion.form>
 
             {socials.length > 0 && (
-              <div className="gradient-border glass rounded-2xl p-5">
-                <div className="text-xs text-muted-foreground uppercase tracking-wider mb-3">Follow Us</div>
-                <div className="flex gap-2">
+              <div className="bg-white border border-slate-100 rounded-2xl p-6 shadow-[0_2px_10px_rgba(0,0,0,0.02)]">
+                <div className="text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-4">Follow Us</div>
+                <div className="flex gap-3">
                   {socials.map((s) => (
                     <a
                       key={s.label}
@@ -196,14 +171,81 @@ export const Contact = () => {
                       target="_blank"
                       rel="noopener noreferrer"
                       aria-label={s.label}
-                      className="w-10 h-10 rounded-lg glass border border-white/5 flex items-center justify-center hover:bg-brand-gradient hover:border-transparent transition-all duration-300"
+                      className="w-11 h-11 rounded-xl bg-slate-50 border border-slate-200 flex items-center justify-center text-slate-600 hover:bg-slate-900 hover:text-white hover:border-slate-900 transition-all duration-300"
                     >
-                      <s.icon className="h-4 w-4" />
+                      <s.icon className="h-4.5 w-4.5" />
                     </a>
                   ))}
                 </div>
               </div>
             )}
+          </div>
+
+          {/* Right Column: Main Info */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.1 }}
+            className="lg:col-span-2 space-y-6"
+          >
+            {contactInfo.slice(0, 2).map((c, i) => {
+              const colors = [
+                { name: "indigo", bgHover: "hover:shadow-indigo-500/10", gradient: "from-indigo-500/10", iconBox: "border-indigo-500/20", text: "text-indigo-500" },
+                { name: "emerald", bgHover: "hover:shadow-emerald-500/10", gradient: "from-emerald-500/10", iconBox: "border-emerald-500/20", text: "text-emerald-500" },
+              ];
+              const theme = colors[i % colors.length];
+              return (
+                <a
+                  key={c.label}
+                  href={c.href}
+                  className={`block relative bg-white rounded-2xl p-7 text-left w-full border border-slate-100 shadow-[0_2px_10px_rgba(0,0,0,0.02)] hover:-translate-y-1 transition-all duration-300 group overflow-hidden ${theme.bgHover}`}
+                >
+                  <div className={`absolute inset-0 bg-gradient-to-b ${theme.gradient} to-transparent pointer-events-none opacity-60`} />
+                  <div className="relative z-10">
+                    <div className="flex justify-between items-start mb-5">
+                      <div className={`w-12 h-12 rounded-xl bg-white border ${theme.iconBox} flex items-center justify-center transition-transform group-hover:scale-105 duration-300 shadow-sm`}>
+                        <c.icon className={`h-5 w-5 ${theme.text}`} />
+                      </div>
+                      <div className={`text-[10px] font-bold tracking-widest uppercase ${theme.text} opacity-80 mt-1`}>CONTACT</div>
+                    </div>
+                    <h3 className="text-xl font-bold font-sans text-slate-900 mb-1">{c.label}</h3>
+                    <div className={`text-sm font-semibold ${theme.text} mb-3`}>Reach out</div>
+                    <p className="text-[13px] text-slate-500 leading-relaxed mb-1">{c.value}</p>
+                  </div>
+                </a>
+              );
+            })}
+
+            <div className="grid sm:grid-cols-2 gap-6">
+              {contactInfo.slice(2, 4).map((c, i) => {
+                const colors = [
+                  { name: "blue", bgHover: "hover:shadow-blue-500/10", gradient: "from-blue-500/10", iconBox: "border-blue-500/20", text: "text-blue-500" },
+                  { name: "green", bgHover: "hover:shadow-green-500/10", gradient: "from-green-500/10", iconBox: "border-green-500/20", text: "text-green-500" },
+                ];
+                const theme = colors[i % colors.length];
+                return (
+                  <a
+                    key={c.label}
+                    href={c.href}
+                    className={`block relative bg-white rounded-2xl p-6 text-left w-full border border-slate-100 shadow-[0_2px_10px_rgba(0,0,0,0.02)] hover:-translate-y-1 transition-all duration-300 group overflow-hidden ${theme.bgHover}`}
+                  >
+                    <div className={`absolute inset-0 bg-gradient-to-b ${theme.gradient} to-transparent pointer-events-none opacity-60`} />
+                    <div className="relative z-10">
+                      <div className="flex flex-col gap-3">
+                        <div className={`w-10 h-10 rounded-xl bg-white border ${theme.iconBox} flex items-center justify-center transition-transform group-hover:scale-105 duration-300 shadow-sm`}>
+                          <c.icon className={`h-4 w-4 ${theme.text}`} />
+                        </div>
+                        <div>
+                          <h3 className="text-lg font-bold font-sans text-slate-900 mb-0.5">{c.label}</h3>
+                          <p className="text-[11px] text-slate-500 truncate">{c.value}</p>
+                        </div>
+                      </div>
+                    </div>
+                  </a>
+                );
+              })}
+            </div>
           </motion.div>
         </div>
       </div>

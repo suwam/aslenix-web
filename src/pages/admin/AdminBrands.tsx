@@ -90,7 +90,7 @@ const AdminBrands = () => {
             <div><Label>Name *</Label><Input value={editing.name} onChange={(e) => setEditing({ ...editing, name: e.target.value })} /></div>
             <MediaPicker label="Logo" value={editing.logo_url} cropAspect={null} onChange={(url) => setEditing({ ...editing, logo_url: url })} />
             {editing.logo_url && (
-              <div className="rounded-lg border border-white/10 p-3 flex items-center justify-center bg-black/30">
+              <div className="rounded-lg border border-foreground/10 p-3 flex items-center justify-center bg-foreground/30">
                 <img src={editing.logo_url} alt="preview" className="h-14 object-contain" />
               </div>
             )}
@@ -137,7 +137,7 @@ const AdminBrands = () => {
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
         {filtered.map((r) => (
           <div key={r.id} className="gradient-border glass rounded-2xl p-4 flex flex-col gap-3">
-            <div className="h-20 rounded-lg bg-black/30 border border-white/5 flex items-center justify-center overflow-hidden">
+            <div className="h-20 rounded-lg bg-foreground/30 border border-foreground/5 flex items-center justify-center overflow-hidden">
               {r.logo_url
                 ? <img src={r.logo_url} alt={r.name} className="max-h-14 object-contain" />
                 : <div className="text-xs text-muted-foreground">No logo</div>}

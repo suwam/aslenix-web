@@ -18,14 +18,14 @@ const ClientInvoices = () => {
     <ClientPortalLayout title="Invoices">
       <div className="gradient-border glass rounded-2xl overflow-hidden">
         <table className="w-full text-sm">
-          <thead className="bg-white/5 text-xs uppercase text-muted-foreground"><tr>
+          <thead className="bg-foreground/5 text-xs uppercase text-muted-foreground"><tr>
             <th className="text-left p-3">Number</th><th className="text-left p-3">Issue</th><th className="text-left p-3">Due</th><th className="text-right p-3">Total</th><th className="text-left p-3">Status</th><th className="text-right p-3">Pay</th>
           </tr></thead>
           <tbody>
             {rows.map((r) => {
               const due = Math.max(0, Number(r.total) - Number(r.paid_amount ?? 0));
               return (
-                <tr key={r.id} className="border-t border-white/5">
+                <tr key={r.id} className="border-t border-foreground/5">
                   <td className="p-3 font-mono text-xs">{r.invoice_number}</td>
                   <td className="p-3 text-xs">{r.issue_date}</td>
                   <td className="p-3 text-xs">{r.due_date ?? "—"}</td>

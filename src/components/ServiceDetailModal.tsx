@@ -21,7 +21,7 @@ const sectionFade = {
 export const ServiceDetailModal = ({ service, open, onOpenChange }: Props) => {
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-5xl w-[95vw] max-h-[92vh] overflow-y-auto p-0 bg-card/95 backdrop-blur-2xl border-white/10 [&>button]:hidden">
+      <DialogContent className="max-w-5xl w-[95vw] max-h-[92vh] overflow-y-auto p-0 bg-card/95 backdrop-blur-2xl border-foreground/10 [&>button]:hidden">
         <DialogTitle className="sr-only">{service?.title ?? "Service"}</DialogTitle>
         <DialogDescription className="sr-only">{service?.desc ?? ""}</DialogDescription>
 
@@ -35,13 +35,13 @@ export const ServiceDetailModal = ({ service, open, onOpenChange }: Props) => {
               transition={{ duration: 0.3 }}
             >
               {/* Header */}
-              <div className="relative overflow-hidden p-8 sm:p-10 border-b border-white/10">
+              <div className="relative overflow-hidden p-8 sm:p-10 border-b border-foreground/10">
                 <div className="absolute inset-0 bg-brand-gradient opacity-[0.08]" />
                 <div className="absolute -top-24 -right-24 w-72 h-72 bg-brand-gradient opacity-30 blur-[120px] rounded-full" />
 
                 <button
                   onClick={() => onOpenChange(false)}
-                  className="absolute top-5 right-5 z-10 w-10 h-10 rounded-full glass border border-white/10 flex items-center justify-center hover:border-accent/50 transition-colors"
+                  className="absolute top-5 right-5 z-10 w-10 h-10 rounded-full glass border border-foreground/10 flex items-center justify-center hover:border-accent/50 transition-colors"
                   aria-label="Close"
                 >
                   <X className="h-4 w-4" />
@@ -49,7 +49,7 @@ export const ServiceDetailModal = ({ service, open, onOpenChange }: Props) => {
 
                 <div className="relative flex items-start gap-5">
                   <div className="w-16 h-16 rounded-2xl bg-brand-gradient flex items-center justify-center shrink-0 shadow-[var(--glow-brand)]">
-                    <service.icon className="h-7 w-7 text-white" />
+                    <service.icon className="h-7 w-7 text-foreground" />
                   </div>
                   <div className="flex-1 min-w-0">
                     <div className="inline-block px-3 py-1 glass rounded-full text-xs font-medium text-accent mb-3">
@@ -86,7 +86,7 @@ export const ServiceDetailModal = ({ service, open, onOpenChange }: Props) => {
                     {service.deliverables.map((d) => (
                       <div key={d} className="flex items-start gap-3 glass rounded-xl p-4">
                         <div className="w-6 h-6 rounded-full bg-brand-gradient flex items-center justify-center shrink-0 mt-0.5">
-                          <Check className="h-3.5 w-3.5 text-white" />
+                          <Check className="h-3.5 w-3.5 text-foreground" />
                         </div>
                         <span className="text-sm text-foreground/90">{d}</span>
                       </div>
@@ -108,7 +108,7 @@ export const ServiceDetailModal = ({ service, open, onOpenChange }: Props) => {
                           transition={{ delay: 0.2 + i * 0.05 }}
                           className="relative glass rounded-xl p-3 text-center"
                         >
-                          <div className="w-12 h-12 mx-auto rounded-full bg-brand-gradient flex items-center justify-center text-white font-display font-bold text-sm shadow-[var(--glow-brand)] mb-3">
+                          <div className="w-12 h-12 mx-auto rounded-full bg-brand-gradient flex items-center justify-center text-foreground font-display font-bold text-sm shadow-[var(--glow-brand)] mb-3">
                             {s.step}
                           </div>
                           <div className="font-display text-xs font-semibold mb-1 leading-tight">{s.title}</div>
@@ -126,7 +126,7 @@ export const ServiceDetailModal = ({ service, open, onOpenChange }: Props) => {
                     {service.technologies.map((t) => (
                       <span
                         key={t}
-                        className="px-4 py-2 glass rounded-full text-sm font-medium border border-white/10 hover:border-accent/40 hover:text-accent transition-colors"
+                        className="px-4 py-2 glass rounded-full text-sm font-medium border border-foreground/10 hover:border-accent/40 hover:text-accent transition-colors"
                       >
                         {t}
                       </span>
@@ -153,7 +153,7 @@ export const ServiceDetailModal = ({ service, open, onOpenChange }: Props) => {
                           }`}
                         >
                           {p.highlighted && (
-                            <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-0.5 rounded-full bg-brand-gradient text-white text-[10px] font-bold tracking-wider">
+                            <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-0.5 rounded-full bg-brand-gradient text-foreground text-[10px] font-bold tracking-wider">
                               POPULAR
                             </div>
                           )}
@@ -231,7 +231,7 @@ export const ServiceDetailModal = ({ service, open, onOpenChange }: Props) => {
                     <div className="absolute inset-0 bg-brand-gradient opacity-[0.08]" />
                     <div className="relative">
                       <div className="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-brand-gradient mb-5 shadow-[var(--glow-brand)]">
-                        <Rocket className="h-6 w-6 text-white" />
+                        <Rocket className="h-6 w-6 text-foreground" />
                       </div>
                       <h3 className="font-display text-2xl sm:text-3xl font-bold mb-3">
                         Ready to <span className="text-gradient">make it possible?</span>
@@ -266,21 +266,21 @@ export const ServiceDetailModal = ({ service, open, onOpenChange }: Props) => {
                         </Button>
                       </div>
 
-                      <div className="mt-7 pt-6 border-t border-white/10">
+                      <div className="mt-7 pt-6 border-t border-foreground/10">
                         <div className="text-xs uppercase tracking-wider text-muted-foreground mb-3">Quick Contact</div>
                         <div className="flex flex-wrap items-center justify-center gap-3">
                           <a
                             href={`https://wa.me/9779709043147?text=${encodeURIComponent(`Hi ASLENIX, I'm interested in ${service.title}.`)}`}
                             target="_blank"
                             rel="noreferrer"
-                            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full glass border border-white/10 hover:border-accent/50 text-sm font-medium transition-colors"
+                            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full glass border border-foreground/10 hover:border-accent/50 text-sm font-medium transition-colors"
                           >
                             <MessageCircle className="h-4 w-4 text-accent" />
                             WhatsApp
                           </a>
                           <a
                             href={`mailto:info.aslenix.np@gmail.com?subject=${encodeURIComponent(`Inquiry: ${service.title}`)}`}
-                            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full glass border border-white/10 hover:border-accent/50 text-sm font-medium transition-colors"
+                            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full glass border border-foreground/10 hover:border-accent/50 text-sm font-medium transition-colors"
                           >
                             <Mail className="h-4 w-4 text-accent" />
                             Email Us
@@ -301,7 +301,7 @@ export const ServiceDetailModal = ({ service, open, onOpenChange }: Props) => {
 
 const SectionHeader = ({ icon: Icon, title }: { icon: typeof Sparkles; title: string }) => (
   <div className="flex items-center gap-3 mb-5">
-    <div className="w-9 h-9 rounded-xl glass border border-white/10 flex items-center justify-center">
+    <div className="w-9 h-9 rounded-xl glass border border-foreground/10 flex items-center justify-center">
       <Icon className="h-4 w-4 text-accent" />
     </div>
     <h3 className="font-display text-xl font-semibold">{title}</h3>

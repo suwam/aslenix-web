@@ -198,29 +198,29 @@ export const Hero = () => {
     <section id="home" className="hero relative overflow-hidden bg-background/95 py-24 sm:py-28 lg:py-32">
       <div className="pointer-events-none absolute inset-0 opacity-60">
         <div className="absolute inset-0 grid-pattern opacity-20" />
-        <div className="absolute left-1/4 top-6 h-[280px] w-[320px] rounded-full bg-[radial-gradient(circle,_rgba(255,79,216,0.22),transparent_68%)] blur-3xl" />
-        <div className="absolute right-0 top-1/3 h-[260px] w-[420px] rounded-full bg-[radial-gradient(circle,_rgba(59,132,246,0.18),transparent_68%)] blur-3xl" />
-        <div className="absolute left-0 bottom-0 h-[220px] w-[220px] rounded-full bg-[radial-gradient(circle,_rgba(255,79,216,0.18),transparent_70%)] blur-3xl" />
+        <div className="absolute left-1/4 top-6 h-[280px] w-[320px] rounded-full bg-[radial-gradient(circle,_rgba(186,230,253,0.4),transparent_68%)] blur-3xl" />
+        <div className="absolute right-0 top-1/3 h-[260px] w-[420px] rounded-full bg-[radial-gradient(circle,_rgba(233,213,255,0.4),transparent_68%)] blur-3xl" />
+        <div className="absolute left-0 bottom-0 h-[220px] w-[220px] rounded-full bg-[radial-gradient(circle,_rgba(186,230,253,0.3),transparent_70%)] blur-3xl" />
       </div>
 
-      <div className="relative z-10 mx-auto flex w-full max-w-7xl flex-col gap-14 px-6 sm:px-8 lg:px-12 xl:px-16 lg:grid lg:grid-cols-[1.05fr_0.95fr] lg:items-center">
+      <div className="relative z-10 mx-auto flex w-full max-w-7xl flex-col gap-14 px-6 sm:px-8 lg:px-12 xl:px-16 lg:grid lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
         <div className="max-w-2xl space-y-8 animate-enter-up">
-          <div className="inline-flex items-center gap-3 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm text-muted-foreground backdrop-blur-xl shadow-[0_0_40px_-20px_rgba(255,79,216,0.3)]">
+          <div className="inline-flex items-center gap-3 rounded-full border border-foreground/10 bg-foreground/5 px-4 py-2 text-sm text-muted-foreground backdrop-blur-xl shadow-[0_0_40px_-20px_rgba(186,230,253,0.5)]">
             <span className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-[#ffffff0f] text-base">✨</span>
-            <span className="font-medium text-white/80">Premium SaaS, AI & growth systems</span>
+            <span className="font-medium text-foreground/80">Premium SaaS, AI & growth systems</span>
           </div>
 
           <div className="space-y-6">
-            <h1 className="font-display text-4xl font-semibold leading-tight tracking-[-0.04em] text-white sm:text-5xl lg:text-6xl xl:text-7xl">
-              {homepageLoaded ? renderTitle(content.title) : <span className="block h-[1.1em] w-3/4 rounded-2xl bg-white/10" />}
+            <h1 className="font-display text-4xl font-semibold leading-tight tracking-[-0.04em] text-foreground sm:text-5xl lg:text-6xl xl:text-7xl">
+              {homepageLoaded ? renderTitle(content.title) : <span className="block h-[1.1em] w-3/4 rounded-2xl bg-foreground/10" />}
             </h1>
             <div className="space-y-4">
               <p className="max-w-xl text-base leading-8 text-muted-foreground sm:text-lg">
-                {homepageLoaded ? content.subtitle : <span className="block h-20 rounded-2xl bg-white/10" />}
+                {homepageLoaded ? content.subtitle : <span className="block h-20 rounded-2xl bg-foreground/10" />}
               </p>
               {homepageLoaded && (
-                <p className="max-w-xl text-base leading-8 text-white/80 sm:text-lg">
-                  <span className="text-white/70">Delivering</span>{" "}
+                <p className="max-w-xl text-base leading-8 text-foreground/80 sm:text-lg">
+                  <span className="text-foreground/70">Delivering</span>{" "}
                   <span className="text-gradient">{typedText}</span>
                   <span className="inline-block h-6 w-1 animate-pulse bg-white rounded-sm align-middle ml-1" />
                 </p>
@@ -248,15 +248,15 @@ export const Hero = () => {
               return (
                 <div
                   key={item.title}
-                  className="group relative overflow-hidden rounded-2xl border border-white/10 bg-white/[0.035] px-4 py-4 shadow-[0_20px_70px_-45px_rgba(0,0,0,0.85)] transition hover:border-accent/35"
+                  className="group relative overflow-hidden rounded-2xl border border-foreground/10 bg-foreground/[0.035] px-4 py-4 shadow-[0_20px_70px_-45px_rgba(0,0,0,0.85)] transition hover:border-accent/35"
                 >
                   <div className="absolute inset-0 -translate-x-full bg-brand-gradient opacity-20 transition-transform duration-700 group-hover:translate-x-0" />
                   <div className="absolute inset-y-0 left-0 w-1/2 bg-brand-gradient opacity-10 blur-2xl" />
                   <div className="relative flex min-w-0 items-center gap-2.5">
-                    <span className="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-xl bg-brand-gradient text-white shadow-[0_0_24px_-8px_hsl(var(--accent)/0.8)]">
+                    <span className="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-xl bg-brand-gradient text-foreground shadow-[0_0_24px_-8px_hsl(var(--accent)/0.8)]">
                       <Icon className="h-3.5 w-3.5" />
                     </span>
-                    <span className="min-w-0 bg-brand-gradient bg-clip-text font-display text-[15px] font-semibold leading-tight text-transparent sm:text-base">
+                    <span className="min-w-0 font-display text-[15px] font-semibold leading-tight text-foreground sm:text-base">
                       {item.title}
                     </span>
                   </div>
@@ -267,37 +267,37 @@ export const Hero = () => {
         </div>
 
         <div className="relative mx-auto flex w-full max-w-[680px] items-center justify-center lg:ml-8 xl:ml-14 animate-enter-side md:hidden">
-          <div className="relative w-full overflow-hidden rounded-[2rem] border border-white/10 bg-[#0d111d]/80 p-5 shadow-[0_24px_80px_-42px_rgba(0,0,0,0.9)]">
+          <div className="relative w-full overflow-hidden rounded-[2rem] border border-foreground/10 bg-background/80 p-5 shadow-[0_24px_80px_-42px_rgba(0,0,0,0.9)]">
             <div className="absolute inset-0 grid-pattern opacity-10" />
             <div className="absolute left-1/2 top-1/2 h-56 w-56 -translate-x-1/2 -translate-y-1/2 rounded-full bg-brand-gradient opacity-15 blur-3xl" />
             <div className="relative space-y-5">
               <div className="flex items-center justify-between gap-4">
                 <div>
-                  <p className="text-xs uppercase tracking-[0.24em] text-white/45">Live Systems</p>
-                  <h2 className="mt-2 font-display text-2xl font-semibold text-white">Fast digital builds</h2>
+                  <p className="text-xs uppercase tracking-[0.24em] text-foreground/45">Live Systems</p>
+                  <h2 className="mt-2 font-display text-2xl font-semibold text-foreground">Fast digital builds</h2>
                 </div>
                 <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-brand-gradient shadow-[0_0_28px_-8px_hsl(var(--accent)/0.9)]">
-                  <Code2 className="h-5 w-5 text-white" />
+                  <Code2 className="h-5 w-5 text-foreground" />
                 </div>
               </div>
               <div className="grid grid-cols-3 gap-3">
                 {["SaaS", "AI", "ERP"].map((item) => (
-                  <div key={item} className="rounded-2xl border border-white/10 bg-white/[0.04] px-3 py-4 text-center">
-                    <div className="text-lg font-semibold text-white">{item}</div>
+                  <div key={item} className="rounded-2xl border border-foreground/10 bg-foreground/[0.04] px-3 py-4 text-center">
+                    <div className="text-lg font-semibold text-foreground">{item}</div>
                     <div className="mt-1 h-1 rounded-full bg-brand-gradient opacity-70" />
                   </div>
                 ))}
               </div>
-              <div className="rounded-2xl border border-white/10 bg-black/20 p-4">
+              <div className="rounded-2xl border border-foreground/10 bg-foreground/20 p-4">
                 <div className="mb-3 flex items-center gap-2">
                   <span className="h-2 w-2 rounded-full bg-green-400 shadow-[0_0_16px_rgba(74,222,128,0.9)]" />
-                  <span className="text-sm text-white/70">Optimized for mobile-first launches</span>
+                  <span className="text-sm text-foreground/70">Optimized for mobile-first launches</span>
                 </div>
                 <div className="space-y-2">
-                  <div className="h-2 rounded-full bg-white/10">
+                  <div className="h-2 rounded-full bg-foreground/10">
                     <div className="h-full w-4/5 rounded-full bg-brand-gradient" />
                   </div>
-                  <div className="h-2 rounded-full bg-white/10">
+                  <div className="h-2 rounded-full bg-foreground/10">
                     <div className="h-full w-2/3 rounded-full bg-brand-gradient opacity-70" />
                   </div>
                 </div>
@@ -306,31 +306,36 @@ export const Hero = () => {
           </div>
         </div>
 
-        <div className="relative mx-auto hidden w-full max-w-[680px] items-center justify-center lg:ml-8 xl:ml-14 md:flex animate-enter-side">
+        <div className="relative hidden w-[110%] lg:w-[115%] max-w-[750px] xl:max-w-[850px] items-center justify-center md:flex animate-enter-side lg:justify-self-start lg:translate-x-12 xl:translate-x-24 2xl:translate-x-40">
           <div className="absolute inset-0 rounded-[3rem] bg-gradient-to-br from-white/5 via-transparent to-white/0 shadow-[0_0_180px_0_rgba(59,132,246,0.14)]" />
-          <div className="absolute inset-0 rounded-[3rem] border border-white/10 bg-white/[0.035] backdrop-blur-[28px]" />
+          <div className="absolute inset-0 rounded-[3rem] border border-foreground/10 bg-foreground/[0.035] backdrop-blur-[28px]" />
 
-          <div className="relative flex min-h-[360px] w-full items-center justify-center overflow-hidden rounded-[3rem] border border-white/10 bg-[#0d111d]/80 px-5 py-10 shadow-[0_40px_140px_-50px_rgba(0,0,0,0.85)] sm:min-h-[430px] sm:px-7 sm:py-12 lg:min-h-[520px] lg:px-9">
+          <div className="relative flex min-h-[300px] w-full items-center justify-center overflow-hidden rounded-[3rem] border border-foreground/10 bg-background/80 px-5 py-8 shadow-[0_40px_140px_-50px_rgba(0,0,0,0.85)] sm:min-h-[380px] sm:px-7 sm:py-10 lg:min-h-[460px] lg:px-9">
             <div className="absolute inset-0 grid-pattern opacity-10" />
-            <div className="absolute left-1/2 top-1/2 h-[340px] w-[420px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(circle,_rgba(255,79,216,0.2),transparent_68%)] blur-3xl" />
-            <div className="absolute left-1/2 top-1/2 h-[360px] w-[520px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(circle,_rgba(59,132,246,0.14),transparent_70%)] blur-3xl" />
+            <div className="absolute left-1/2 top-1/2 h-[340px] w-[420px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(circle,_rgba(186,230,253,0.3),transparent_68%)] blur-3xl" />
+            <div className="absolute left-1/2 top-1/2 h-[360px] w-[520px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(circle,_rgba(233,213,255,0.3),transparent_70%)] blur-3xl" />
 
-            <div className="relative z-10 w-full max-w-[600px] overflow-hidden rounded-[2.25rem] border border-white/10 bg-[#060916] p-3 shadow-[0_26px_90px_-35px_rgba(0,0,0,0.85),inset_0_1px_0_rgba(255,255,255,0.08)] sm:p-4">
-              <div className="overflow-hidden rounded-[1.75rem] border border-white/10 bg-black">
+            <div className="relative z-10 w-full max-w-[700px] overflow-hidden rounded-[2.25rem] border border-foreground/10 bg-background p-2 shadow-[0_26px_90px_-35px_rgba(0,0,0,0.85),inset_0_1px_0_rgba(255,255,255,0.08)] sm:p-3">
+              <div className="flex items-center gap-1.5 px-4 pb-3 pt-2">
+                <div className="h-3 w-3 rounded-full bg-[#ff5f56] border border-[#e0443e] shadow-sm" />
+                <div className="h-3 w-3 rounded-full bg-[#ffbd2e] border border-[#dea123] shadow-sm" />
+                <div className="h-3 w-3 rounded-full bg-[#27c93f] border border-[#1aab29] shadow-sm" />
+              </div>
+              <div className="overflow-hidden rounded-[1.5rem] border border-foreground/10 bg-foreground relative">
                 {slideCount > 0 ? (
                   <div
                     className="flex transition-transform duration-700 ease-out"
                     style={{ transform: `translate3d(-${activeSlide * 100}%, 0, 0)` }}
                   >
                     {slides.map((slide, index) => (
-                      <div key={`${slide.src}-${index}`} className="relative aspect-[16/10.5] min-w-full basis-full shrink-0 overflow-hidden">
+                      <div key={`${slide.src}-${index}`} className="relative aspect-video min-w-full basis-full shrink-0 overflow-hidden">
                         <img
                           src={slide.src}
                           alt={slide.alt}
                           className="h-full w-full object-cover"
                           loading={index === 0 ? "eager" : "lazy"}
                           decoding="async"
-                          fetchPriority={index === 0 ? "high" : "low"}
+                          fetchpriority={index === 0 ? "high" : "low"}
                           draggable={false}
                         />
                         <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(6,9,22,0.12),rgba(6,9,22,0.36))]" />
@@ -338,32 +343,34 @@ export const Hero = () => {
                     ))}
                   </div>
                 ) : (
-                  <div className="aspect-[16/10.5] animate-pulse bg-white/10" />
+                  <div className="aspect-video animate-pulse bg-foreground/10" />
+                )}
+
+                {slideCount > 1 && (
+                  <>
+                    <button
+                      type="button"
+                      aria-label="Show previous dashboard image"
+                      onClick={() => goToSlide(activeSlide - 1)}
+                      className="absolute left-4 top-1/2 z-20 inline-flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full border border-foreground/15 bg-foreground/60 text-foreground backdrop-blur-xl transition hover:bg-foreground/80"
+                    >
+                      <ArrowLeft className="h-4 w-4" />
+                    </button>
+                    <button
+                      type="button"
+                      aria-label="Show next dashboard image"
+                      onClick={() => goToSlide(activeSlide + 1)}
+                      className="absolute right-4 top-1/2 z-20 inline-flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full border border-foreground/15 bg-foreground/60 text-foreground backdrop-blur-xl transition hover:bg-foreground/80"
+                    >
+                      <ArrowRight className="h-4 w-4" />
+                    </button>
+                  </>
                 )}
               </div>
 
-              {slideCount > 1 && (
-                <>
-                  <button
-                    type="button"
-                    aria-label="Show previous dashboard image"
-                    onClick={() => goToSlide(activeSlide - 1)}
-                    className="absolute left-7 top-1/2 z-20 inline-flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full border border-white/15 bg-black/60 text-white backdrop-blur-xl transition hover:bg-black/80"
-                  >
-                    <ArrowLeft className="h-4 w-4" />
-                  </button>
-                  <button
-                    type="button"
-                    aria-label="Show next dashboard image"
-                    onClick={() => goToSlide(activeSlide + 1)}
-                    className="absolute right-7 top-1/2 z-20 inline-flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full border border-white/15 bg-black/60 text-white backdrop-blur-xl transition hover:bg-black/80"
-                  >
-                    <ArrowRight className="h-4 w-4" />
-                  </button>
-                </>
-              )}
 
-              <div className="absolute bottom-8 left-1/2 z-20 flex -translate-x-1/2 items-center gap-2 rounded-full border border-white/15 bg-black/70 px-3 py-2 backdrop-blur-xl">
+
+              <div className="absolute bottom-8 left-1/2 z-20 flex -translate-x-1/2 items-center gap-2 rounded-full border border-foreground/15 bg-foreground/70 px-3 py-2 backdrop-blur-xl">
                 {slides.map((slide, index) => (
                   <button
                     key={`${slide.src}-dot-${index}`}
@@ -371,9 +378,8 @@ export const Hero = () => {
                     aria-label={`Show dashboard image ${index + 1}`}
                     aria-current={activeSlide === index}
                     onClick={() => goToSlide(index)}
-                    className={`h-2 rounded-full transition-all duration-300 ${
-                      activeSlide === index ? "w-7 bg-white" : "w-2 bg-white/70 hover:bg-white"
-                    }`}
+                    className={`h-2 rounded-full transition-all duration-300 ${activeSlide === index ? "w-7 bg-white" : "w-2 bg-foreground/70 hover:bg-white"
+                      }`}
                   />
                 ))}
               </div>

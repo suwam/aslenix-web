@@ -80,7 +80,7 @@ const AdminClients = () => {
         {filtered.map((c) => (
           <div key={c.id} className="gradient-border glass rounded-2xl p-5 group">
             <div className="flex items-start justify-between mb-3">
-              <div className="w-10 h-10 rounded-xl bg-brand-gradient flex items-center justify-center text-white font-bold">
+              <div className="w-10 h-10 rounded-xl bg-brand-gradient flex items-center justify-center text-foreground font-bold">
                 {c.company_name[0]?.toUpperCase()}
               </div>
               <div className="flex gap-1 opacity-0 group-hover:opacity-100 transition">
@@ -93,7 +93,7 @@ const AdminClients = () => {
             {c.email && <div className="text-xs text-muted-foreground flex items-center gap-1.5 mt-1"><Mail className="w-3 h-3" />{c.email}</div>}
             {c.phone && <div className="text-xs text-muted-foreground flex items-center gap-1.5 mt-1"><Phone className="w-3 h-3" />{c.phone}</div>}
             {c.website && <div className="text-xs text-muted-foreground flex items-center gap-1.5 mt-1"><Globe className="w-3 h-3" />{c.website}</div>}
-            <div className="mt-3 pt-3 border-t border-white/5 text-xs text-muted-foreground">{c.projects?.length ?? 0} projects</div>
+            <div className="mt-3 pt-3 border-t border-foreground/5 text-xs text-muted-foreground">{c.projects?.length ?? 0} projects</div>
           </div>
         ))}
         {filtered.length === 0 && <div className="col-span-full text-center text-muted-foreground py-12">No clients yet</div>}

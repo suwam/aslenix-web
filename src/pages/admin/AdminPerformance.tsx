@@ -59,14 +59,14 @@ const AdminPerformance = () => {
 
       <div className="gradient-border glass rounded-2xl overflow-hidden">
         <table className="w-full text-sm">
-          <thead className="bg-white/5 text-xs uppercase text-muted-foreground">
+          <thead className="bg-foreground/5 text-xs uppercase text-muted-foreground">
             <tr><th className="text-left p-3">Time</th><th className="text-left p-3">Page</th><th className="text-left p-3">Message</th><th className="text-left p-3">Severity</th><th className="text-right p-3">Load</th></tr>
           </thead>
           <tbody>
             {loading ? <tr><td colSpan={5} className="p-6 text-center text-muted-foreground">Loading…</td></tr> :
              errors.length === 0 ? <tr><td colSpan={5} className="p-12 text-center text-muted-foreground">No errors recorded — your site is healthy ✨</td></tr> :
              errors.map((e) => (
-              <tr key={e.id} className="border-t border-white/5 hover:bg-white/5">
+              <tr key={e.id} className="border-t border-foreground/5 hover:bg-foreground/5">
                 <td className="p-3 text-xs text-muted-foreground whitespace-nowrap">{format(new Date(e.created_at), "MMM d HH:mm")}</td>
                 <td className="p-3 text-xs font-mono">{e.page_path ?? "—"}</td>
                 <td className="p-3 text-xs max-w-md truncate" title={e.message}>{e.message}</td>
