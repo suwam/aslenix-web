@@ -1,41 +1,12 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { motion } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
-import * as LucideIcons from "lucide-react";
-import type { Service } from "@/data/services";
+import { services, type Service } from "@/data/services";
 import { ServiceDetailModal } from "@/components/ServiceDetailModal";
-import { supabase } from "@/integrations/supabase/client";
 
 export const Services = () => {
   const [selected, setSelected] = useState<Service | null>(null);
   const [open, setOpen] = useState(false);
-  const [services, setServices] = useState<Service[]>([]);
-
-  useEffect(() => {
-    supabase
-      .from("services")
-      .select("*")
-      .eq("active", true)
-      .order("display_order")
-      .then(({ data }) => {
-        if (data) {
-          setServices(
-            data.map((d) => ({
-              slug: d.slug,
-              icon: ((LucideIcons as any)[d.icon || "Sparkles"] || LucideIcons.Sparkles) as LucideIcons.LucideIcon,
-              title: d.title,
-              desc: d.short_description || "",
-              overview: (d.overview as any) || { what: "", why: "" },
-              deliverables: (d.deliverables as string[]) || [],
-              technologies: d.technologies || [],
-              packages: (d.packages as any[]) || [],
-              caseStudies: (d.case_studies as any[]) || [],
-              faqs: (d.faqs as any[]) || [],
-            }))
-          );
-        }
-      });
-  }, []);
 
   const handleOpen = (service: Service) => {
     setSelected(service);
