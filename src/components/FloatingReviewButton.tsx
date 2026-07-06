@@ -63,12 +63,14 @@ export const FloatingReviewButton = () => {
         <button
           onClick={() => setOpen(true)}
           className={cn(
-            "h-14 w-14 rounded-full bg-blue-600 shadow-lg flex items-center justify-center",
-            "hover:bg-blue-700 hover:shadow-xl hover:scale-105 transition-all duration-200 border border-blue-700"
+            "h-14 w-14 rounded-full bg-gradient-to-r from-[#7B2FF7] to-[#2563EB] shadow-[0_8px_20px_-6px_rgba(123,47,247,0.4)] flex items-center justify-center",
+            "hover:shadow-[0_12px_25px_-8px_rgba(123,47,247,0.6)] hover:scale-105 transition-all duration-200 border-0 group relative overflow-hidden"
           )}
           aria-label="Leave a review"
         >
-          <Star className="w-6 h-6 fill-white text-white" />
+          {/* Shine effect overlay */}
+          <div className="absolute inset-0 -translate-x-full group-hover:animate-[shimmer_1.5s_infinite] bg-gradient-to-r from-transparent via-white/20 to-transparent pointer-events-none" />
+          <Star className="w-6 h-6 fill-white text-white relative z-10" />
         </button>
       </div>
 
