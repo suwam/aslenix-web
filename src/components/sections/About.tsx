@@ -43,7 +43,10 @@ export const About = () => {
     },
     ["team_members"],
     [],
-  ) ?? [];
+  );
+
+  const isLoading = team === null;
+  const activeTeam = team ?? [];
 
   return (
     <section id="about" className="py-24 sm:py-32 relative">
@@ -133,9 +136,24 @@ export const About = () => {
             </p>
           </div>
 
-          {team.length > 0 ? (
+          {isLoading ? (
             <div className="mt-12 grid gap-6 sm:grid-cols-2 xl:grid-cols-3">
-              {team.map((member, i) => {
+              {[1, 2, 3].map((i) => (
+                <div key={i} className="bg-white rounded-2xl p-7 flex flex-col items-center w-full border border-slate-100 shadow-sm animate-pulse">
+                  <div className="w-full flex justify-end mb-2">
+                    <div className="h-3 w-16 bg-slate-200 rounded"></div>
+                  </div>
+                  <div className="mb-6 mt-2 h-32 w-32 rounded-2xl bg-slate-200"></div>
+                  <div className="h-5 w-32 bg-slate-200 rounded mb-2"></div>
+                  <div className="h-3 w-24 bg-slate-200 rounded mb-4"></div>
+                  <div className="h-3 w-full bg-slate-200 rounded mb-1"></div>
+                  <div className="h-3 w-4/5 bg-slate-200 rounded"></div>
+                </div>
+              ))}
+            </div>
+          ) : activeTeam.length > 0 ? (
+            <div className="mt-12 grid gap-6 sm:grid-cols-2 xl:grid-cols-3">
+              {activeTeam.map((member, i) => {
                 const colors = [
                   { name: "cyan", bgHover: "hover:shadow-cyan-500/10", gradient: "from-cyan-500/10", iconBox: "border-cyan-500/20", text: "text-cyan-500" },
                   { name: "amber", bgHover: "hover:shadow-amber-500/10", gradient: "from-amber-500/10", iconBox: "border-amber-500/20", text: "text-amber-500" },
@@ -157,7 +175,7 @@ export const About = () => {
                       
                       <div className="mb-6 mt-2 relative">
                         {member.photo_url ? (
-                          <img src={member.photo_url} alt={member.name} className={`h-32 w-32 rounded-2xl object-cover border-2 border-white shadow-md mx-auto transition-transform group-hover:scale-105 duration-500 ring-2 ring-slate-50`} />
+                          <img src={member.photo_url} alt={member.name} loading="lazy" decoding="async" className={`h-32 w-32 rounded-2xl object-cover border-2 border-white shadow-md mx-auto transition-transform group-hover:scale-105 duration-500 ring-2 ring-slate-50`} />
                         ) : (
                           <div className={`flex h-32 w-32 items-center justify-center rounded-2xl bg-white border-2 border-white shadow-md mx-auto text-4xl font-bold ${theme.text} transition-transform group-hover:scale-105 duration-500 ring-2 ring-slate-50`}>
                             {member.name

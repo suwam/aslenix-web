@@ -18,7 +18,10 @@ export const Blog = () => {
     },
     ["blogs"],
     [],
-  ) ?? [];
+  );
+
+  const isLoading = posts === null;
+  const activePosts = posts ?? [];
   return (
     <section id="blog" className="py-24 sm:py-32 relative">
       <div className="container">
@@ -33,15 +36,29 @@ export const Blog = () => {
             All articles <ArrowRight className="h-4 w-4" />
           </a>
         </div>
-        {posts.length === 0 ? (
+        {isLoading ? (
+          <div className="grid md:grid-cols-3 gap-6">
+            {[1, 2, 3].map((i) => (
+              <div key={i} className="gradient-border glass rounded-2xl overflow-hidden animate-pulse">
+                <div className="aspect-[16/10] bg-muted/50"></div>
+                <div className="p-6">
+                  <div className="h-4 w-24 bg-muted/50 rounded mb-4"></div>
+                  <div className="h-6 w-3/4 bg-muted/50 rounded mb-4"></div>
+                  <div className="h-4 w-full bg-muted/50 rounded mb-2"></div>
+                  <div className="h-4 w-5/6 bg-muted/50 rounded"></div>
+                </div>
+              </div>
+            ))}
+          </div>
+        ) : activePosts.length === 0 ? (
           <div className="text-center text-muted-foreground py-12">No published posts yet.</div>
         ) : (
           <div className="grid md:grid-cols-3 gap-6">
-            {posts.map((post, i) => (
+            {activePosts.map((post, i) => (
               <motion.article key={post.id} initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.5, delay: i * 0.1 }}
                 className="group gradient-border glass rounded-2xl overflow-hidden glow-hover cursor-pointer">
                 <div className={`relative aspect-[16/10] bg-gradient-to-br ${gradients[i % 3]} overflow-hidden`}>
-                  {post.featured_image && <img src={post.featured_image} alt={post.title} className="absolute inset-0 w-full h-full object-cover" />}
+                  {post.featured_image && <img src={post.featured_image} alt={post.title} loading="lazy" decoding="async" className="absolute inset-0 w-full h-full object-cover" />}
                   <div className="absolute inset-0 grid-pattern opacity-40" />
                   {post.category && <div className="absolute bottom-4 left-4 px-3 py-1 rounded-full glass text-xs font-medium">{post.category}</div>}
                 </div>

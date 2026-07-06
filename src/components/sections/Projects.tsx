@@ -55,9 +55,12 @@ export const Projects = () => {
     },
     ["projects"],
     [],
-  ) ?? [];
+  );
 
-  const filtered = active === "All" ? projects : projects.filter((p) => (p.category ?? "").toLowerCase() === active.toLowerCase());
+  const isLoading = projects === null;
+  const activeProjects = projects ?? [];
+
+  const filtered = active === "All" ? activeProjects : activeProjects.filter((p) => (p.category ?? "").toLowerCase() === active.toLowerCase());
 
   return (
     <section id="projects" className="py-24 sm:py-32 relative">
@@ -79,7 +82,21 @@ export const Projects = () => {
           </div>
         </div>
 
-        {filtered.length === 0 ? (
+        {isLoading ? (
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {[1, 2, 3, 4, 5, 6].map((i) => (
+              <div key={i} className="gradient-border glass rounded-2xl overflow-hidden animate-pulse">
+                <div className="relative aspect-[4/3] bg-muted/50"></div>
+                <div className="p-6">
+                  <div className="h-3 w-16 bg-muted/50 rounded mb-3"></div>
+                  <div className="h-5 w-3/4 bg-muted/50 rounded mb-3"></div>
+                  <div className="h-3 w-full bg-muted/50 rounded mb-2"></div>
+                  <div className="h-3 w-4/5 bg-muted/50 rounded"></div>
+                </div>
+              </div>
+            ))}
+          </div>
+        ) : filtered.length === 0 ? (
           <div className="text-center text-muted-foreground py-12">No projects to show yet.</div>
         ) : (
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -88,7 +105,7 @@ export const Projects = () => {
                 className="group relative text-left gradient-border glass rounded-2xl overflow-hidden glow-hover cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-accent/70">
                 <div className="relative aspect-[4/3] overflow-hidden bg-muted">
                   {p.cover_image ? (
-                    <img src={p.cover_image} alt={p.title} loading="lazy" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
+                    <img src={p.cover_image} alt={p.title} loading="lazy" decoding="async" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
                   ) : (
                     <div className="w-full h-full bg-brand-gradient opacity-30" />
                   )}
@@ -245,7 +262,7 @@ const ProjectDetailModal = ({
                     </div>
                     <div className="aspect-[16/10] overflow-hidden rounded-2xl bg-muted">
                       {project.cover_image ? (
-                        <img src={project.cover_image} alt={`${project.title} screenshot`} className="h-full w-full object-cover" />
+                        <img src={project.cover_image} alt={`${project.title} screenshot`} decoding="async" className="h-full w-full object-cover" />
                       ) : (
                         <div className="flex h-full w-full items-center justify-center bg-brand-gradient opacity-30">
                           <Layers className="h-12 w-12 text-accent" />
@@ -324,6 +341,8 @@ const ProjectDetailModal = ({
                           <img
                             src={src}
                             alt={`${project.title} gallery screenshot ${index + 1}`}
+                            loading="lazy"
+                            decoding="async"
                             className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
                           />
                         </div>
