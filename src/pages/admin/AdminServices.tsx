@@ -2,11 +2,12 @@ import { useEffect, useState } from "react";
 import { AdminShell } from "@/components/admin/AdminShell";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
-import { Plus, Pencil, Trash2 } from "lucide-react";
+import { Plus, Pencil, Trash2, DownloadCloud } from "lucide-react";
 import { Link } from "react-router-dom";
 import { toast } from "sonner";
 import { Switch } from "@/components/ui/switch";
 import { logActivity } from "@/lib/activity";
+import { services as hardcodedServices } from "@/data/services";
 
 const AdminServices = () => {
   const [items, setItems] = useState<any[]>([]);
@@ -30,9 +31,55 @@ const AdminServices = () => {
     toast.success("Deleted"); load();
   };
 
+  const runMigration = async () => {
+    if (!confirm("Are you sure you want to migrate hardcoded services to the database?")) return;
+    
+    let count = 0;
+    for (const [i, s] of hardcodedServices.entries()) {
+      const iconMap: Record<string, string> = {
+        "website-development": "Code2",
+        "mobile-app-development": "Smartphone",
+        "custom-software-systems": "Cpu",
+        "ui-ux-design": "Palette",
+        "branding-identity": "Sparkles",
+        "digital-marketing": "TrendingUp",
+        "ai-solutions": "Brain",
+        "business-automation": "Workflow"
+      };
+
+      const payload = {
+        title: s.title,
+        slug: s.slug,
+        icon: iconMap[s.slug] || "Sparkles",
+        short_description: s.desc,
+        full_description: s.desc,
+        deliverables: s.deliverables as any,
+        technologies: s.technologies,
+        overview: s.overview as any,
+        packages: s.packages as any,
+        case_studies: s.caseStudies as any,
+        faqs: s.faqs as any,
+        display_order: i,
+        active: true
+      };
+
+      const { error } = await supabase.from("services").insert(payload);
+      if (error) {
+        toast.error(`Error migrating ${s.title}: ${error.message}`);
+      } else {
+        count++;
+      }
+    }
+    toast.success(`Successfully migrated ${count} services.`);
+    load();
+  };
+
   return (
     <AdminShell title="Services" actions={
-      <Button asChild variant="hero" size="sm"><Link to="/admin/services/new"><Plus className="w-3.5 h-3.5" /> New service</Link></Button>
+      <div className="flex items-center gap-3">
+        <Button variant="outline" size="sm" onClick={runMigration}><DownloadCloud className="w-3.5 h-3.5 mr-1" /> Import Data</Button>
+        <Button asChild variant="hero" size="sm"><Link to="/admin/services/new"><Plus className="w-3.5 h-3.5 mr-1" /> New service</Link></Button>
+      </div>
     }>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {items.map((s) => (
@@ -46,7 +93,7 @@ const AdminServices = () => {
               <Switch checked={s.active} onCheckedChange={(v) => toggle(s.id, v)} />
             </div>
             <div className="flex gap-2 mt-4">
-              <Button asChild variant="glass" size="sm"><Link to={`/admin/services/${s.id}`}><Pencil className="w-3.5 h-3.5" /> Edit</Link></Button>
+              <Button asChild variant="glass" size="sm"><Link to={`/admin/services/${s.id}`}><Pencil className="w-3.5 h-3.5 mr-1" /> Edit</Link></Button>
               <Button variant="ghost" size="sm" onClick={() => remove(s.id, s.title)}><Trash2 className="w-3.5 h-3.5 text-destructive" /></Button>
             </div>
           </div>

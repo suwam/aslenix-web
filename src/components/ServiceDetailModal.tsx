@@ -148,38 +148,50 @@ export const ServiceDetailModal = ({ service, open, onOpenChange }: Props) => {
                       return (
                         <div
                           key={p.name}
-                          className={`relative rounded-2xl p-5 flex flex-col transition-all duration-300 hover:-translate-y-1 hover:shadow-[var(--glow-brand)] ${
-                            p.highlighted ? "gradient-border bg-card" : "glass"
+                          className={`relative rounded-2xl p-6 flex flex-col transition-all duration-300 hover:-translate-y-1 ${
+                            p.highlighted 
+                              ? "border-2 border-accent bg-accent/[0.03] shadow-xl shadow-accent/5" 
+                              : "border border-foreground/10 bg-foreground/[0.02]"
                           }`}
                         >
                           {p.highlighted && (
-                            <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-0.5 rounded-full bg-brand-gradient text-foreground text-[10px] font-bold tracking-wider">
-                              POPULAR
+                            <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full bg-accent text-accent-foreground text-xs font-bold tracking-widest uppercase shadow-sm">
+                              Popular
                             </div>
                           )}
-                          <div className="font-display text-lg font-bold mb-1">{p.name}</div>
-                          {p.startingFrom && (
-                            <div className="text-[10px] uppercase tracking-wider text-muted-foreground mb-1">
-                              Starting from
+                          
+                          <div className="text-center mb-6">
+                            <h4 className="font-display text-xl font-bold text-foreground mb-4">{p.name}</h4>
+                            <div className="flex flex-col items-center justify-center min-h-[64px]">
+                              {p.startingFrom && (
+                                <span className="text-xs font-medium uppercase tracking-wider text-muted-foreground mb-1 block">
+                                  Starting From
+                                </span>
+                              )}
+                              <div className="text-2xl sm:text-3xl font-display font-bold text-foreground">
+                                {p.price}
+                              </div>
                             </div>
-                          )}
-                          <div className="text-xl font-display font-bold text-gradient mb-4 leading-tight">
-                            {p.price}
                           </div>
-                          <ul className="space-y-2 flex-1">
+                          
+                          <div className="w-full h-px bg-foreground/10 mb-6" />
+                          
+                          <ul className="space-y-4 flex-1 mb-8">
                             {p.features.map((f) => (
-                              <li key={f} className="flex items-start gap-2 text-xs text-foreground/80">
-                                <Check className="h-3.5 w-3.5 text-accent shrink-0 mt-0.5" />
+                              <li key={f} className="flex items-start gap-3 text-sm text-foreground/80">
+                                <Check className="h-4 w-4 text-accent shrink-0 mt-0.5" />
                                 <span>{f}</span>
                               </li>
                             ))}
                           </ul>
-                          <div className="flex flex-col gap-2 mt-5">
-                            <Button variant="hero" size="sm" onClick={scrollToContact}>
-                              Get Quote
-                            </Button>
-                            <Button variant="glass" size="sm" onClick={scrollToContact}>
-                              Book Consultation
+                          
+                          <div className="flex flex-col gap-3 mt-auto">
+                            <Button 
+                              variant={p.highlighted ? "default" : "outline"} 
+                              className={`w-full h-11 ${p.highlighted ? "bg-accent hover:bg-accent/90 text-accent-foreground" : "border-foreground/20 hover:bg-foreground/5 text-foreground"}`}
+                              onClick={scrollToContact}
+                            >
+                              Get Started
                             </Button>
                           </div>
                         </div>

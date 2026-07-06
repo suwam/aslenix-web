@@ -916,6 +916,9 @@ export type Database = {
           technologies: string[] | null
           title: string
           updated_at: string
+          case_studies: Json | null
+          overview: Json | null
+          packages: Json | null
         }
         Insert: {
           active?: boolean
@@ -935,6 +938,9 @@ export type Database = {
           technologies?: string[] | null
           title: string
           updated_at?: string
+          case_studies?: Json | null
+          overview?: Json | null
+          packages?: Json | null
         }
         Update: {
           active?: boolean
@@ -954,6 +960,9 @@ export type Database = {
           technologies?: string[] | null
           title?: string
           updated_at?: string
+          case_studies?: Json | null
+          overview?: Json | null
+          packages?: Json | null
         }
         Relationships: []
       }
