@@ -67,11 +67,12 @@ export const Navbar = memo(() => {
           </a>
           <Button 
             asChild 
-            className="bg-gradient-to-r from-[#7B2FF7] to-[#2563EB] text-white hover:opacity-90 rounded-full px-7 py-5 font-medium transition-all duration-300 shadow-[0_8px_20px_-6px_rgba(123,47,247,0.4)] hover:shadow-[0_12px_25px_-8px_rgba(123,47,247,0.6)] hover:-translate-y-0.5 border-0 group relative overflow-hidden"
+            variant="hero"
+            className="rounded-full px-7 py-5 font-medium border-0 group relative overflow-hidden"
           >
             <a href="#contact" className="flex items-center">
               {/* Shine effect overlay */}
-              <div className="absolute inset-0 -translate-x-full group-hover:animate-[shimmer_1.5s_infinite] bg-gradient-to-r from-transparent via-white/20 to-transparent pointer-events-none" />
+              <div className="absolute inset-0 -translate-x-full group-hover:animate-[shimmer_1.5s_infinite] bg-gradient-to-r from-transparent via-white/40 to-transparent pointer-events-none z-20" />
               <span className="relative z-10 flex items-center">
                 Let's Talk
                 <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
