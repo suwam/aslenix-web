@@ -77,7 +77,7 @@ export const FloatingReviewButton = () => {
       <AnimatePresence>
         {open && (
           <Dialog open={open} onOpenChange={setOpen}>
-            <DialogContent className="sm:max-w-md p-0 overflow-hidden border border-slate-300 bg-white shadow-xl text-slate-900 rounded-md">
+            <DialogContent className="sm:max-w-md p-0 overflow-hidden border border-foreground/10 bg-background shadow-[0_24px_80px_-42px_rgba(0,0,0,0.9)] text-foreground rounded-2xl">
               <motion.div
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -85,16 +85,16 @@ export const FloatingReviewButton = () => {
                 transition={{ duration: 0.2 }}
                 className="p-6 relative"
               >
-                <DialogTitle className="text-xl font-semibold mb-1 text-slate-800">
+                <DialogTitle className="font-display text-2xl font-semibold mb-1 text-foreground">
                   How did we do?
                 </DialogTitle>
-                <DialogDescription className="mb-6 text-slate-600 text-sm">
+                <DialogDescription className="mb-6 text-muted-foreground text-sm">
                   Your feedback helps us improve and serve you better.
                 </DialogDescription>
 
                 <div className="space-y-4">
                   {/* Rating Selector */}
-                  <div className="flex gap-1 mb-2 pb-4 border-b border-slate-200">
+                  <div className="flex gap-1 mb-2 pb-4 border-b border-foreground/10">
                     {[1, 2, 3, 4, 5].map((star) => (
                       <button
                         key={star}
@@ -109,7 +109,7 @@ export const FloatingReviewButton = () => {
                             "w-8 h-8 transition-colors",
                             (hoveredStar !== null ? star <= hoveredStar : star <= rating)
                               ? "fill-yellow-400 text-yellow-400"
-                              : "fill-slate-100 text-slate-200 hover:text-yellow-200"
+                              : "fill-foreground/5 text-foreground/15 hover:text-yellow-200"
                           )} 
                         />
                       </button>
@@ -117,45 +117,45 @@ export const FloatingReviewButton = () => {
                   </div>
 
                   <div className="space-y-1.5">
-                    <Label htmlFor="review-name" className="text-slate-700 text-sm font-medium">Full Name *</Label>
+                    <Label htmlFor="review-name" className="text-foreground/90 text-sm font-medium">Full Name *</Label>
                     <Input 
                       id="review-name" 
                       placeholder="John Doe" 
                       value={name} 
                       onChange={(e) => setName(e.target.value)} 
-                      className="bg-white border border-slate-300 text-slate-900 placeholder:text-slate-400 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 rounded-sm shadow-none"
+                      className="bg-background border border-foreground/10 text-foreground placeholder:text-muted-foreground focus:border-accent focus:ring-1 focus:ring-accent rounded-xl shadow-sm"
                     />
                   </div>
 
                   <div className="space-y-1.5">
-                    <Label htmlFor="review-email" className="text-slate-700 text-sm font-medium">Email <span className="text-slate-400 font-normal">(Optional)</span></Label>
+                    <Label htmlFor="review-email" className="text-foreground/90 text-sm font-medium">Email <span className="text-muted-foreground font-normal">(Optional)</span></Label>
                     <Input 
                       id="review-email" 
                       type="email" 
                       placeholder="john@example.com" 
                       value={email} 
                       onChange={(e) => setEmail(e.target.value)}
-                      className="bg-white border border-slate-300 text-slate-900 placeholder:text-slate-400 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 rounded-sm shadow-none"
+                      className="bg-background border border-foreground/10 text-foreground placeholder:text-muted-foreground focus:border-accent focus:ring-1 focus:ring-accent rounded-xl shadow-sm"
                     />
                   </div>
 
                   <div className="space-y-1.5">
-                    <Label htmlFor="review-quote" className="text-slate-700 text-sm font-medium">Your Review *</Label>
+                    <Label htmlFor="review-quote" className="text-foreground/90 text-sm font-medium">Your Review *</Label>
                     <Textarea 
                       id="review-quote" 
                       placeholder="What was your experience like?" 
                       rows={4} 
                       value={quote} 
                       onChange={(e) => setQuote(e.target.value)}
-                      className="bg-white border border-slate-300 text-slate-900 placeholder:text-slate-400 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 resize-none rounded-sm shadow-none p-3"
+                      className="bg-background border border-foreground/10 text-foreground placeholder:text-muted-foreground focus:border-accent focus:ring-1 focus:ring-accent resize-none rounded-xl shadow-sm p-3"
                     />
                   </div>
 
-                  <div className="flex gap-3 pt-4 border-t border-slate-200 mt-2">
-                    <Button variant="outline" className="w-full rounded-sm border-slate-300 text-slate-700 hover:bg-slate-50" onClick={() => setOpen(false)}>
+                  <div className="flex gap-3 pt-4 border-t border-foreground/10 mt-2">
+                    <Button variant="outline" className="w-full rounded-xl" onClick={() => setOpen(false)}>
                       Cancel
                     </Button>
-                    <Button className="w-full rounded-sm bg-blue-600 text-white hover:bg-blue-700" onClick={submit}>
+                    <Button variant="hero" className="w-full rounded-xl border-0" onClick={submit}>
                       Submit Review
                     </Button>
                   </div>
