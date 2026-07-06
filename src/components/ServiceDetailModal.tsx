@@ -148,39 +148,83 @@ export const ServiceDetailModal = ({ service, open, onOpenChange }: Props) => {
                       return (
                         <div
                           key={p.name}
-                          className={`relative rounded-2xl p-5 flex flex-col transition-all duration-300 hover:-translate-y-1 hover:shadow-[var(--glow-brand)] ${
-                            p.highlighted ? "gradient-border bg-card" : "glass"
+                          className={`group relative rounded-[2rem] p-7 flex flex-col transition-all duration-500 overflow-hidden hover:-translate-y-2 ${
+                            p.highlighted 
+                              ? "bg-card shadow-2xl shadow-accent/20 border-0" 
+                              : "glass hover:shadow-xl hover:shadow-accent/5"
                           }`}
                         >
+                          {/* Inner glow on hover for non-highlighted */}
+                          {!p.highlighted && (
+                            <div className="absolute inset-0 bg-gradient-to-br from-accent/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+                          )}
+                          
+                          {/* Highlighted Styling enhancements */}
                           {p.highlighted && (
-                            <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-0.5 rounded-full bg-brand-gradient text-foreground text-[10px] font-bold tracking-wider">
-                              POPULAR
-                            </div>
+                            <>
+                              {/* Background tint and top border */}
+                              <div className="absolute inset-0 bg-brand-gradient opacity-[0.08] pointer-events-none" />
+                              <div className="absolute top-0 left-0 right-0 h-1.5 bg-brand-gradient" />
+                              
+                              {/* Glowing orb in the corner */}
+                              <div className="absolute -top-12 -right-12 w-40 h-40 bg-brand-gradient blur-[50px] opacity-40 rounded-full pointer-events-none" />
+                              
+                              <div className="absolute top-5 right-5">
+                                <div className="px-4 py-1.5 rounded-full bg-brand-gradient text-foreground text-[10px] font-bold tracking-widest uppercase shadow-[0_4px_10px_rgba(200,180,255,0.4)]">
+                                  Popular
+                                </div>
+                              </div>
+                            </>
                           )}
-                          <div className="font-display text-lg font-bold mb-1">{p.name}</div>
-                          {p.startingFrom && (
-                            <div className="text-[10px] uppercase tracking-wider text-muted-foreground mb-1">
-                              Starting from
+                          
+                          <div className="relative z-10 flex-1 flex flex-col">
+                            <div className="font-display text-2xl font-bold mb-1 text-foreground">{p.name}</div>
+                            {p.startingFrom && (
+                              <div className="text-[10px] uppercase tracking-widest text-muted-foreground font-semibold mb-2">
+                                Starting from
+                              </div>
+                            )}
+                            <div className={`text-3xl sm:text-4xl font-display font-bold tracking-tight mb-8 ${p.highlighted ? "text-gradient" : "text-foreground"}`}>
+                              {p.price}
                             </div>
-                          )}
-                          <div className="text-xl font-display font-bold text-gradient mb-4 leading-tight">
-                            {p.price}
-                          </div>
-                          <ul className="space-y-2 flex-1">
-                            {p.features.map((f) => (
-                              <li key={f} className="flex items-start gap-2 text-xs text-foreground/80">
-                                <Check className="h-3.5 w-3.5 text-accent shrink-0 mt-0.5" />
-                                <span>{f}</span>
-                              </li>
-                            ))}
-                          </ul>
-                          <div className="flex flex-col gap-2 mt-5">
-                            <Button variant="hero" size="sm" onClick={scrollToContact}>
-                              Get Quote
-                            </Button>
-                            <Button variant="glass" size="sm" onClick={scrollToContact}>
-                              Book Consultation
-                            </Button>
+                            
+                            <ul className="space-y-4 flex-1 mb-8">
+                              {p.features.map((f) => (
+                                <li key={f} className="flex items-start gap-3 text-sm text-foreground/80 group/item">
+                                  <div className={`w-6 h-6 rounded-full flex items-center justify-center shrink-0 mt-0.5 transition-colors duration-300 ${
+                                    p.highlighted 
+                                      ? "bg-accent/20 text-accent" 
+                                      : "bg-foreground/5 text-foreground/40 group-hover/item:bg-accent/10 group-hover/item:text-accent"
+                                  }`}>
+                                    <Check className="h-3.5 w-3.5" />
+                                  </div>
+                                  <span className="leading-relaxed">{f}</span>
+                                </li>
+                              ))}
+                            </ul>
+
+                            <div className="flex flex-col gap-3 mt-auto">
+                              <Button 
+                                variant={p.highlighted ? "hero" : "outline"} 
+                                className={`w-full h-12 rounded-xl transition-all duration-300 ${
+                                  p.highlighted 
+                                    ? "shadow-[0_8px_20px_-8px_rgba(200,180,255,0.6)] hover:shadow-[0_8px_25px_-5px_rgba(200,180,255,0.8)]" 
+                                    : "border-foreground/10 hover:border-accent/40 hover:bg-accent/5 hover:text-accent"
+                                }`} 
+                                size="lg" 
+                                onClick={scrollToContact}
+                              >
+                                Get Quote
+                              </Button>
+                              <Button 
+                                variant="ghost" 
+                                size="sm" 
+                                className="w-full h-10 rounded-xl text-muted-foreground hover:text-foreground hover:bg-foreground/5" 
+                                onClick={scrollToContact}
+                              >
+                                Book Consultation
+                              </Button>
+                            </div>
                           </div>
                         </div>
                       );

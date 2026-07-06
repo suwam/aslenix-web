@@ -30,9 +30,55 @@ const AdminServices = () => {
     toast.success("Deleted"); load();
   };
 
+  const loadDefaults = async () => {
+    try {
+      const { services: defaultServices } = await import("@/data/services");
+      const toInsert = defaultServices.map((s, idx) => {
+        let iconName = "Sparkles";
+        if (s.title.includes("Website")) iconName = "Code2";
+        else if (s.title.includes("Mobile")) iconName = "Smartphone";
+        else if (s.title.includes("Custom")) iconName = "Cpu";
+        else if (s.title.includes("UI")) iconName = "Palette";
+        else if (s.title.includes("Brand")) iconName = "Sparkles";
+        else if (s.title.includes("Market")) iconName = "TrendingUp";
+        else if (s.title.includes("AI")) iconName = "Brain";
+        else if (s.title.includes("Auto")) iconName = "Workflow";
+
+        return {
+          title: s.title,
+          slug: s.slug,
+          icon: iconName,
+          short_description: s.desc,
+          full_description: s.overview.what + "\n\n" + s.overview.why,
+          deliverables: s.deliverables,
+          technologies: s.technologies,
+          active: true,
+          display_order: idx,
+        };
+      });
+
+      const { error } = await supabase.from("services").insert(toInsert);
+      if (error) {
+        toast.error("Failed to load defaults: " + error.message);
+      } else {
+        toast.success("Loaded default services!");
+        load();
+      }
+    } catch (e: any) {
+      toast.error(e.message);
+    }
+  };
+
   return (
     <AdminShell title="Services" actions={
-      <Button asChild variant="hero" size="sm"><Link to="/admin/services/new"><Plus className="w-3.5 h-3.5" /> New service</Link></Button>
+      <div className="flex items-center gap-2">
+        {items.length === 0 && (
+          <Button variant="outline" size="sm" onClick={loadDefaults}>
+            Load Defaults
+          </Button>
+        )}
+        <Button asChild variant="hero" size="sm"><Link to="/admin/services/new"><Plus className="w-3.5 h-3.5 mr-1" /> New service</Link></Button>
+      </div>
     }>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {items.map((s) => (
