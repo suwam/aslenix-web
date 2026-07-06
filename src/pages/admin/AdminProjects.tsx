@@ -35,60 +35,70 @@ const AdminProjects = () => {
   );
 
   return (
-    <AdminShell>
-      <div className="gradient-border glass rounded-2xl overflow-hidden flex flex-col">
-        <div className="p-6 border-b border-white/5 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-          <h1 className="font-display text-2xl font-bold">Projects</h1>
-          <div className="flex items-center gap-3 w-full sm:w-auto">
-            <div className="relative w-full sm:w-64">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
-              <Input value={q} onChange={(e) => setQ(e.target.value)} placeholder="Search projects…" className="pl-9 bg-muted/30 border-foreground/5 h-9" />
-            </div>
-            <Button asChild variant="hero" size="sm" className="shrink-0 h-9"><Link to="/admin/projects/new"><Plus className="w-3.5 h-3.5 mr-1" /> New project</Link></Button>
-          </div>
-        </div>
+    <AdminShell
+      title="Projects"
+      actions={
+        <Button asChild variant="hero" size="sm">
+          <Link to="/admin/projects/new"><Plus className="w-3.5 h-3.5 mr-1" /> New Project</Link>
+        </Button>
+      }
+    >
+      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between mb-6">
+        <Input
+          placeholder="Search projects…"
+          value={q}
+          onChange={(e) => setQ(e.target.value)}
+          className="max-w-sm"
+        />
+        <div className="text-sm text-muted-foreground">Manage your portfolio projects.</div>
+      </div>
 
-        <table className="w-full text-sm">
-          <thead className="bg-muted/30 text-xs uppercase tracking-wider text-muted-foreground">
-            <tr>
-              <th className="text-left px-4 py-3">Project</th>
-              <th className="text-left px-4 py-3 hidden md:table-cell">Category</th>
-              <th className="text-left px-4 py-3 hidden lg:table-cell">Client</th>
-              <th className="px-4 py-3">Featured</th>
-              <th className="px-4 py-3 text-right">Actions</th>
-            </tr>
-          </thead>
-          <tbody className="divide-y divide-white/5">
-            {loading ? (
-              <tr><td colSpan={5} className="text-center py-12 text-muted-foreground">Loading…</td></tr>
-            ) : filtered.length === 0 ? (
-              <tr><td colSpan={5} className="text-center py-12 text-muted-foreground">No projects yet</td></tr>
-            ) : filtered.map((p) => (
-              <tr key={p.id} className="hover:bg-foreground/5">
-                <td className="px-4 py-3">
-                  <div className="flex items-center gap-3">
-                    {p.cover_image
-                      ? <img src={p.cover_image} alt="" className="w-10 h-10 rounded-lg object-cover" />
-                      : <div className="w-10 h-10 rounded-lg bg-brand-gradient" />}
-                    <div className="min-w-0">
-                      <div className="font-medium truncate">{p.title}</div>
-                      <div className="text-xs text-muted-foreground truncate">/{p.slug}</div>
-                    </div>
-                  </div>
-                </td>
-                <td className="px-4 py-3 hidden md:table-cell text-muted-foreground">{p.category ?? "—"}</td>
-                <td className="px-4 py-3 hidden lg:table-cell text-muted-foreground">{p.client_name ?? "—"}</td>
-                <td className="px-4 py-3 text-center">
-                  {p.featured && <Star className="w-4 h-4 text-accent inline fill-accent" />}
-                </td>
-                <td className="px-4 py-3 text-right">
-                  <Button asChild variant="ghost" size="sm"><Link to={`/admin/projects/${p.id}`}><Pencil className="w-3.5 h-3.5" /></Link></Button>
-                  <Button variant="ghost" size="sm" onClick={() => remove(p.id, p.title)}><Trash2 className="w-3.5 h-3.5 text-destructive" /></Button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+      <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+        {filtered.map((p) => (
+          <div key={p.id} className="gradient-border glass rounded-3xl p-5 group flex flex-col">
+            <div className="flex items-start gap-4 mb-4">
+              <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-3xl bg-foreground/5 text-lg font-semibold text-foreground/90 overflow-hidden">
+                {p.cover_image ? (
+                  <img src={p.cover_image} alt={p.title} className="h-full w-full object-cover" />
+                ) : (
+                  <span>{p.title.slice(0, 2).toUpperCase()}</span>
+                )}
+              </div>
+              <div className="flex-1 min-w-0">
+                <div className="flex items-center justify-between gap-4">
+                  <h3 className="text-lg font-semibold text-foreground truncate">{p.title}</h3>
+                  {p.featured && (
+                    <span className="shrink-0 rounded-full bg-foreground/5 px-2 py-1 text-xs uppercase tracking-[0.2em] text-accent flex items-center">
+                      <Star className="w-3 h-3 fill-accent" />
+                    </span>
+                  )}
+                </div>
+                <p className="text-sm text-accent/90 mt-1 truncate">{p.category || "Project"}</p>
+              </div>
+            </div>
+            
+            <p className="text-sm leading-6 text-muted-foreground line-clamp-3 flex-1">
+              {p.short_description || (p.client_name ? `Client: ${p.client_name}` : "No description provided.")}
+            </p>
+            
+            <div className="mt-5 flex items-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+              <Button size="icon" variant="ghost" asChild>
+                <Link to={`/admin/projects/${p.id}`}><Pencil className="w-3.5 h-3.5" /></Link>
+              </Button>
+              <Button size="icon" variant="ghost" onClick={() => remove(p.id, p.title)}>
+                <Trash2 className="w-3.5 h-3.5 text-destructive" />
+              </Button>
+            </div>
+          </div>
+        ))}
+
+        {loading ? (
+          <div className="col-span-full py-12 text-center"><div className="inline-block h-6 w-6 animate-spin rounded-full border-2 border-solid border-current border-r-transparent opacity-50" /></div>
+        ) : filtered.length === 0 && (
+          <div className="col-span-full rounded-3xl border border-foreground/10 bg-foreground/5 p-10 text-center text-sm text-muted-foreground">
+            No projects found.
+          </div>
+        )}
       </div>
     </AdminShell>
   );

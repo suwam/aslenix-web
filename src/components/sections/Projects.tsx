@@ -262,7 +262,7 @@ const ProjectDetailModal = ({
                     </div>
                     <div className="aspect-[16/10] overflow-hidden rounded-2xl bg-muted">
                       {project.cover_image ? (
-                        <img src={project.cover_image} alt={`${project.title} screenshot`} decoding="async" className="h-full w-full object-cover" />
+                        <img src={project.cover_image} alt={`${project.title} screenshot`} decoding="async" className="h-full w-full object-contain" />
                       ) : (
                         <div className="flex h-full w-full items-center justify-center bg-brand-gradient opacity-30">
                           <Layers className="h-12 w-12 text-accent" />
@@ -343,7 +343,7 @@ const ProjectDetailModal = ({
                             alt={`${project.title} gallery screenshot ${index + 1}`}
                             loading="lazy"
                             decoding="async"
-                            className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
+                            className="h-full w-full object-contain transition-transform duration-700 group-hover:scale-105"
                           />
                         </div>
                       </div>

@@ -218,7 +218,7 @@ const ProjectGalleryManager = ({ images, onChange }: { images: string[]; onChang
           {images.map((image, index) => (
             <div key={`${image}-${index}`} className="group relative overflow-hidden rounded-xl border border-foreground/10 bg-muted/20">
               <div className="aspect-video overflow-hidden">
-                <img src={image} alt={`Gallery image ${index + 1}`} className="h-full w-full object-cover" />
+                <img src={image} alt={`Gallery image ${index + 1}`} className="h-full w-full object-contain" />
               </div>
               <div className="absolute inset-x-0 bottom-0 flex items-center justify-between gap-2 bg-background/80 p-2 opacity-100 backdrop-blur sm:opacity-0 sm:transition-opacity sm:group-hover:opacity-100">
                 <div className="text-xs font-medium text-muted-foreground">#{index + 1}</div>
@@ -245,7 +245,7 @@ const ProjectGalleryManager = ({ images, onChange }: { images: string[]; onChang
       )}
 
       <div className="rounded-xl border border-foreground/10 bg-foreground/[0.02] p-4">
-        <MediaPicker label="Add gallery image" value={null} onChange={addImage} cropAspect={16 / 10} />
+        <MediaPicker label="Add gallery image" value={null} onChange={addImage} cropAspect={null} />
       </div>
     </div>
   );
