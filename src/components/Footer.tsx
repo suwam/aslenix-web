@@ -173,11 +173,11 @@ export const Footer = ({ onOpenPrivacy, onOpenTerms }: FooterProps) => {
           </div>
         </div>
 
-        <div className="relative pt-6 border-t border-foreground/5 flex flex-col items-center gap-4 text-sm text-muted-foreground sm:min-h-12 sm:justify-center">
+        <div className="relative pt-6 border-t border-foreground/5 flex flex-col items-center gap-4 text-base text-muted-foreground sm:min-h-12 sm:justify-center">
           <div className="text-gradient text-center font-semibold">
             © {new Date().getFullYear()} ASLENIX. Crafted with vision in Nepal.
           </div>
-          <div className="flex gap-5 sm:absolute sm:right-0 sm:top-6">
+          <div className="flex gap-5 sm:absolute sm:right-0 sm:top-6 text-sm">
             <button type="button" onClick={onOpenPrivacy} className="hover:text-accent transition-colors text-left">
               Privacy
             </button>
