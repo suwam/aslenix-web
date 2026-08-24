@@ -2,6 +2,8 @@ import { useState } from "react";
 import { z } from "zod";
 import { motion } from "framer-motion";
 import { Mail, Phone, Globe, Send, Github, Linkedin, Instagram, Twitter, MessageCircle, Facebook } from "lucide-react";
+import PhoneInput from "react-phone-input-2";
+import "react-phone-input-2/lib/style.css";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -12,7 +14,7 @@ import { useSupabaseRealtime } from "@/hooks/useSupabaseRealtime";
 const schema = z.object({
   name: z.string().trim().min(2, "Name must be at least 2 characters").max(100),
   email: z.string().trim().email("Invalid email").max(255),
-  phone: z.string().trim().min(5, "Phone seems too short").max(30),
+  phone: z.string().trim().refine((value) => value.replace(/\D/g, "").length > 10, "Phone number must be more than 10 digits"),
   message: z.string().trim().min(10, "Message must be at least 10 characters").max(1000),
 });
 
@@ -65,9 +67,7 @@ export const Contact = () => {
       toast.error(parsed.error.issues[0].message);
       return;
     }
-    const phone = parsed.data.phone.startsWith("+")
-      ? parsed.data.phone
-      : `+977 ${parsed.data.phone.replace(/^0+/, "")}`;
+    const phone = `+${parsed.data.phone.replace(/\D/g, "")}`;
     setLoading(true);
     const { error } = await supabase.from("leads").insert({
       name: parsed.data.name, email: parsed.data.email,
@@ -137,22 +137,26 @@ export const Contact = () => {
               </div>
               <div>
                 <label className="text-sm font-bold text-slate-900 mb-2 block">Phone</label>
-                <div className="relative">
-                  <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center gap-2 pl-4 text-sm font-semibold text-slate-700">
-                    <span aria-label="Nepal" role="img" className="text-base leading-none">🇳🇵</span>
-                    <span>+977</span>
-                  </div>
-                  <Input
-                    required
-                    type="tel"
-                    inputMode="tel"
-                    maxLength={30}
-                    value={form.phone}
-                    onChange={(e) => setForm({ ...form, phone: e.target.value })}
-                    className="h-12 bg-slate-50 border-slate-200 pl-[6.6rem] focus-visible:ring-slate-900 focus-visible:border-slate-900 transition-colors"
-                    placeholder="9709043147"
-                  />
-                </div>
+                <PhoneInput
+                  country="np"
+                  value={form.phone}
+                  onChange={(value) => setForm({ ...form, phone: value })}
+                  enableSearch
+                  countryCodeEditable={false}
+                  enableLongNumbers
+                  specialLabel=""
+                  placeholder="9709043147"
+                  inputProps={{
+                    required: true,
+                    name: "phone",
+                    inputMode: "tel",
+                  }}
+                  containerClass="!w-full"
+                  inputClass="!h-12 !w-full !rounded-xl !border !border-slate-200 !bg-slate-50 !pl-14 !text-base !text-slate-900 !transition-colors focus:!border-slate-900 focus:!ring-2 focus:!ring-slate-900/20"
+                  buttonClass="!rounded-l-xl !border-slate-200 !bg-slate-50 hover:!bg-slate-100"
+                  dropdownClass="!rounded-xl !border-slate-200 !shadow-xl"
+                  searchClass="!mx-2 !my-2 !h-10 !rounded-lg !border-slate-200 !text-sm"
+                />
               </div>
               <div>
                 <label className="text-sm font-bold text-slate-900 mb-2 block">Message</label>
