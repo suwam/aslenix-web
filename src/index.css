@@ -226,6 +226,128 @@
     border: 2px solid transparent;
     background-clip: content-box;
   }
+
+  .phone-country-field.react-tel-input {
+    font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  }
+
+  .phone-country-field.react-tel-input .selected-flag {
+    width: 50px;
+    padding-left: 13px;
+  }
+
+  .phone-country-field.react-tel-input .selected-flag .arrow {
+    left: 24px;
+    border-top-color: #475569;
+  }
+
+  .phone-country-field.react-tel-input .selected-flag .arrow.up {
+    border-bottom-color: #475569;
+  }
+
+  .phone-country-field.react-tel-input .flag-dropdown.open,
+  .phone-country-field.react-tel-input .flag-dropdown.open .selected-flag,
+  .phone-country-field.react-tel-input .selected-flag:hover,
+  .phone-country-field.react-tel-input .selected-flag:focus {
+    background: #f8fafc;
+  }
+
+  .phone-country-field.react-tel-input .country-list.phone-country-dropdown {
+    width: min(420px, calc(100vw - 48px));
+    max-height: 300px;
+    margin: 8px 0 0;
+    overflow-y: auto;
+    border: 1px solid #e2e8f0;
+    border-radius: 16px;
+    background: #ffffff;
+    box-shadow: 0 24px 60px -24px rgba(15, 23, 42, 0.28);
+    scrollbar-width: thin;
+    scrollbar-color: #94a3b8 transparent;
+  }
+
+  .phone-country-field.react-tel-input .country-list.phone-country-dropdown::-webkit-scrollbar {
+    width: 10px;
+  }
+
+  .phone-country-field.react-tel-input .country-list.phone-country-dropdown::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .phone-country-field.react-tel-input .country-list.phone-country-dropdown::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border: 3px solid #ffffff;
+    border-radius: 9999px;
+  }
+
+  .phone-country-field.react-tel-input .country-list .search {
+    position: sticky;
+    top: 0;
+    z-index: 3;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px;
+    border-bottom: 1px solid #e2e8f0;
+    background: rgba(255, 255, 255, 0.96);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+  }
+
+  .phone-country-field.react-tel-input .country-list .search-emoji {
+    flex: 0 0 auto;
+    width: 32px;
+    height: 32px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 9999px;
+    background: #f1f5f9;
+    font-size: 16px;
+  }
+
+  .phone-country-field.react-tel-input .country-list .search-box.phone-country-search {
+    width: 100%;
+    height: 42px;
+    margin: 0;
+    padding: 0 14px;
+    border: 1px solid #e2e8f0;
+    border-radius: 9999px;
+    background: #ffffff;
+    color: #0f172a;
+    font-size: 14px;
+    line-height: 42px;
+    outline: none;
+  }
+
+  .phone-country-field.react-tel-input .country-list .search-box.phone-country-search:focus {
+    border-color: #0f172a;
+    box-shadow: 0 0 0 3px rgba(15, 23, 42, 0.1);
+  }
+
+  .phone-country-field.react-tel-input .country-list .country {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    min-height: 42px;
+    padding: 10px 14px;
+    color: #0f172a;
+    font-size: 14px;
+  }
+
+  .phone-country-field.react-tel-input .country-list .country:hover,
+  .phone-country-field.react-tel-input .country-list .country.highlight {
+    background: #f1f5f9;
+  }
+
+  .phone-country-field.react-tel-input .country-list .country-name {
+    margin-right: 0;
+  }
+
+  .phone-country-field.react-tel-input .country-list .dial-code {
+    margin-left: auto;
+    color: #64748b;
+    font-weight: 600;
+  }
 }
 
 @keyframes float {

@@ -151,11 +151,12 @@ export const Contact = () => {
                     name: "phone",
                     inputMode: "tel",
                   }}
-                  containerClass="!w-full"
+                  searchPlaceholder="Search country"
+                  containerClass="phone-country-field !w-full"
                   inputClass="!h-12 !w-full !rounded-xl !border !border-slate-200 !bg-slate-50 !pl-14 !text-base !text-slate-900 !transition-colors focus:!border-slate-900 focus:!ring-2 focus:!ring-slate-900/20"
                   buttonClass="!rounded-l-xl !border-slate-200 !bg-slate-50 hover:!bg-slate-100"
-                  dropdownClass="!rounded-xl !border-slate-200 !shadow-xl"
-                  searchClass="!mx-2 !my-2 !h-10 !rounded-lg !border-slate-200 !text-sm"
+                  dropdownClass="phone-country-dropdown"
+                  searchClass="phone-country-search"
                 />
               </div>
               <div>
