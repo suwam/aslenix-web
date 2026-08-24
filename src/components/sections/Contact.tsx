@@ -65,10 +65,13 @@ export const Contact = () => {
       toast.error(parsed.error.issues[0].message);
       return;
     }
+    const phone = parsed.data.phone.startsWith("+")
+      ? parsed.data.phone
+      : `+977 ${parsed.data.phone.replace(/^0+/, "")}`;
     setLoading(true);
     const { error } = await supabase.from("leads").insert({
       name: parsed.data.name, email: parsed.data.email,
-      phone: parsed.data.phone, message: parsed.data.message,
+      phone, message: parsed.data.message,
       source: "website",
     });
     setLoading(false);
@@ -134,14 +137,22 @@ export const Contact = () => {
               </div>
               <div>
                 <label className="text-sm font-bold text-slate-900 mb-2 block">Phone</label>
-                <Input
-                  required
-                  maxLength={30}
-                  value={form.phone}
-                  onChange={(e) => setForm({ ...form, phone: e.target.value })}
-                  className="h-12 bg-slate-50 border-slate-200 focus-visible:ring-slate-900 focus-visible:border-slate-900 transition-colors"
-                  placeholder="+977 ..."
-                />
+                <div className="relative">
+                  <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center gap-2 pl-4 text-sm font-semibold text-slate-700">
+                    <span aria-label="Nepal" role="img" className="text-base leading-none">🇳🇵</span>
+                    <span>+977</span>
+                  </div>
+                  <Input
+                    required
+                    type="tel"
+                    inputMode="tel"
+                    maxLength={30}
+                    value={form.phone}
+                    onChange={(e) => setForm({ ...form, phone: e.target.value })}
+                    className="h-12 bg-slate-50 border-slate-200 pl-[6.6rem] focus-visible:ring-slate-900 focus-visible:border-slate-900 transition-colors"
+                    placeholder="9709043147"
+                  />
+                </div>
               </div>
               <div>
                 <label className="text-sm font-bold text-slate-900 mb-2 block">Message</label>
