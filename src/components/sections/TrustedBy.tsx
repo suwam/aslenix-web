@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
-import logo from "@/assets/aslenix-logo.webp";
+import logo from "@/assets/new-logo.png";
 
 type Brand = {
   id: string;

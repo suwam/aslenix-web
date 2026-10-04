@@ -111,7 +111,7 @@ export const Footer = ({ onOpenPrivacy, onOpenTerms }: FooterProps) => {
                 </div>
                 <div className="flex flex-col pt-0">
                   <span className="text-[10px] font-bold uppercase tracking-[0.15em] text-muted-foreground group-hover:text-accent transition-colors">Office</span>
-                  <span className="text-xs font-medium text-foreground/90 mt-0.5 leading-snug">Buddhanagar-10,<br/>Kathmandu</span>
+                  <span className="text-xs font-medium text-foreground/90 mt-0.5 leading-snug">Buddhanagar,<br/>Kathmandu</span>
                 </div>
               </div>
               <a href="https://wa.me/message/JIZWD7OFCQVWK1" target="_blank" rel="noopener noreferrer" className="group flex items-start gap-3 p-3 rounded-xl border border-foreground/5 bg-foreground/[0.015] hover:border-[#25D366]/30 hover:bg-[#25D366]/5 hover:shadow-[0_8px_30px_-12px_rgba(37,211,102,0.2)] transition-all duration-300">

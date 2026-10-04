@@ -2,9 +2,10 @@ import { motion } from "framer-motion";
 import { ExternalLink, MapPin } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
-const mapsUrl = "https://maps.app.goo.gl/9gCfTWWnM2oVzMSL9";
+const mapsUrl =
+  "https://www.google.com/maps/place/ASLENIX+TECH+AND+SOLUTION/@27.6871748,85.3293724,17.5z/data=!4m14!1m7!3m6!1s0x39eb19c24a608d2f:0xc3cf5bff6cc815e4!2sASLENIX+TECH+AND+SOLUTION!8m2!3d27.6866207!4d85.3313799!16s%2Fg%2F11njy5br0h!3m5!1s0x39eb19c24a608d2f:0xc3cf5bff6cc815e4!8m2!3d27.6866207!4d85.3313799!16s%2Fg%2F11njy5br0h";
 const embedUrl =
-  "https://www.google.com/maps?q=ASLENIX%20TECH%20AND%20SOLUTION%2C%20Durga%20Marg%2C%20Kathmandu%2C%20Nepal&z=16&output=embed";
+  "https://www.google.com/maps?q=ASLENIX%20TECH%20AND%20SOLUTION%4027.6866207%2C85.3313799&z=17&output=embed";
 
 export const LocationMap = () => {
   return (
@@ -27,7 +28,7 @@ export const LocationMap = () => {
                 Find <span className="text-gradient">ASLENIX</span> in Kathmandu
               </h2>
               <p className="mt-3 text-base text-muted-foreground sm:text-lg">
-                Durga Marg, Kathmandu, Nepal
+                Buddhanagar, Kathmandu, Nepal
               </p>
             </div>
             <Button asChild variant="outline" size="lg" className="w-full sm:w-auto">
