@@ -1,5 +1,5 @@
 import { memo } from "react";
-import logo from "@/assets/new-logo.png";
+const logo = "/logo.png";
 
 interface LogoProps {
   className?: string;
