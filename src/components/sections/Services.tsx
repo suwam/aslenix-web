@@ -18,18 +18,37 @@ export const Services = () => {
       <div className="absolute inset-x-0 top-1/4 h-[400px] bg-brand-gradient opacity-[0.07] blur-[150px] -z-10" />
 
       <div className="container">
-        <div className="mx-auto mb-10 max-w-5xl space-y-5 text-foreground/80 lg:mb-14">
-          <p className="text-[1.05rem] leading-relaxed sm:text-[1.18rem]">
-            We design and build modern websites, SaaS products, ERP systems, AI solutions, and brand
-            experiences that help startups and businesses scale with clarity and speed.
-          </p>
+        <div className="relative mx-auto mb-16 max-w-5xl overflow-hidden rounded-3xl border border-sky-200/60 bg-gradient-to-br from-sky-100/80 via-white/90 to-violet-100/80 p-7 text-slate-800 shadow-[0_20px_70px_-45px_rgba(59,130,246,0.35)] sm:p-10 lg:mb-20 lg:p-12 dark:border-white/10 dark:from-sky-950/35 dark:via-background/90 dark:to-violet-950/35 dark:text-foreground">
+          <div className="pointer-events-none absolute -right-16 -top-20 h-64 w-64 rounded-full bg-sky-300/20 blur-3xl dark:bg-sky-400/10" />
+          <div className="pointer-events-none absolute -bottom-24 -left-12 h-64 w-64 rounded-full bg-violet-300/20 blur-3xl dark:bg-violet-400/10" />
 
-          <div className="space-y-1 pt-1 text-[1.05rem] leading-relaxed sm:text-[1.18rem]">
-            <p>Web Development</p>
-            <p>Mobile App Development</p>
-            <p>AI Solutions</p>
-            <p>ERP Systems</p>
-            <p>Branding &amp; Digital Strategy</p>
+          <div className="relative space-y-5">
+            <p className="max-w-4xl text-base leading-8 sm:text-lg">
+              ASLENIX is a digital agency based in Nepal helping businesses launch high-impact web
+              platforms, mobile products, AI systems, and growth strategies.
+            </p>
+
+            <p className="max-w-4xl text-base leading-8 text-slate-700 sm:text-lg dark:text-foreground/80">
+              We design and build modern websites, SaaS products, ERP systems, AI solutions, and
+              brand experiences that help startups and businesses scale with clarity and speed.
+            </p>
+
+            <ul className="flex flex-wrap gap-2.5 pt-2 text-sm font-medium sm:gap-3">
+              {[
+                "Web Development",
+                "Mobile App Development",
+                "AI Solutions",
+                "ERP Systems",
+                "Branding & Digital Strategy",
+              ].map((service) => (
+                <li
+                  key={service}
+                  className="rounded-full border border-sky-200/70 bg-white/70 px-4 py-2 text-slate-700 shadow-sm dark:border-white/10 dark:bg-white/5 dark:text-foreground/90"
+                >
+                  {service}
+                </li>
+              ))}
+            </ul>
           </div>
         </div>
 
