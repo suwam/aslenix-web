@@ -20,11 +20,6 @@ export const Services = () => {
       <div className="container">
         <div className="mx-auto mb-10 max-w-5xl space-y-5 text-foreground/80 lg:mb-14">
           <p className="text-[1.05rem] leading-relaxed sm:text-[1.18rem]">
-            ASLENIX is a digital agency based in Nepal helping businesses launch high-impact web platforms,
-            mobile products, AI systems, and growth strategies.
-          </p>
-
-          <p className="text-[1.05rem] leading-relaxed sm:text-[1.18rem]">
             We design and build modern websites, SaaS products, ERP systems, AI solutions, and brand
             experiences that help startups and businesses scale with clarity and speed.
           </p>
