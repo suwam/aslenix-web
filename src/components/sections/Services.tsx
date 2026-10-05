@@ -18,6 +18,26 @@ export const Services = () => {
       <div className="absolute inset-x-0 top-1/4 h-[400px] bg-brand-gradient opacity-[0.07] blur-[150px] -z-10" />
 
       <div className="container">
+        <div className="mx-auto mb-10 max-w-5xl space-y-5 text-foreground/80 lg:mb-14">
+          <p className="text-[1.05rem] leading-relaxed sm:text-[1.18rem]">
+            ASLENIX is a digital agency based in Nepal helping businesses launch high-impact web platforms,
+            mobile products, AI systems, and growth strategies.
+          </p>
+
+          <p className="text-[1.05rem] leading-relaxed sm:text-[1.18rem]">
+            We design and build modern websites, SaaS products, ERP systems, AI solutions, and brand
+            experiences that help startups and businesses scale with clarity and speed.
+          </p>
+
+          <div className="space-y-1 pt-1 text-[1.05rem] leading-relaxed sm:text-[1.18rem]">
+            <p>Web Development</p>
+            <p>Mobile App Development</p>
+            <p>AI Solutions</p>
+            <p>ERP Systems</p>
+            <p>Branding &amp; Digital Strategy</p>
+          </div>
+        </div>
+
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
