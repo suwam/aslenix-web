@@ -1,6 +1,7 @@
-import { ArrowLeft, ArrowRight, Brain, Code2, Database } from "lucide-react";
+import { ArrowLeft, ArrowRight, Brain, Code2, Database, Pause, Play, Volume2, VolumeX } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { getVideoEmbedUrl, isVideoSource, type HeroSlide } from "@/lib/video";
 import dashboardOne from "@/assets/project-1.webp";
 import dashboardTwo from "@/assets/project-5.webp";
 import dashboardThree from "@/assets/project-6.webp";
@@ -41,17 +42,12 @@ const phrases = [
   "Growth-focused digital platforms",
 ];
 
-const dashboardSlides = [
-  { src: dashboardOne, alt: "Dark analytics dashboard with charts and data tables" },
-  { src: dashboardTwo, alt: "AI analytics dashboard with graphs and metrics" },
-  { src: dashboardThree, alt: "Ecommerce product dashboard interface" },
-  { src: dashboardFour, alt: "Mobile app interface screens" },
+const dashboardSlides: HeroSlide[] = [
+  { src: dashboardOne, alt: "Dark analytics dashboard with charts and data tables", type: "image" },
+  { src: dashboardTwo, alt: "AI analytics dashboard with graphs and metrics", type: "image" },
+  { src: dashboardThree, alt: "Ecommerce product dashboard interface", type: "image" },
+  { src: dashboardFour, alt: "Mobile app interface screens", type: "image" },
 ];
-
-type HeroSlide = {
-  src: string;
-  alt: string;
-};
 
 const HERO_CACHE_KEY = "aslenix:homepage-content:v1";
 
@@ -63,10 +59,111 @@ const parseHeroSlides = (value: unknown): HeroSlide[] | null => {
       const record = slide as Record<string, unknown>;
       const src = typeof record.src === "string" ? record.src.trim() : "";
       const alt = typeof record.alt === "string" ? record.alt.trim() : "";
-      return src ? { src, alt: alt || "Dashboard preview" } : null;
+      const type = record.type === "video" || record.type === "image" ? record.type : undefined;
+      return src ? { src, alt: alt || "Dashboard preview", type } : null;
     })
     .filter((slide): slide is HeroSlide => Boolean(slide));
   return slides.length > 0 ? slides : null;
+};
+
+const HeroSlideMedia = ({
+  slide,
+  isActive,
+  index,
+  slideCount,
+  isMuted,
+  isPlaying,
+  onVideoEnd,
+}: {
+  slide: HeroSlide;
+  isActive: boolean;
+  index: number;
+  slideCount: number;
+  isMuted: boolean;
+  isPlaying: boolean;
+  onVideoEnd?: () => void;
+}) => {
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const isVideo = isVideoSource(slide.src, slide.type);
+  const embedUrl = isVideo ? getVideoEmbedUrl(slide.src) : null;
+
+  useEffect(() => {
+    if (!videoRef.current || !isVideo || embedUrl) return;
+
+    if (isActive) {
+      if (isPlaying) {
+        const playPromise = videoRef.current.play();
+        if (playPromise !== undefined) {
+          playPromise.catch(() => {
+            // Autoplay may be restricted by browser until user interacts
+          });
+        }
+      } else {
+        videoRef.current.pause();
+      }
+    } else {
+      videoRef.current.pause();
+      videoRef.current.currentTime = 0;
+    }
+  }, [isActive, isPlaying, isVideo, embedUrl]);
+
+  useEffect(() => {
+    if (videoRef.current) {
+      videoRef.current.muted = isMuted;
+    }
+  }, [isMuted]);
+
+  if (isVideo) {
+    if (embedUrl) {
+      return (
+        <div className="relative aspect-video min-w-full basis-full shrink-0 overflow-hidden bg-black">
+          {isActive ? (
+            <iframe
+              src={embedUrl}
+              title={slide.alt || "Video preview"}
+              className="h-full w-full border-0 pointer-events-auto"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowFullScreen
+            />
+          ) : (
+            <div className="h-full w-full bg-black/40" />
+          )}
+        </div>
+      );
+    }
+
+    return (
+      <div className="relative aspect-video min-w-full basis-full shrink-0 overflow-hidden bg-black">
+        <video
+          ref={videoRef}
+          src={slide.src}
+          className="h-full w-full object-cover"
+          playsInline
+          muted={isMuted}
+          autoPlay={isActive}
+          loop={slideCount === 1}
+          preload="metadata"
+          onEnded={onVideoEnd}
+        />
+        <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(6,9,22,0.08),rgba(6,9,22,0.25))]" />
+      </div>
+    );
+  }
+
+  return (
+    <div className="relative aspect-video min-w-full basis-full shrink-0 overflow-hidden">
+      <img
+        src={slide.src}
+        alt={slide.alt || "Dashboard preview"}
+        className="h-full w-full object-cover"
+        loading={index === 0 ? "eager" : "lazy"}
+        decoding="async"
+        fetchpriority={index === 0 ? "high" : "low"}
+        draggable={false}
+      />
+      <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(6,9,22,0.12),rgba(6,9,22,0.36))]" />
+    </div>
+  );
 };
 
 const readCachedHomepageData = () => {
@@ -109,6 +206,9 @@ export const Hero = () => {
   const [typedText, setTypedText] = useState(phrases[0]);
   const [isDeleting, setIsDeleting] = useState(false);
   const [activeSlide, setActiveSlide] = useState(0);
+  const [isHovered, setIsHovered] = useState(false);
+  const [isMuted, setIsMuted] = useState(true);
+  const [isPlaying, setIsPlaying] = useState(true);
   const [enhanced, setEnhanced] = useState(false);
   const [homepageData, setHomepageData] = useState<any>(() => readCachedHomepageData());
 
@@ -140,6 +240,8 @@ export const Hero = () => {
   const customSlides = parseHeroSlides(homepageData?.hero_slides);
   const slides = homepageLoaded ? customSlides ?? dashboardSlides : [];
   const slideCount = slides.length;
+  const currentSlide = slides[activeSlide];
+  const currentIsVideo = currentSlide ? isVideoSource(currentSlide.src, currentSlide.type) : false;
 
   useEffect(() => {
     const timeout = window.setTimeout(() => setEnhanced(true), 900);
@@ -173,19 +275,29 @@ export const Hero = () => {
     if (!enhanced) return;
     if (window.matchMedia("(max-width: 767px)").matches) return;
     if (slideCount <= 1) return;
+    if (isHovered) return;
+    if (currentIsVideo) return; // Allow visitors to watch the video without abrupt auto-advance
+
     const interval = window.setInterval(() => {
       setActiveSlide((prev) => (prev + 1) % slideCount);
-    }, 3000);
+    }, 4500);
 
     return () => window.clearInterval(interval);
-  }, [slideCount, enhanced]);
+  }, [slideCount, enhanced, isHovered, currentIsVideo, activeSlide]);
 
   useEffect(() => {
     if (slideCount > 0 && activeSlide >= slideCount) setActiveSlide(0);
   }, [activeSlide, slideCount]);
 
+  const handleVideoEnded = () => {
+    if (slideCount > 1) {
+      goToSlide(activeSlide + 1);
+    }
+  };
+
   const goToSlide = (index: number) => {
     setActiveSlide((index + slideCount) % slideCount);
+    setIsPlaying(true);
   };
 
   const highlights = [
@@ -315,7 +427,11 @@ export const Hero = () => {
             <div className="absolute left-1/2 top-1/2 h-[340px] w-[420px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(circle,_rgba(186,230,253,0.3),transparent_68%)] blur-3xl" />
             <div className="absolute left-1/2 top-1/2 h-[360px] w-[520px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(circle,_rgba(233,213,255,0.3),transparent_70%)] blur-3xl" />
 
-            <div className="relative z-10 w-full max-w-[700px] overflow-hidden rounded-[2.25rem] border border-foreground/10 bg-background p-2 shadow-[0_26px_90px_-35px_rgba(0,0,0,0.85),inset_0_1px_0_rgba(255,255,255,0.08)] sm:p-3">
+            <div
+              className="relative z-10 w-full max-w-[700px] overflow-hidden rounded-[2.25rem] border border-foreground/10 bg-background p-2 shadow-[0_26px_90px_-35px_rgba(0,0,0,0.85),inset_0_1px_0_rgba(255,255,255,0.08)] sm:p-3"
+              onMouseEnter={() => setIsHovered(true)}
+              onMouseLeave={() => setIsHovered(false)}
+            >
               <div className="flex items-center gap-1.5 px-4 pb-3 pt-2">
                 <div className="h-3 w-3 rounded-full bg-[#ff5f56] border border-[#e0443e] shadow-sm" />
                 <div className="h-3 w-3 rounded-full bg-[#ffbd2e] border border-[#dea123] shadow-sm" />
@@ -328,29 +444,62 @@ export const Hero = () => {
                     style={{ transform: `translate3d(-${activeSlide * 100}%, 0, 0)` }}
                   >
                     {slides.map((slide, index) => (
-                      <div key={`${slide.src}-${index}`} className="relative aspect-video min-w-full basis-full shrink-0 overflow-hidden">
-                        <img
-                          src={slide.src}
-                          alt={slide.alt}
-                          className="h-full w-full object-cover"
-                          loading={index === 0 ? "eager" : "lazy"}
-                          decoding="async"
-                          fetchpriority={index === 0 ? "high" : "low"}
-                          draggable={false}
-                        />
-                        <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(6,9,22,0.12),rgba(6,9,22,0.36))]" />
-                      </div>
+                      <HeroSlideMedia
+                        key={`${slide.src}-${index}`}
+                        slide={slide}
+                        isActive={activeSlide === index}
+                        index={index}
+                        slideCount={slideCount}
+                        isMuted={isMuted}
+                        isPlaying={isPlaying}
+                        onVideoEnd={handleVideoEnded}
+                      />
                     ))}
                   </div>
                 ) : (
                   <div className="aspect-video animate-pulse bg-foreground/10" />
                 )}
 
+                {/* Video controls overlay (for direct HTML5 videos) */}
+                {currentIsVideo && !getVideoEmbedUrl(currentSlide?.src) && (
+                  <div className="absolute top-4 right-4 z-20 flex items-center gap-2">
+                    <button
+                      type="button"
+                      onClick={() => setIsPlaying((p) => !p)}
+                      className="inline-flex h-8 w-8 items-center justify-center rounded-full border border-white/20 bg-black/60 text-white backdrop-blur-md transition hover:bg-black/80 hover:scale-105"
+                      aria-label={isPlaying ? "Pause video" : "Play video"}
+                      title={isPlaying ? "Pause video" : "Play video"}
+                    >
+                      {isPlaying ? <Pause className="h-3.5 w-3.5" /> : <Play className="h-3.5 w-3.5 ml-0.5" />}
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setIsMuted((m) => !m)}
+                      className="inline-flex h-8 w-8 items-center justify-center rounded-full border border-white/20 bg-black/60 text-white backdrop-blur-md transition hover:bg-black/80 hover:scale-105"
+                      aria-label={isMuted ? "Unmute audio" : "Mute audio"}
+                      title={isMuted ? "Unmute audio" : "Mute audio"}
+                    >
+                      {isMuted ? <VolumeX className="h-3.5 w-3.5" /> : <Volume2 className="h-3.5 w-3.5" />}
+                    </button>
+                  </div>
+                )}
+
+                {/* Subtle video badge indicator */}
+                {currentIsVideo && (
+                  <div className="pointer-events-none absolute top-4 left-4 z-20 flex items-center gap-1.5 rounded-full border border-white/20 bg-black/60 px-2.5 py-1 text-[11px] font-medium text-white/90 backdrop-blur-md">
+                    <span className="relative flex h-2 w-2">
+                      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
+                      <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500" />
+                    </span>
+                    <span>Video Showcase</span>
+                  </div>
+                )}
+
                 {slideCount > 1 && (
                   <>
                     <button
                       type="button"
-                      aria-label="Show previous dashboard image"
+                      aria-label="Show previous slide"
                       onClick={() => goToSlide(activeSlide - 1)}
                       className="absolute left-4 top-1/2 z-20 inline-flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full border border-foreground/15 bg-foreground/60 text-foreground backdrop-blur-xl transition hover:bg-foreground/80"
                     >
@@ -358,7 +507,7 @@ export const Hero = () => {
                     </button>
                     <button
                       type="button"
-                      aria-label="Show next dashboard image"
+                      aria-label="Show next slide"
                       onClick={() => goToSlide(activeSlide + 1)}
                       className="absolute right-4 top-1/2 z-20 inline-flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full border border-foreground/15 bg-foreground/60 text-foreground backdrop-blur-xl transition hover:bg-foreground/80"
                     >
@@ -375,7 +524,7 @@ export const Hero = () => {
                   <button
                     key={`${slide.src}-dot-${index}`}
                     type="button"
-                    aria-label={`Show dashboard image ${index + 1}`}
+                    aria-label={`Show slide ${index + 1}`}
                     aria-current={activeSlide === index}
                     onClick={() => goToSlide(index)}
                     className={`h-2 rounded-full transition-all duration-300 ${activeSlide === index ? "w-7 bg-white" : "w-2 bg-foreground/70 hover:bg-white"
