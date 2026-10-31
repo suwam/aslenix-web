@@ -74,7 +74,7 @@ export const CinematicVideoShowcase = ({
   // Iframe platform embed (e.g. YouTube/Vimeo)
   if (embedUrl) {
     return (
-      <div className="relative w-full h-[320px] sm:h-[400px] md:h-[480px] lg:h-[540px] xl:h-[600px] 2xl:h-[640px] rounded-[24px] lg:rounded-[28px] overflow-hidden border border-foreground/[0.08] dark:border-white/10 bg-black/90 shadow-[0_20px_50px_-15px_rgba(15,23,42,0.18),0_0_0_1px_rgba(255,255,255,0.08)] dark:shadow-[0_24px_64px_-16px_rgba(0,0,0,0.65),0_0_0_1px_rgba(255,255,255,0.1)]">
+      <div className="relative w-full h-[320px] sm:h-[390px] md:h-[450px] lg:h-[490px] xl:h-[540px] 2xl:h-[580px] rounded-[24px] lg:rounded-[28px] overflow-hidden border border-foreground/[0.08] dark:border-white/10 bg-black/90 shadow-[0_20px_50px_-15px_rgba(15,23,42,0.18),0_0_0_1px_rgba(255,255,255,0.08)] dark:shadow-[0_24px_64px_-16px_rgba(0,0,0,0.65),0_0_0_1px_rgba(255,255,255,0.1)]">
         <iframe
           src={embedUrl}
           title={alt}
@@ -89,7 +89,7 @@ export const CinematicVideoShowcase = ({
   return (
     <div
       onClick={handleContainerClick}
-      className={`group relative w-full h-[320px] sm:h-[400px] md:h-[480px] lg:h-[540px] xl:h-[600px] 2xl:h-[640px] rounded-[24px] lg:rounded-[28px] overflow-hidden border border-foreground/[0.08] dark:border-white/10 bg-card/90 dark:bg-black/90 shadow-[0_20px_50px_-15px_rgba(15,23,42,0.18),0_0_0_1px_rgba(255,255,255,0.08)] dark:shadow-[0_24px_64px_-16px_rgba(0,0,0,0.65),0_0_0_1px_rgba(255,255,255,0.1)] transition-all duration-500 ease-out hover:border-foreground/20 dark:hover:border-white/20 hover:shadow-[0_28px_70px_-15px_rgba(15,23,42,0.25)] dark:hover:shadow-[0_32px_80px_-16px_rgba(0,0,0,0.75)] select-none ${
+      className={`group relative w-full h-[320px] sm:h-[390px] md:h-[450px] lg:h-[490px] xl:h-[540px] 2xl:h-[580px] rounded-[24px] lg:rounded-[28px] overflow-hidden border border-foreground/[0.08] dark:border-white/10 bg-card/90 dark:bg-black/90 shadow-[0_20px_50px_-15px_rgba(15,23,42,0.18),0_0_0_1px_rgba(255,255,255,0.08)] dark:shadow-[0_24px_64px_-16px_rgba(0,0,0,0.65),0_0_0_1px_rgba(255,255,255,0.1)] transition-all duration-500 ease-out hover:border-foreground/20 dark:hover:border-white/20 hover:shadow-[0_28px_70px_-15px_rgba(15,23,42,0.25)] dark:hover:shadow-[0_32px_80px_-16px_rgba(0,0,0,0.75)] select-none ${
         isVideo ? "cursor-pointer" : ""
       }`}
     >

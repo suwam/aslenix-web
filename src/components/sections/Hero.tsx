@@ -218,7 +218,7 @@ export const Hero = () => {
   ];
 
   return (
-    <section id="home" className="hero relative overflow-hidden bg-background/95 py-20 sm:py-24 lg:py-28">
+    <section id="home" className="hero relative overflow-hidden bg-background/95 pt-14 pb-18 sm:pt-18 sm:pb-22 lg:pt-20 lg:pb-24">
       {/* Ambient background atmosphere */}
       <div className="pointer-events-none absolute inset-0 opacity-60">
         <div className="absolute inset-0 grid-pattern opacity-20" />
@@ -227,7 +227,7 @@ export const Hero = () => {
         <div className="absolute left-0 bottom-0 h-[220px] w-[220px] rounded-full bg-[radial-gradient(circle,_rgba(186,230,253,0.25),transparent_70%)] blur-3xl" />
       </div>
 
-      <div className="relative z-10 mx-auto flex w-full max-w-[1440px] 2xl:max-w-[1600px] flex-col gap-12 sm:gap-14 px-5 sm:px-8 lg:px-10 xl:px-12 lg:grid lg:grid-cols-[42%_58%] xl:grid-cols-[40%_60%] lg:items-center lg:gap-12 xl:gap-16">
+      <div className="relative z-10 mx-auto flex w-full max-w-[1440px] 2xl:max-w-[1600px] flex-col gap-10 sm:gap-12 px-5 sm:px-8 lg:px-10 xl:px-12 lg:grid lg:grid-cols-[42%_58%] xl:grid-cols-[40%_60%] lg:items-start lg:gap-10 xl:gap-14">
         {/* Left Column: Editorial Headline & Content */}
         <div className="max-w-2xl space-y-7 sm:space-y-8 animate-enter-up">
           {/* Top Pill Badge */}
@@ -311,9 +311,9 @@ export const Hero = () => {
           </div>
         </div>
 
-        {/* Right Column: Oversized Cinematic Video Showcase with 35–45px top and 30–40px right spacing on desktop */}
+        {/* Right Column: Oversized Cinematic Video Showcase positioned upwards */}
         <div
-          className="relative w-full animate-enter-side flex flex-col items-center justify-center lg:items-end lg:pt-10 lg:pr-8 xl:pt-11 xl:pr-10"
+          className="relative w-full animate-enter-side flex flex-col items-center justify-center lg:items-end lg:pt-2 xl:pt-3 lg:pr-2 xl:pr-4"
           onMouseEnter={() => setIsHovered(true)}
           onMouseLeave={() => setIsHovered(false)}
         >
@@ -337,7 +337,7 @@ export const Hero = () => {
                 onVideoEnd={handleVideoEnded}
               />
             ) : (
-              <div className="h-[320px] sm:h-[400px] md:h-[480px] lg:h-[540px] xl:h-[600px] 2xl:h-[640px] w-full animate-pulse rounded-[24px] lg:rounded-[28px] bg-foreground/10" />
+              <div className="h-[320px] sm:h-[390px] md:h-[450px] lg:h-[490px] xl:h-[540px] 2xl:h-[580px] w-full animate-pulse rounded-[24px] lg:rounded-[28px] bg-foreground/10" />
             )}
 
             {/* Slide Navigation Controls (if multi-slide) */}
