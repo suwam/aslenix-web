@@ -285,8 +285,8 @@ export const Hero = () => {
           onMouseEnter={() => setIsHovered(true)}
           onMouseLeave={() => setIsHovered(false)}
         >
-          {/* Ambient soft glow aura behind the mosaic */}
-          <div className="pointer-events-none absolute -inset-4 sm:-inset-8 rounded-[3.5rem] bg-gradient-to-tr from-cyan-500/20 via-sky-500/10 to-indigo-500/20 blur-3xl opacity-60 transition-opacity duration-700 -z-10" />
+          {/* Ambient subtle glow aura behind the mosaic */}
+          <div className="pointer-events-none absolute -inset-4 sm:-inset-6 rounded-[2.5rem] bg-gradient-to-tr from-indigo-500/[0.08] via-sky-500/[0.04] to-transparent blur-3xl opacity-40 transition-opacity duration-700 -z-10" />
 
           {/* Oversized Cinematic Video Mosaic */}
           <div className="relative w-full">
@@ -310,27 +310,27 @@ export const Hero = () => {
 
             {/* Slide Navigation Controls (if multi-slide) */}
             {slideCount > 1 && (
-              <div className="mt-4 flex items-center justify-between px-2">
+              <div className="mt-3.5 flex items-center justify-between px-1.5">
                 <div className="flex items-center gap-1.5">
                   <button
                     type="button"
                     aria-label="Show previous slide"
                     onClick={() => goToSlide(activeSlide - 1)}
-                    className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-white/15 bg-black/50 text-white backdrop-blur-xl shadow-md transition-all duration-300 hover:bg-black/80 hover:scale-105 active:scale-95"
+                    className="inline-flex h-8 w-8 items-center justify-center rounded-full border border-white/10 bg-black/40 text-white/80 backdrop-blur-md shadow-sm transition-all duration-200 hover:bg-black/70 hover:text-white hover:scale-105 active:scale-95"
                   >
-                    <ArrowLeft className="h-4 w-4" />
+                    <ArrowLeft className="h-3.5 w-3.5" />
                   </button>
                   <button
                     type="button"
                     aria-label="Show next slide"
                     onClick={() => goToSlide(activeSlide + 1)}
-                    className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-white/15 bg-black/50 text-white backdrop-blur-xl shadow-md transition-all duration-300 hover:bg-black/80 hover:scale-105 active:scale-95"
+                    className="inline-flex h-8 w-8 items-center justify-center rounded-full border border-white/10 bg-black/40 text-white/80 backdrop-blur-md shadow-sm transition-all duration-200 hover:bg-black/70 hover:text-white hover:scale-105 active:scale-95"
                   >
-                    <ArrowRight className="h-4 w-4" />
+                    <ArrowRight className="h-3.5 w-3.5" />
                   </button>
                 </div>
 
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-1.5">
                   {slides.map((slide, index) => (
                     <button
                       key={`${slide.src}-dot-${index}`}
@@ -338,10 +338,10 @@ export const Hero = () => {
                       aria-label={`Show slide ${index + 1}`}
                       aria-current={activeSlide === index}
                       onClick={() => goToSlide(index)}
-                      className={`h-2 rounded-full transition-all duration-300 ${
+                      className={`h-1.5 rounded-full transition-all duration-300 ${
                         activeSlide === index
-                          ? "w-8 bg-cyan-400 shadow-[0_0_12px_rgba(56,189,248,0.7)]"
-                          : "w-2 bg-foreground/25 hover:bg-foreground/50"
+                          ? "w-6 bg-white/90"
+                          : "w-1.5 bg-foreground/20 hover:bg-foreground/40"
                       }`}
                     />
                   ))}

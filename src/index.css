@@ -207,6 +207,21 @@
     animation: enter-side 0.75s var(--transition-smooth) 0.08s both;
   }
 
+  @keyframes mosaic-tile-reveal {
+    from {
+      opacity: 0;
+      transform: translateY(12px) scale(0.985);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+  }
+
+  .animate-mosaic-tile {
+    animation: mosaic-tile-reveal 0.65s cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+
   .modal-scroll {
     scrollbar-width: thin;
     scrollbar-color: rgba(222, 47, 17, 0.18) transparent;
