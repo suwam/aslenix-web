@@ -2,7 +2,7 @@ import { ArrowLeft, ArrowRight, Brain, Code2, Database, Pause, Play, Volume2, Vo
 import { Button } from "@/components/ui/button";
 import { useEffect, useRef, useState } from "react";
 import { getVideoEmbedUrl, isVideoSource, type HeroSlide } from "@/lib/video";
-import { VideoMosaic } from "@/components/sections/VideoMosaic";
+import { CinematicVideoShowcase } from "@/components/sections/CinematicVideoShowcase";
 import dashboardOne from "@/assets/project-1.webp";
 import dashboardTwo from "@/assets/project-5.webp";
 import dashboardThree from "@/assets/project-6.webp";
@@ -285,14 +285,14 @@ export const Hero = () => {
           onMouseEnter={() => setIsHovered(true)}
           onMouseLeave={() => setIsHovered(false)}
         >
-          {/* Ambient subtle glow aura behind the mosaic */}
-          <div className="pointer-events-none absolute -inset-4 sm:-inset-6 rounded-[2.5rem] bg-gradient-to-tr from-indigo-500/[0.08] via-sky-500/[0.04] to-transparent blur-3xl opacity-40 transition-opacity duration-700 -z-10" />
+          {/* Ambient subtle backlight behind the cinematic showcase */}
+          <div className="pointer-events-none absolute -inset-6 sm:-inset-10 rounded-[3rem] bg-gradient-to-tr from-sky-500/15 via-indigo-500/10 to-transparent blur-3xl opacity-50 transition-opacity duration-700 -z-10" />
 
-          {/* Oversized Cinematic Video Mosaic */}
+          {/* Oversized Cinematic Video Showcase */}
           <div className="relative w-full">
             {currentSlide ? (
-              <VideoMosaic
-                key={`mosaic-${currentSlide.src}-${activeSlide}`}
+              <CinematicVideoShowcase
+                key={`showcase-${currentSlide.src}-${activeSlide}`}
                 src={currentSlide.src}
                 alt={currentSlide.alt}
                 isVideo={currentIsVideo}
@@ -305,7 +305,7 @@ export const Hero = () => {
                 onVideoEnd={handleVideoEnded}
               />
             ) : (
-              <div className="h-[460px] w-full animate-pulse rounded-2xl bg-foreground/10" />
+              <div className="h-[320px] sm:h-[400px] md:h-[480px] lg:h-[540px] xl:h-[600px] 2xl:h-[640px] w-full animate-pulse rounded-[20px] sm:rounded-[24px] lg:rounded-[28px] bg-foreground/10" />
             )}
 
             {/* Slide Navigation Controls (if multi-slide) */}
