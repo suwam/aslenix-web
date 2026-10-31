@@ -116,7 +116,7 @@ const HeroSlideMedia = ({
   if (isVideo) {
     if (embedUrl) {
       return (
-        <div className="relative aspect-video min-w-full basis-full shrink-0 overflow-hidden bg-black">
+        <div className="relative h-full w-full min-w-full basis-full shrink-0 overflow-hidden bg-black">
           {isActive ? (
             <iframe
               src={embedUrl}
@@ -133,7 +133,7 @@ const HeroSlideMedia = ({
     }
 
     return (
-      <div className="relative aspect-video min-w-full basis-full shrink-0 overflow-hidden bg-black">
+      <div className="relative h-full w-full min-w-full basis-full shrink-0 overflow-hidden bg-black">
         <video
           ref={videoRef}
           src={slide.src}
@@ -145,13 +145,12 @@ const HeroSlideMedia = ({
           preload="metadata"
           onEnded={onVideoEnd}
         />
-        <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(6,9,22,0.08),rgba(6,9,22,0.25))]" />
       </div>
     );
   }
 
   return (
-    <div className="relative aspect-video min-w-full basis-full shrink-0 overflow-hidden">
+    <div className="relative h-full w-full min-w-full basis-full shrink-0 overflow-hidden bg-black/20">
       <img
         src={slide.src}
         alt={slide.alt || "Dashboard preview"}
@@ -161,7 +160,6 @@ const HeroSlideMedia = ({
         fetchpriority={index === 0 ? "high" : "low"}
         draggable={false}
       />
-      <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(6,9,22,0.12),rgba(6,9,22,0.36))]" />
     </div>
   );
 };
@@ -273,7 +271,6 @@ export const Hero = () => {
 
   useEffect(() => {
     if (!enhanced) return;
-    if (window.matchMedia("(max-width: 767px)").matches) return;
     if (slideCount <= 1) return;
     if (isHovered) return;
     if (currentIsVideo) return; // Allow visitors to watch the video without abrupt auto-advance
@@ -315,7 +312,7 @@ export const Hero = () => {
         <div className="absolute left-0 bottom-0 h-[220px] w-[220px] rounded-full bg-[radial-gradient(circle,_rgba(186,230,253,0.3),transparent_70%)] blur-3xl" />
       </div>
 
-      <div className="relative z-10 mx-auto flex w-full max-w-7xl flex-col gap-14 px-6 sm:px-8 lg:px-12 xl:px-16 lg:grid lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
+      <div className="relative z-10 mx-auto flex w-full max-w-[1400px] xl:max-w-[1480px] 2xl:max-w-[1560px] flex-col gap-12 sm:gap-14 px-5 sm:px-8 lg:px-10 xl:px-14 lg:grid lg:grid-cols-[42%_58%] xl:grid-cols-[40%_60%] lg:items-center lg:gap-10 xl:gap-14">
         <div className="max-w-2xl space-y-8 animate-enter-up">
           <div className="inline-flex items-center gap-3 rounded-full border border-foreground/10 bg-foreground/5 px-4 py-2 text-sm text-muted-foreground backdrop-blur-xl shadow-[0_0_40px_-20px_rgba(186,230,253,0.5)]">
             <span className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-[#ffffff0f] text-base">✨</span>
@@ -378,148 +375,103 @@ export const Hero = () => {
           </div>
         </div>
 
-        <div className="relative mx-auto flex w-full max-w-[680px] items-center justify-center lg:ml-8 xl:ml-14 animate-enter-side md:hidden">
-          <div className="relative w-full overflow-hidden rounded-[2rem] border border-foreground/10 bg-background/80 p-5 shadow-[0_24px_80px_-42px_rgba(0,0,0,0.9)]">
-            <div className="absolute inset-0 grid-pattern opacity-10" />
-            <div className="absolute left-1/2 top-1/2 h-56 w-56 -translate-x-1/2 -translate-y-1/2 rounded-full bg-brand-gradient opacity-15 blur-3xl" />
-            <div className="relative space-y-5">
-              <div className="flex items-center justify-between gap-4">
-                <div>
-                  <p className="text-xs uppercase tracking-[0.24em] text-foreground/45">Live Systems</p>
-                  <h2 className="mt-2 font-display text-2xl font-semibold text-foreground">Fast digital builds</h2>
-                </div>
-                <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-brand-gradient shadow-[0_0_28px_-8px_hsl(var(--accent)/0.9)]">
-                  <Code2 className="h-5 w-5 text-foreground" />
-                </div>
-              </div>
-              <div className="grid grid-cols-3 gap-3">
-                {["SaaS", "AI", "ERP"].map((item) => (
-                  <div key={item} className="rounded-2xl border border-foreground/10 bg-foreground/[0.04] px-3 py-4 text-center">
-                    <div className="text-lg font-semibold text-foreground">{item}</div>
-                    <div className="mt-1 h-1 rounded-full bg-brand-gradient opacity-70" />
-                  </div>
+        <div className="relative w-full animate-enter-side flex items-center justify-center lg:justify-end">
+          {/* Ambient soft glow aura behind the showcase */}
+          <div className="pointer-events-none absolute -inset-3 sm:-inset-6 rounded-[3rem] bg-gradient-to-tr from-cyan-500/20 via-sky-500/10 to-indigo-500/20 blur-3xl opacity-60 transition-opacity duration-700 group-hover:opacity-90 -z-10" />
+
+          {/* Clean, premium rounded video container */}
+          <div
+            className="group relative w-full overflow-hidden rounded-[1.75rem] sm:rounded-[2.25rem] lg:rounded-[2.5rem] border border-white/10 dark:border-white/[0.08] bg-card/60 shadow-[0_25px_60px_-15px_rgba(0,0,0,0.7),0_0_90px_-20px_rgba(56,189,248,0.2),inset_0_1px_1px_rgba(255,255,255,0.18)] ring-1 ring-white/10 backdrop-blur-md transition-all duration-500 ease-out hover:scale-[1.01] hover:shadow-[0_35px_80px_-20px_rgba(0,0,0,0.8),0_0_110px_-15px_rgba(56,189,248,0.28)] aspect-[16/10.5] sm:aspect-[16/10] lg:aspect-[16/9.8] xl:aspect-[16/9.6] min-h-[300px] sm:min-h-[400px] lg:min-h-[480px] xl:min-h-[530px]"
+            onMouseEnter={() => setIsHovered(true)}
+            onMouseLeave={() => setIsHovered(false)}
+          >
+            {/* Top & bottom subtle contrast scrims for controls & pagination */}
+            <div className="pointer-events-none absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-black/60 via-black/15 to-transparent z-10 transition-opacity duration-300" />
+            <div className="pointer-events-none absolute inset-x-0 bottom-0 h-28 bg-gradient-to-t from-black/70 via-black/20 to-transparent z-10 transition-opacity duration-300" />
+
+            {/* Slides track */}
+            {slideCount > 0 ? (
+              <div
+                className="flex h-full w-full transition-transform duration-700 ease-out"
+                style={{ transform: `translate3d(-${activeSlide * 100}%, 0, 0)` }}
+              >
+                {slides.map((slide, index) => (
+                  <HeroSlideMedia
+                    key={`${slide.src}-${index}`}
+                    slide={slide}
+                    isActive={activeSlide === index}
+                    index={index}
+                    slideCount={slideCount}
+                    isMuted={isMuted}
+                    isPlaying={isPlaying}
+                    onVideoEnd={handleVideoEnded}
+                  />
                 ))}
               </div>
-              <div className="rounded-2xl border border-foreground/10 bg-foreground/20 p-4">
-                <div className="mb-3 flex items-center gap-2">
-                  <span className="h-2 w-2 rounded-full bg-green-400 shadow-[0_0_16px_rgba(74,222,128,0.9)]" />
-                  <span className="text-sm text-foreground/70">Optimized for mobile-first launches</span>
-                </div>
-                <div className="space-y-2">
-                  <div className="h-2 rounded-full bg-foreground/10">
-                    <div className="h-full w-4/5 rounded-full bg-brand-gradient" />
-                  </div>
-                  <div className="h-2 rounded-full bg-foreground/10">
-                    <div className="h-full w-2/3 rounded-full bg-brand-gradient opacity-70" />
-                  </div>
-                </div>
+            ) : (
+              <div className="h-full w-full animate-pulse bg-foreground/10" />
+            )}
+
+            {/* Subtle video badge indicator */}
+            {currentIsVideo && (
+              <div className="pointer-events-none absolute top-4 left-4 sm:top-5 sm:left-5 z-20 flex items-center gap-2 rounded-full border border-white/20 bg-black/45 px-3 py-1.5 text-xs font-medium text-white/95 backdrop-blur-xl shadow-lg transition-transform duration-300 group-hover:scale-105">
+                <span className="relative flex h-2 w-2">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
+                  <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500" />
+                </span>
+                <span className="tracking-wider uppercase text-[10.5px] font-semibold text-white/90">Cinematic Showcase</span>
               </div>
-            </div>
-          </div>
-        </div>
+            )}
 
-        <div className="relative hidden w-[110%] lg:w-[115%] max-w-[750px] xl:max-w-[850px] items-center justify-center md:flex animate-enter-side lg:justify-self-start lg:translate-x-12 xl:translate-x-24 2xl:translate-x-40">
-          <div className="absolute inset-0 rounded-[3rem] bg-gradient-to-br from-white/5 via-transparent to-white/0 shadow-[0_0_180px_0_rgba(59,132,246,0.14)]" />
-          <div className="absolute inset-0 rounded-[3rem] border border-foreground/10 bg-foreground/[0.035] backdrop-blur-[28px]" />
-
-          <div className="relative flex min-h-[300px] w-full items-center justify-center overflow-hidden rounded-[3rem] border border-foreground/10 bg-background/80 px-5 py-8 shadow-[0_40px_140px_-50px_rgba(0,0,0,0.85)] sm:min-h-[380px] sm:px-7 sm:py-10 lg:min-h-[460px] lg:px-9">
-            <div className="absolute inset-0 grid-pattern opacity-10" />
-            <div className="absolute left-1/2 top-1/2 h-[340px] w-[420px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(circle,_rgba(186,230,253,0.3),transparent_68%)] blur-3xl" />
-            <div className="absolute left-1/2 top-1/2 h-[360px] w-[520px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(circle,_rgba(233,213,255,0.3),transparent_70%)] blur-3xl" />
-
-            <div
-              className="relative z-10 w-full max-w-[700px] overflow-hidden rounded-[2.25rem] border border-foreground/10 bg-background p-2 shadow-[0_26px_90px_-35px_rgba(0,0,0,0.85),inset_0_1px_0_rgba(255,255,255,0.08)] sm:p-3"
-              onMouseEnter={() => setIsHovered(true)}
-              onMouseLeave={() => setIsHovered(false)}
-            >
-              <div className="flex items-center gap-1.5 px-4 pb-3 pt-2">
-                <div className="h-3 w-3 rounded-full bg-[#ff5f56] border border-[#e0443e] shadow-sm" />
-                <div className="h-3 w-3 rounded-full bg-[#ffbd2e] border border-[#dea123] shadow-sm" />
-                <div className="h-3 w-3 rounded-full bg-[#27c93f] border border-[#1aab29] shadow-sm" />
+            {/* Video controls overlay (for direct HTML5 videos) */}
+            {currentIsVideo && !getVideoEmbedUrl(currentSlide?.src) && (
+              <div className="absolute top-4 right-4 sm:top-5 sm:right-5 z-20 flex items-center gap-2">
+                <button
+                  type="button"
+                  onClick={() => setIsPlaying((p) => !p)}
+                  className="inline-flex h-9 w-9 sm:h-10 sm:w-10 items-center justify-center rounded-full border border-white/20 bg-black/45 text-white backdrop-blur-xl shadow-lg transition-all duration-300 hover:bg-black/75 hover:scale-105 active:scale-95"
+                  aria-label={isPlaying ? "Pause video" : "Play video"}
+                  title={isPlaying ? "Pause video" : "Play video"}
+                >
+                  {isPlaying ? <Pause className="h-4 w-4" /> : <Play className="h-4 w-4 ml-0.5" />}
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setIsMuted((m) => !m)}
+                  className="inline-flex h-9 w-9 sm:h-10 sm:w-10 items-center justify-center rounded-full border border-white/20 bg-black/45 text-white backdrop-blur-xl shadow-lg transition-all duration-300 hover:bg-black/75 hover:scale-105 active:scale-95"
+                  aria-label={isMuted ? "Unmute audio" : "Mute audio"}
+                  title={isMuted ? "Unmute audio" : "Mute audio"}
+                >
+                  {isMuted ? <VolumeX className="h-4 w-4" /> : <Volume2 className="h-4 w-4" />}
+                </button>
               </div>
-              <div className="overflow-hidden rounded-[1.5rem] border border-foreground/10 bg-foreground relative">
-                {slideCount > 0 ? (
-                  <div
-                    className="flex transition-transform duration-700 ease-out"
-                    style={{ transform: `translate3d(-${activeSlide * 100}%, 0, 0)` }}
-                  >
-                    {slides.map((slide, index) => (
-                      <HeroSlideMedia
-                        key={`${slide.src}-${index}`}
-                        slide={slide}
-                        isActive={activeSlide === index}
-                        index={index}
-                        slideCount={slideCount}
-                        isMuted={isMuted}
-                        isPlaying={isPlaying}
-                        onVideoEnd={handleVideoEnded}
-                      />
-                    ))}
-                  </div>
-                ) : (
-                  <div className="aspect-video animate-pulse bg-foreground/10" />
-                )}
+            )}
 
-                {/* Video controls overlay (for direct HTML5 videos) */}
-                {currentIsVideo && !getVideoEmbedUrl(currentSlide?.src) && (
-                  <div className="absolute top-4 right-4 z-20 flex items-center gap-2">
-                    <button
-                      type="button"
-                      onClick={() => setIsPlaying((p) => !p)}
-                      className="inline-flex h-8 w-8 items-center justify-center rounded-full border border-white/20 bg-black/60 text-white backdrop-blur-md transition hover:bg-black/80 hover:scale-105"
-                      aria-label={isPlaying ? "Pause video" : "Play video"}
-                      title={isPlaying ? "Pause video" : "Play video"}
-                    >
-                      {isPlaying ? <Pause className="h-3.5 w-3.5" /> : <Play className="h-3.5 w-3.5 ml-0.5" />}
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => setIsMuted((m) => !m)}
-                      className="inline-flex h-8 w-8 items-center justify-center rounded-full border border-white/20 bg-black/60 text-white backdrop-blur-md transition hover:bg-black/80 hover:scale-105"
-                      aria-label={isMuted ? "Unmute audio" : "Mute audio"}
-                      title={isMuted ? "Unmute audio" : "Mute audio"}
-                    >
-                      {isMuted ? <VolumeX className="h-3.5 w-3.5" /> : <Volume2 className="h-3.5 w-3.5" />}
-                    </button>
-                  </div>
-                )}
+            {/* Slide Navigation Arrows */}
+            {slideCount > 1 && (
+              <>
+                <button
+                  type="button"
+                  aria-label="Show previous slide"
+                  onClick={() => goToSlide(activeSlide - 1)}
+                  className="absolute left-3 sm:left-5 top-1/2 z-20 inline-flex h-9 w-9 sm:h-11 sm:w-11 -translate-y-1/2 items-center justify-center rounded-full border border-white/20 bg-black/45 text-white backdrop-blur-xl shadow-lg transition-all duration-300 hover:bg-black/75 hover:scale-110 active:scale-95 opacity-80 group-hover:opacity-100"
+                >
+                  <ArrowLeft className="h-4 w-4 sm:h-5 sm:w-5" />
+                </button>
+                <button
+                  type="button"
+                  aria-label="Show next slide"
+                  onClick={() => goToSlide(activeSlide + 1)}
+                  className="absolute right-3 sm:right-5 top-1/2 z-20 inline-flex h-9 w-9 sm:h-11 sm:w-11 -translate-y-1/2 items-center justify-center rounded-full border border-white/20 bg-black/45 text-white backdrop-blur-xl shadow-lg transition-all duration-300 hover:bg-black/75 hover:scale-110 active:scale-95 opacity-80 group-hover:opacity-100"
+                >
+                  <ArrowRight className="h-4 w-4 sm:h-5 sm:w-5" />
+                </button>
+              </>
+            )}
 
-                {/* Subtle video badge indicator */}
-                {currentIsVideo && (
-                  <div className="pointer-events-none absolute top-4 left-4 z-20 flex items-center gap-1.5 rounded-full border border-white/20 bg-black/60 px-2.5 py-1 text-[11px] font-medium text-white/90 backdrop-blur-md">
-                    <span className="relative flex h-2 w-2">
-                      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
-                      <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500" />
-                    </span>
-                    <span>Video Showcase</span>
-                  </div>
-                )}
-
-                {slideCount > 1 && (
-                  <>
-                    <button
-                      type="button"
-                      aria-label="Show previous slide"
-                      onClick={() => goToSlide(activeSlide - 1)}
-                      className="absolute left-4 top-1/2 z-20 inline-flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full border border-foreground/15 bg-foreground/60 text-foreground backdrop-blur-xl transition hover:bg-foreground/80"
-                    >
-                      <ArrowLeft className="h-4 w-4" />
-                    </button>
-                    <button
-                      type="button"
-                      aria-label="Show next slide"
-                      onClick={() => goToSlide(activeSlide + 1)}
-                      className="absolute right-4 top-1/2 z-20 inline-flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full border border-foreground/15 bg-foreground/60 text-foreground backdrop-blur-xl transition hover:bg-foreground/80"
-                    >
-                      <ArrowRight className="h-4 w-4" />
-                    </button>
-                  </>
-                )}
-              </div>
-
-
-
-              <div className="absolute bottom-8 left-1/2 z-20 flex -translate-x-1/2 items-center gap-2 rounded-full border border-foreground/15 bg-foreground/70 px-3 py-2 backdrop-blur-xl">
+            {/* Slide Pagination Dots */}
+            {slideCount > 1 && (
+              <div className="absolute bottom-4 sm:bottom-5 left-1/2 z-20 flex -translate-x-1/2 items-center gap-2 rounded-full border border-white/15 bg-black/45 px-3.5 py-1.5 backdrop-blur-xl shadow-lg">
                 {slides.map((slide, index) => (
                   <button
                     key={`${slide.src}-dot-${index}`}
@@ -527,12 +479,15 @@ export const Hero = () => {
                     aria-label={`Show slide ${index + 1}`}
                     aria-current={activeSlide === index}
                     onClick={() => goToSlide(index)}
-                    className={`h-2 rounded-full transition-all duration-300 ${activeSlide === index ? "w-7 bg-white" : "w-2 bg-foreground/70 hover:bg-white"
-                      }`}
+                    className={`h-2 rounded-full transition-all duration-300 ${
+                      activeSlide === index
+                        ? "w-7 bg-white shadow-[0_0_12px_rgba(255,255,255,0.7)]"
+                        : "w-2 bg-white/40 hover:bg-white/80"
+                    }`}
                   />
                 ))}
               </div>
-            </div>
+            )}
           </div>
         </div>
       </div>
