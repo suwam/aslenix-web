@@ -13,16 +13,17 @@ import { getVideoEmbedUrl, isVideoSource, type HeroSlide } from "@/lib/video";
 
 const normalizeSlides = (value: unknown): HeroSlide[] => {
   if (!Array.isArray(value)) return [];
-  return value
-    .map((slide) => {
-      if (!slide || typeof slide !== "object") return null;
-      const record = slide as Record<string, unknown>;
-      const src = typeof record.src === "string" ? record.src : "";
-      const alt = typeof record.alt === "string" ? record.alt : "";
-      const type = record.type === "video" || record.type === "image" ? record.type : undefined;
-      return { src, alt, type };
-    })
-    .filter((slide): slide is HeroSlide => Boolean(slide));
+  const slides: HeroSlide[] = [];
+  for (const slide of value) {
+    if (!slide || typeof slide !== "object") continue;
+    const record = slide as Record<string, unknown>;
+    const src = typeof record.src === "string" ? record.src : "";
+    const alt = typeof record.alt === "string" ? record.alt : "";
+    const type: "image" | "video" | undefined =
+      record.type === "video" || record.type === "image" ? record.type : undefined;
+    slides.push({ src, alt, type });
+  }
+  return slides;
 };
 
 const VideoSlideEditor = ({

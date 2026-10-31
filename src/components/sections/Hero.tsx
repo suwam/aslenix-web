@@ -54,16 +54,17 @@ const HERO_CACHE_KEY = "aslenix:homepage-content:v1";
 
 const parseHeroSlides = (value: unknown): HeroSlide[] | null => {
   if (!Array.isArray(value)) return null;
-  const slides = value
-    .map((slide) => {
-      if (!slide || typeof slide !== "object") return null;
-      const record = slide as Record<string, unknown>;
-      const src = typeof record.src === "string" ? record.src.trim() : "";
-      const alt = typeof record.alt === "string" ? record.alt.trim() : "";
-      const type = record.type === "video" || record.type === "image" ? record.type : undefined;
-      return src ? { src, alt: alt || "Dashboard preview", type } : null;
-    })
-    .filter((slide): slide is HeroSlide => Boolean(slide));
+  const slides: HeroSlide[] = [];
+  for (const slide of value) {
+    if (!slide || typeof slide !== "object") continue;
+    const record = slide as Record<string, unknown>;
+    const src = typeof record.src === "string" ? record.src.trim() : "";
+    if (!src) continue;
+    const alt = typeof record.alt === "string" ? record.alt.trim() : "";
+    const type: "image" | "video" | undefined =
+      record.type === "video" || record.type === "image" ? record.type : undefined;
+    slides.push({ src, alt: alt || "Dashboard preview", type });
+  }
   return slides.length > 0 ? slides : null;
 };
 
@@ -143,6 +144,7 @@ export const Hero = () => {
   const slideCount = slides.length;
   const currentSlide = slides[activeSlide];
   const currentIsVideo = currentSlide ? isVideoSource(currentSlide.src, currentSlide.type) : false;
+  const currentEmbedUrl = currentIsVideo && currentSlide ? getVideoEmbedUrl(currentSlide.src) : null;
 
   useEffect(() => {
     const timeout = window.setTimeout(() => setEnhanced(true), 900);
