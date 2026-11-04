@@ -38,8 +38,8 @@ const VideoSlideEditor = ({
   const embedUrl = getVideoEmbedUrl(slide.src);
 
   const handleUpload = async (file: File) => {
-    if (file.size > 80 * 1024 * 1024) {
-      toast.error("Video file is too large (max 80MB). Consider using YouTube/Vimeo or compressing the file.");
+    if (file.size > 200 * 1024 * 1024) {
+      toast.error("Video file is too large (max 200MB). Consider using YouTube/Vimeo or compressing the file.");
       return;
     }
     setUploading(true);
@@ -101,7 +101,7 @@ const VideoSlideEditor = ({
           <Upload className="w-3.5 h-3.5 mr-1.5" />
           {uploading ? "Uploading video..." : "Upload Video File"}
         </Button>
-        <span className="text-xs text-muted-foreground">MP4, WebM, MOV up to 80MB</span>
+        <span className="text-xs text-muted-foreground">MP4, WebM, MOV up to 200MB</span>
         <input
           ref={fileRef}
           type="file"
